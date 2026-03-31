@@ -124,6 +124,7 @@ section { padding: 6rem 4rem; }
 .stat { text-align: center; padding: 1.5rem 1rem; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; }
 .stat-number { font-family: var(--font-display); font-size: 2rem; color: var(--accent-light); }
 .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+.stat-note { font-size: 0.68rem; color: #7a7a84; margin-top: 0.4rem; letter-spacing: 0.03em; }
 .tech-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.55rem; margin-top: 2rem; }
 .tech-tag { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.45rem 0.4rem; min-height: 38px; display: flex; align-items: center; justify-content: center; text-align: center; white-space: nowrap; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); transition: all 0.3s; }
 .tech-tag:hover { border-color: var(--accent); color: var(--text); }
@@ -238,6 +239,7 @@ footer a:hover { color: var(--text); }
   .stat { padding: 1rem 0.5rem; }
   .stat-number { font-size: 1.5rem; }
   .stat-label { font-size: 0.65rem; }
+  .stat-note { font-size: 0.6rem; }
   .tech-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem; }
   .tech-tag { font-size: 0.7rem; padding: 0.35rem 0.4rem; min-height: 36px; }
   .project-card h3 { font-size: 1rem; }
@@ -305,7 +307,11 @@ footer a:hover { color: var(--text); }
       <div class="stats-row">
         <div class="stat"><div class="stat-number">1200+</div><div class="stat-label" data-en="Tests Passing" data-tr="Geçen Test">Tests Passing</div></div>
         <div class="stat"><div class="stat-number">59+</div><div class="stat-label" data-en="Apps Built" data-tr="Uygulama">Apps Built</div></div>
-        <div class="stat"><div class="stat-number">V0</div><div class="stat-label" data-en="Discipline" data-tr="Disiplin">Discipline</div></div>
+        <div class="stat" title="Maturity level based on quality and governance discipline.">
+          <div class="stat-number">V1</div>
+          <div class="stat-label" data-en="Maturity" data-tr="Olgunluk">Maturity</div>
+          <div class="stat-note" data-en="Baseline governance active" data-tr="Temel yönetişim aktif">Baseline governance active</div>
+        </div>
       </div>
     </div>
   </div>
