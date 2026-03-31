@@ -124,8 +124,8 @@ section { padding: 6rem 4rem; }
 .stat { text-align: center; padding: 1.5rem 1rem; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; }
 .stat-number { font-family: var(--font-display); font-size: 2rem; color: var(--accent-light); }
 .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
-.tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-.tech-tag { font-family: var(--font-mono); font-size: 0.75rem; padding: 0.4rem 0.85rem; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); transition: all 0.3s; }
+.tech-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.55rem; margin-top: 2rem; }
+.tech-tag { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.45rem 0.4rem; min-height: 38px; display: flex; align-items: center; justify-content: center; text-align: center; white-space: nowrap; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); transition: all 0.3s; }
 .tech-tag:hover { border-color: var(--accent); color: var(--text); }
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; max-width: 1200px; }
 .project-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; transition: all 0.4s; position: relative; overflow: hidden; }
@@ -238,8 +238,8 @@ footer a:hover { color: var(--text); }
   .stat { padding: 1rem 0.5rem; }
   .stat-number { font-size: 1.5rem; }
   .stat-label { font-size: 0.65rem; }
-  .tech-stack { gap: 0.4rem; }
-  .tech-tag { font-size: 0.7rem; padding: 0.3rem 0.65rem; }
+  .tech-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem; }
+  .tech-tag { font-size: 0.7rem; padding: 0.35rem 0.4rem; min-height: 36px; }
   .project-card h3 { font-size: 1rem; }
   .project-card p { font-size: 0.85rem; }
   .service-number { font-size: 2.2rem; }
