@@ -266,9 +266,17 @@ footer a:hover { color: var(--text); }
 }
 .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+.project-card.reveal { transition-delay: calc(var(--stagger, 0) * 0.12s); }
+.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-light)); z-index: 200; width: 0%; transition: width 0.05s linear; pointer-events: none; }
+.copy-email-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.7rem; padding: 0.3rem 0.7rem; border-radius: 4px; cursor: pointer; transition: all 0.3s; margin-left: 0.5rem; }
+.copy-email-btn:hover { border-color: var(--accent); color: var(--text); }
+.copy-email-btn.copied { background: rgba(192,57,43,0.15); border-color: var(--accent); color: var(--accent-light); }
+.typing-cursor { display: inline-block; width: 3px; height: 0.9em; background: var(--accent-light); margin-left: 4px; animation: cursorBlink 0.8s ease-in-out infinite; vertical-align: baseline; }
+@keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 </style>
 </head>
 <body>
+<div class="scroll-progress" id="scroll-progress"></div>
 <nav>
   <a href="#" class="logo">Winston<span>Red</span></a>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -294,12 +302,12 @@ footer a:hover { color: var(--text); }
   <div class="proof-strip">
     <div class="proof-chip">
       <span class="proof-k" data-en="Tests" data-tr="Test">Tests</span>
-      <strong>1200+</strong>
+      <strong data-count="1200" data-suffix="+">0</strong>
       <small data-en="Passing in CI" data-tr="CI üzerinde geçen">Passing in CI</small>
     </div>
     <div class="proof-chip">
       <span class="proof-k" data-en="Apps" data-tr="Uygulama">Apps</span>
-      <strong>59+</strong>
+      <strong data-count="59" data-suffix="+">0</strong>
       <small data-en="Built in WinstonRedGuard" data-tr="WinstonRedGuard içinde">Built in WinstonRedGuard</small>
     </div>
     <div class="proof-chip">
@@ -576,6 +584,7 @@ footer a:hover { color: var(--text); }
           <div class="contact-link-icon">✉</div>
           <div class="contact-link-text"><h4>Email</h4><p>winstonrgsocial@gmail.com</p></div>
         </a>
+        <button class="copy-email-btn" onclick="copyEmail(this)" data-en="Copy email" data-tr="E-postayı kopyala">Copy email</button>
       </div>
     </div>
   </div>
@@ -586,6 +595,7 @@ footer a:hover { color: var(--text); }
   <span data-en="Çanakkale, Turkey · Open to remote" data-tr="Çanakkale, Türkiye · Uzaktan çalışmaya açık">Çanakkale, Turkey · Open to remote</span>
 </footer>
 <script>
+/* ── Menu ── */
 function toggleMenu() {
   document.querySelector('.hamburger').classList.toggle('active');
   document.querySelector('.nav-links').classList.toggle('open');
@@ -598,18 +608,15 @@ function closeMenu() {
   document.querySelector('.menu-overlay').classList.remove('visible');
   document.body.style.overflow = '';
 }
+
+/* ── Language toggle ── */
 let lang = 'en';
 function renderProofTimestamp() {
   const el = document.getElementById('proof-updated');
   if (!el) return;
   const locale = lang === 'tr' ? 'tr-TR' : 'en-US';
   const now = new Date();
-  el.textContent = now.toLocaleString(locale, {
-    day: '2-digit',
-    month: 'short',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+  el.textContent = now.toLocaleString(locale, { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
 }
 function toggleLang() {
   lang = lang === 'en' ? 'tr' : 'en';
@@ -620,10 +627,17 @@ function toggleLang() {
   });
   renderProofTimestamp();
 }
+
+/* ── Scroll reveal with stagger ── */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.project-card.reveal').forEach((card, i) => {
+  card.style.setProperty('--stagger', i);
+});
+
+/* ── Nav hide on scroll + progress bar ── */
 let lastScroll = 0;
 window.addEventListener('scroll', () => {
   const nav = document.querySelector('nav');
@@ -631,7 +645,71 @@ window.addEventListener('scroll', () => {
   if (st > lastScroll && st > 100) nav.style.transform = 'translateY(-100%)';
   else nav.style.transform = 'translateY(0)';
   lastScroll = st;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = h > 0 ? (st / h) * 100 : 0;
+  document.getElementById('scroll-progress').style.width = pct + '%';
 });
+
+/* ── Counter animation ── */
+function animateCounters() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    if (el.dataset.counted) return;
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1500;
+    const start = performance.now();
+    el.dataset.counted = '1';
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(target * ease) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(step);
+  });
+}
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) animateCounters(); });
+}, { threshold: 0.3 });
+const proofStrip = document.querySelector('.proof-strip');
+if (proofStrip) counterObserver.observe(proofStrip);
+
+/* ── Typing effect for hero ── */
+(function initTyping() {
+  const h1 = document.querySelector('.hero h1');
+  if (!h1) return;
+  const em = h1.querySelector('em');
+  if (!em) return;
+  const fullText = em.textContent;
+  em.textContent = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  em.appendChild(cursor);
+  let i = 0;
+  function typeChar() {
+    if (i < fullText.length) {
+      em.insertBefore(document.createTextNode(fullText[i]), cursor);
+      i++;
+      setTimeout(typeChar, 70 + Math.random() * 40);
+    } else {
+      setTimeout(() => cursor.remove(), 2000);
+    }
+  }
+  setTimeout(typeChar, 800);
+})();
+
+/* ── Copy email ── */
+function copyEmail(btn) {
+  navigator.clipboard.writeText('winstonrgsocial@gmail.com').then(() => {
+    const orig = btn.textContent;
+    btn.textContent = lang === 'tr' ? 'Kopyaland\u0131!' : 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+/* ── Init ── */
 const params = new URLSearchParams(window.location.search);
 if (params.get('success') === '1') {
   const note = document.getElementById('status-note');
