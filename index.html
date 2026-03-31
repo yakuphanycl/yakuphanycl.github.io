@@ -14,13 +14,13 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="WinstonRed">
 <meta property="og:title" content="WinstonRed — Yakuphan Yücel">
-<meta property="og:description" content="Building intelligent systems that work. AI automation, research engines, and production-ready applications.">
+<meta property="og:description" content="Production-grade systems with measurable outcomes. 59+ apps, 1200+ tests, governance-first delivery.">
 <meta property="og:url" content="https://yakuphanycl.github.io/">
 <meta property="og:image" content="https://yakuphanycl.github.io/og-image.png">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="WinstonRed — Yakuphan Yücel">
-<meta name="twitter:description" content="Building intelligent systems that work. AI automation, research engines, and production-ready applications.">
+<meta name="twitter:description" content="Production-grade systems with measurable outcomes. 59+ apps, 1200+ tests, governance-first delivery.">
 <meta name="twitter:image" content="https://yakuphanycl.github.io/og-image.png">
 <script type="application/ld+json">
 {
@@ -109,6 +109,11 @@ nav {
 .hero-mini-cta { margin-top: 1rem; font-size: 0.82rem; color: var(--text-muted); animation: fadeUp 0.8s ease-out 0.35s both; }
 .hero-mini-cta a { color: var(--accent-light); text-decoration: none; border-bottom: 1px dashed rgba(231,76,60,0.5); }
 .hero-mini-cta a:hover { color: #fff; border-bottom-color: #fff; }
+.proof-strip { display: grid; grid-template-columns: repeat(4, minmax(150px, 1fr)); gap: 0.75rem; margin-top: 1.4rem; max-width: 860px; animation: fadeUp 0.8s ease-out 0.28s both; }
+.proof-chip { border: 1px solid var(--border); background: rgba(17,17,19,0.65); border-radius: 8px; padding: 0.75rem 0.85rem; }
+.proof-chip strong { display: block; font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.2; }
+.proof-chip small { display: block; margin-top: 0.2rem; color: var(--text-muted); font-size: 0.72rem; line-height: 1.35; }
+.proof-k { display: block; font-size: 0.68rem; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.2rem; font-family: var(--font-mono); }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; animation: fadeUp 0.8s ease-out 0.5s both; }
 .scroll-hint span { width: 1px; height: 30px; background: linear-gradient(to bottom, var(--text-muted), transparent); animation: scrollPulse 2s ease-in-out infinite; }
@@ -136,6 +141,9 @@ section { padding: 6rem 4rem; }
 .project-icon { width: 42px; height: 42px; background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 1.25rem; }
 .project-card h3 { font-family: var(--font-body); font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; }
 .project-card p { color: var(--text-muted); font-size: 0.9rem; font-weight: 300; line-height: 1.6; }
+.project-proof { margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 0.9rem; display: grid; gap: 0.35rem; }
+.project-proof div { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+.project-proof strong { color: var(--text); font-weight: 600; }
 .project-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
 .project-meta span { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.25rem 0.6rem; background: var(--surface); border-radius: 3px; color: var(--text-muted); }
 .project-link { margin-top: 0.75rem; }
@@ -210,6 +218,7 @@ footer a:hover { color: var(--text); }
   .hero::before { width: 300px; height: 300px; top: -100px; right: -100px; }
   .hero h1 { font-size: 2.2rem; }
   .hero-sub { font-size: 1rem; }
+  .proof-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 100%; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   .case-grid { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
@@ -230,6 +239,8 @@ footer a:hover { color: var(--text); }
   .hero-badge { font-size: 0.7rem; padding: 0.3rem 0.75rem; }
   .hero-cta { flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
   .hero-mini-cta { margin-top: 0.5rem; font-size: 0.78rem; }
+  .proof-strip { grid-template-columns: 1fr; gap: 0.5rem; margin-top: 1rem; }
+  .proof-chip { padding: 0.65rem 0.75rem; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; padding: 0.9rem 1.5rem; }
   .scroll-hint { display: none; }
   section { padding: 3rem 1.25rem; }
@@ -277,8 +288,30 @@ footer a:hover { color: var(--text); }
   <div class="hero-badge">
     <span data-en="Available for projects" data-tr="Projelere açık">Available for projects</span>
   </div>
-  <h1 data-en="Building <em>intelligent</em> systems that work." data-tr="Çalışan <em>akıllı</em> sistemler inşa ediyorum.">Building <em>intelligent</em> systems that work.</h1>
-  <p class="hero-sub" data-en="Founder at WinstonRed. I build AI-powered automation tools, multi-source research engines, and production-ready applications with Python &amp; PowerShell." data-tr="WinstonRed kurucusu. Python ve PowerShell ile yapay zeka destekli otomasyon araçları, çok kaynaklı araştırma motorları ve üretime hazır uygulamalar geliştiriyorum.">Founder at WinstonRed. I build AI-powered automation tools, multi-source research engines, and production-ready applications with Python &amp; PowerShell.</p>
+  <h1 data-en="Production-grade <em>AI systems</em> with measurable outcomes." data-tr="Ölçülebilir sonuç üreten <em>üretim seviyesi</em> AI sistemleri geliştiriyorum.">Production-grade <em>AI systems</em> with measurable outcomes.</h1>
+  <p class="hero-sub" data-en="Founder at WinstonRed. I ship automation and research platforms with governance gates, test-first delivery, and clear operational handover." data-tr="WinstonRed kurucusu. Yönetişim kapıları, test-öncelikli teslim ve net operasyonel devir ile otomasyon ve araştırma platformları geliştiriyorum.">Founder at WinstonRed. I ship automation and research platforms with governance gates, test-first delivery, and clear operational handover.</p>
+  <div class="proof-strip">
+    <div class="proof-chip">
+      <span class="proof-k" data-en="Tests" data-tr="Test">Tests</span>
+      <strong>1200+</strong>
+      <small data-en="Passing in CI" data-tr="CI üzerinde geçen">Passing in CI</small>
+    </div>
+    <div class="proof-chip">
+      <span class="proof-k" data-en="Apps" data-tr="Uygulama">Apps</span>
+      <strong>59+</strong>
+      <small data-en="Built in WinstonRedGuard" data-tr="WinstonRedGuard içinde">Built in WinstonRedGuard</small>
+    </div>
+    <div class="proof-chip">
+      <span class="proof-k" data-en="Governance" data-tr="Yönetişim">Governance</span>
+      <strong data-en="Policy Gates ON" data-tr="Policy Gate AKTİF">Policy Gates ON</strong>
+      <small data-en="Registry + quality checks" data-tr="Registry + kalite kontrolleri">Registry + quality checks</small>
+    </div>
+    <div class="proof-chip">
+      <span class="proof-k" data-en="Snapshot" data-tr="Anlık Durum">Snapshot</span>
+      <strong id="proof-updated">--:--</strong>
+      <small data-en="Updated from current profile data" data-tr="Güncel profil verisinden güncellendi">Updated from current profile data</small>
+    </div>
+  </div>
   <div class="hero-cta">
     <a href="#contact" class="btn-primary" data-en="Get in Touch →" data-tr="İletişime Geç →">Get in Touch →</a>
     <a href="#projects" class="btn-secondary" data-en="View Projects" data-tr="Projeleri Gör">View Projects</a>
@@ -327,6 +360,11 @@ footer a:hover { color: var(--text); }
       <div class="project-icon">🛡️</div>
       <h3><a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">WinstonRedGuard</a></h3>
       <p data-en="The core monorepo powering all WinstonRed applications — 59+ apps, 1200+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline." data-tr="Tüm WinstonRed uygulamalarını barındıran ana monorepo — 59+ uygulama, 1200+ test, CI/CD yeşil. Otomatik kalite kontrolleri, yönetişim kuralları ve günlük sinyal istihbarat hattı içeren Python &amp; PowerShell politika kapı sistemi.">The core monorepo powering all WinstonRed applications — 59+ apps, 1200+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline.</p>
+      <div class="project-proof">
+        <div data-en="<strong>Problem:</strong> Many apps, fragmented standards, and high review overhead." data-tr="<strong>Problem:</strong> Çok sayıda uygulama, parçalı standartlar ve yüksek review maliyeti."><strong>Problem:</strong> Many apps, fragmented standards, and high review overhead.</div>
+        <div data-en="<strong>Solution:</strong> Registry alignment + automated policy gates + quality checks." data-tr="<strong>Çözüm:</strong> Registry hizalama + otomatik policy gate + kalite kontrolleri."><strong>Solution:</strong> Registry alignment + automated policy gates + quality checks.</div>
+        <div data-en="<strong>Outcome:</strong> 59+ apps, 1200+ tests, CI/CD consistently green." data-tr="<strong>Sonuç:</strong> 59+ uygulama, 1200+ test, sürekli yeşil CI/CD."><strong>Outcome:</strong> 59+ apps, 1200+ tests, CI/CD consistently green.</div>
+      </div>
       <p class="project-link"><a href="/projects/winstonredguard.html" data-en="Read case study →" data-tr="Vaka çalışmasını oku →">Read case study →</a></p>
       <div class="project-meta"><span>Python</span><span>PowerShell</span><span>GitHub Actions</span><span>Monorepo</span></div>
     </div>
@@ -334,12 +372,22 @@ footer a:hover { color: var(--text); }
       <div class="project-icon">📊</div>
       <h3><a href="https://winstonredguard-production.up.railway.app" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">PulseBoard</a></h3>
       <p data-en="Open-source repository health dashboard. FastAPI + SQLite backend with GitHub OAuth, 5 async metric collectors (CI, coverage, PRs, commits, deps), and a 0–100 Pulse Score. Deployed on Railway." data-tr="Açık kaynak repo sağlık paneli. GitHub OAuth ile FastAPI + SQLite, 5 asenkron metrik toplayıcı (CI, kapsam, PR'lar, commitler, bağımlılıklar) ve 0–100 Pulse Skoru. Railway'de canlı.">Open-source repository health dashboard. FastAPI + SQLite backend with GitHub OAuth, 5 async metric collectors (CI, coverage, PRs, commits, deps), and a 0–100 Pulse Score. Deployed on Railway.</p>
+      <div class="project-proof">
+        <div data-en="<strong>Problem:</strong> Repo health signals were scattered and hard to prioritize." data-tr="<strong>Problem:</strong> Repo sağlık sinyalleri dağınık ve önceliklendirmesi zordu."><strong>Problem:</strong> Repo health signals were scattered and hard to prioritize.</div>
+        <div data-en="<strong>Solution:</strong> 5 async collectors + unified 0–100 scoring + one dashboard." data-tr="<strong>Çözüm:</strong> 5 asenkron toplayıcı + birleşik 0–100 skor + tek dashboard."><strong>Solution:</strong> 5 async collectors + unified 0–100 scoring + one dashboard.</div>
+        <div data-en="<strong>Outcome:</strong> A single operational view for health-based decisions." data-tr="<strong>Sonuç:</strong> Sağlık temelli kararlar için tek operasyon ekranı."><strong>Outcome:</strong> A single operational view for health-based decisions.</div>
+      </div>
       <div class="project-meta"><span>FastAPI</span><span>119 tests</span><span>Railway</span><span>SaaS</span></div>
     </div>
     <div class="project-card reveal">
       <div class="project-icon">🎯</div>
       <h3>Paper Impact</h3>
       <p data-en="Academic paper impact scorer. Fetches papers from arXiv, collects adoption signals across GitHub, social media, and news, then computes a 0–100 Impact Score with 5 weighted categories." data-tr="Akademik makale etki skorlayıcı. arXiv'den makaleleri çeker, GitHub, sosyal medya ve haberler üzerinden benimseme sinyallerini toplar, 5 ağırlıklı kategori ile 0–100 Etki Skoru hesaplar.">Academic paper impact scorer. Fetches papers from arXiv, collects adoption signals across GitHub, social media, and news, then computes a 0–100 Impact Score with 5 weighted categories.</p>
+      <div class="project-proof">
+        <div data-en="<strong>Problem:</strong> Research impact was hard to compare across disconnected signals." data-tr="<strong>Problem:</strong> Araştırma etkisini dağınık sinyaller arasında karşılaştırmak zordu."><strong>Problem:</strong> Research impact was hard to compare across disconnected signals.</div>
+        <div data-en="<strong>Solution:</strong> Weighted scoring model combining arXiv, GitHub, social, and news signals." data-tr="<strong>Çözüm:</strong> arXiv, GitHub, sosyal medya ve haber sinyallerini birleştiren ağırlıklı skor modeli."><strong>Solution:</strong> Weighted scoring model combining arXiv, GitHub, social, and news signals.</div>
+        <div data-en="<strong>Outcome:</strong> Repeatable 0–100 impact score for ranking and tracking papers." data-tr="<strong>Sonuç:</strong> Makaleleri sıralamak ve izlemek için tekrarlanabilir 0–100 etki skoru."><strong>Outcome:</strong> Repeatable 0–100 impact score for ranking and tracking papers.</div>
+      </div>
       <div class="project-meta"><span>Python</span><span>156 tests</span><span>arXiv API</span><span>Zero deps</span></div>
     </div>
     <div class="project-card reveal">
@@ -550,6 +598,18 @@ function closeMenu() {
   document.body.style.overflow = '';
 }
 let lang = 'en';
+function renderProofTimestamp() {
+  const el = document.getElementById('proof-updated');
+  if (!el) return;
+  const locale = lang === 'tr' ? 'tr-TR' : 'en-US';
+  const now = new Date();
+  el.textContent = now.toLocaleString(locale, {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
 function toggleLang() {
   lang = lang === 'en' ? 'tr' : 'en';
   document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'TR' : 'EN';
@@ -557,6 +617,7 @@ function toggleLang() {
     const text = el.getAttribute('data-' + lang);
     if (text) el.innerHTML = text;
   });
+  renderProofTimestamp();
 }
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
@@ -575,6 +636,7 @@ if (params.get('success') === '1') {
   const note = document.getElementById('status-note');
   if (note) note.classList.add('visible');
 }
+renderProofTimestamp();
 </script>
 </body>
 </html>
