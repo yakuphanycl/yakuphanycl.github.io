@@ -106,6 +106,9 @@ nav {
 .btn-primary:hover { background: var(--accent-light); box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-1px); }
 .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2rem; background: transparent; color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.9rem; border-radius: 6px; border: 1px solid var(--border); transition: all 0.3s; }
 .btn-secondary:hover { border-color: var(--text-muted); background: var(--bg-elevated); }
+.hero-mini-cta { margin-top: 1rem; font-size: 0.82rem; color: var(--text-muted); animation: fadeUp 0.8s ease-out 0.35s both; }
+.hero-mini-cta a { color: var(--accent-light); text-decoration: none; border-bottom: 1px dashed rgba(231,76,60,0.5); }
+.hero-mini-cta a:hover { color: #fff; border-bottom-color: #fff; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; animation: fadeUp 0.8s ease-out 0.5s both; }
 .scroll-hint span { width: 1px; height: 30px; background: linear-gradient(to bottom, var(--text-muted), transparent); animation: scrollPulse 2s ease-in-out infinite; }
@@ -134,6 +137,15 @@ section { padding: 6rem 4rem; }
 .project-card p { color: var(--text-muted); font-size: 0.9rem; font-weight: 300; line-height: 1.6; }
 .project-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
 .project-meta span { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.25rem 0.6rem; background: var(--surface); border-radius: 3px; color: var(--text-muted); }
+.project-link { margin-top: 0.75rem; }
+.project-link a { color: var(--accent-light); text-decoration: none; font-size: 0.85rem; }
+.project-link a:hover { color: #fff; }
+.cases { background: var(--bg-elevated); }
+.case-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px; }
+.case-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
+.case-card h3 { font-size: 1rem; margin-bottom: 0.8rem; }
+.case-point { margin-bottom: 0.7rem; color: var(--text-muted); font-size: 0.9rem; }
+.case-point strong { color: var(--text); font-weight: 600; }
 .services { background: var(--bg-elevated); }
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px; }
 .service-card { padding: 2.5rem 2rem; border: 1px solid var(--border); border-radius: 10px; transition: all 0.4s; position: relative; }
@@ -142,7 +154,32 @@ section { padding: 6rem 4rem; }
 .service-card:hover .service-number { color: rgba(192,57,43,0.15); }
 .service-card h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.75rem; }
 .service-card p { color: var(--text-muted); font-size: 0.9rem; font-weight: 300; line-height: 1.6; }
-.contact-wrapper { max-width: 700px; }
+.service-facts { margin-top: 1rem; padding-left: 1.1rem; color: var(--text-muted); font-size: 0.84rem; display: grid; gap: 0.35rem; }
+.trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 1100px; }
+.trust-card { border: 1px solid var(--border); background: var(--bg-card); border-radius: 10px; padding: 1.4rem; }
+.trust-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+.trust-card p { font-size: 0.9rem; color: var(--text-muted); }
+.contact-wrapper { max-width: 1100px; }
+.contact-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.25rem; align-items: start; margin-top: 1.5rem; }
+.contact-form { border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); padding: 1.2rem; }
+.contact-form h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
+.contact-form p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.form-row { display: grid; gap: 0.35rem; margin-bottom: 0.8rem; }
+.form-row label { font-size: 0.8rem; color: var(--text-muted); }
+.form-row input, .form-row select, .form-row textarea {
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.7rem 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+.form-row textarea { min-height: 120px; resize: vertical; }
+.form-actions { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; }
+.status-note { display: none; margin-top: 0.75rem; font-size: 0.82rem; color: #9edb9e; }
+.status-note.visible { display: block; }
 .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
 .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text); transition: all 0.3s; }
 .contact-link:hover { border-color: var(--accent); transform: translateX(6px); }
@@ -173,8 +210,11 @@ footer a:hover { color: var(--text); }
   .hero h1 { font-size: 2.2rem; }
   .hero-sub { font-size: 1rem; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .case-grid { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
   footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
   .section-title { font-size: 1.8rem; }
@@ -188,6 +228,7 @@ footer a:hover { color: var(--text); }
   .hero-sub { font-size: 0.95rem; margin-top: 1rem; }
   .hero-badge { font-size: 0.7rem; padding: 0.3rem 0.75rem; }
   .hero-cta { flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+  .hero-mini-cta { margin-top: 0.5rem; font-size: 0.78rem; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; padding: 0.9rem 1.5rem; }
   .scroll-hint { display: none; }
   section { padding: 3rem 1.25rem; }
@@ -222,6 +263,7 @@ footer a:hover { color: var(--text); }
   <ul class="nav-links">
     <li><a href="#about" data-en="About" data-tr="Hakkında" onclick="closeMenu()">About</a></li>
     <li><a href="#projects" data-en="Projects" data-tr="Projeler" onclick="closeMenu()">Projects</a></li>
+    <li><a href="#cases" data-en="Case Studies" data-tr="Vaka Çalışmaları" onclick="closeMenu()">Case Studies</a></li>
     <li><a href="#services" data-en="Services" data-tr="Hizmetler" onclick="closeMenu()">Services</a></li>
     <li><a href="#contact" data-en="Contact" data-tr="İletişim" onclick="closeMenu()">Contact</a></li>
     <li><button class="lang-toggle" onclick="toggleLang()">TR</button></li>
@@ -239,6 +281,7 @@ footer a:hover { color: var(--text); }
     <a href="#contact" class="btn-primary" data-en="Get in Touch →" data-tr="İletişime Geç →">Get in Touch →</a>
     <a href="#projects" class="btn-secondary" data-en="View Projects" data-tr="Projeleri Gör">View Projects</a>
   </div>
+  <p class="hero-mini-cta" data-en="Need fast scope clarity? <a href=\"mailto:winstonrgsocial@gmail.com?subject=15-minute%20discovery%20call\">Book a 15-minute discovery call</a>." data-tr="Kapsamı hızlı netleştirelim: <a href=\"mailto:winstonrgsocial@gmail.com?subject=15%20dakikalik%20kesif%20gorusmesi\">15 dakikalık keşif görüşmesi planlayın</a>.">Need fast scope clarity? <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20discovery%20call">Book a 15-minute discovery call</a>.</p>
   <div class="scroll-hint"><span></span></div>
 </section>
 <section class="about" id="about">
@@ -275,6 +318,7 @@ footer a:hover { color: var(--text); }
       <div class="project-icon">🛡️</div>
       <h3><a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">WinstonRedGuard</a></h3>
       <p data-en="The core monorepo powering all WinstonRed applications — 46+ apps, 300+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline." data-tr="Tüm WinstonRed uygulamalarını barındıran ana monorepo — 46+ uygulama, 300+ test, CI/CD yeşil. Otomatik kalite kontrolleri, yönetişim kuralları ve günlük sinyal istihbarat hattı içeren Python &amp; PowerShell politika kapı sistemi.">The core monorepo powering all WinstonRed applications — 46+ apps, 300+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline.</p>
+      <p class="project-link"><a href="/projects/winstonredguard.html" data-en="Read case study →" data-tr="Vaka çalışmasını oku →">Read case study →</a></p>
       <div class="project-meta"><span>Python</span><span>PowerShell</span><span>GitHub Actions</span><span>Monorepo</span></div>
     </div>
     <div class="project-card reveal">
@@ -327,6 +371,33 @@ footer a:hover { color: var(--text); }
     </div>
   </div>
 </section>
+<section class="cases" id="cases">
+  <div class="reveal">
+    <p class="section-label" data-en="Case Studies" data-tr="Vaka Çalışmaları">Case Studies</p>
+    <h2 class="section-title" data-en="From Problem to Measurable Output" data-tr="Problemden Ölçülebilir Sonuca">From Problem to Measurable Output</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="case-grid">
+    <div class="case-card reveal">
+      <h3>WinstonRedGuard</h3>
+      <p class="case-point" data-en="<strong>Problem:</strong> Many apps, fragmented standards, and review overhead." data-tr="<strong>Problem:</strong> Çok uygulama, parçalı standartlar ve yüksek review yükü."><strong>Problem:</strong> Many apps, fragmented standards, and review overhead.</p>
+      <p class="case-point" data-en="<strong>Solution:</strong> Governance rules + automated policy gates + registry alignment." data-tr="<strong>Çözüm:</strong> Yönetişim kuralları + otomatik policy gate + registry hizalama."><strong>Solution:</strong> Governance rules + automated policy gates + registry alignment.</p>
+      <p class="case-point" data-en="<strong>Outcome:</strong> 46+ apps, 300+ tests, CI/CD consistently green." data-tr="<strong>Sonuç:</strong> 46+ uygulama, 300+ test, sürekli yeşil CI/CD."><strong>Outcome:</strong> 46+ apps, 300+ tests, CI/CD consistently green.</p>
+    </div>
+    <div class="case-card reveal">
+      <h3>PulseBoard</h3>
+      <p class="case-point" data-en="<strong>Problem:</strong> Repo health signals were scattered and hard to prioritize." data-tr="<strong>Problem:</strong> Repo sağlık sinyalleri dağınıktı, önceliklendirme zordu."><strong>Problem:</strong> Repo health signals were scattered and hard to prioritize.</p>
+      <p class="case-point" data-en="<strong>Solution:</strong> FastAPI + SQLite dashboard with 5 async collectors and unified scoring." data-tr="<strong>Çözüm:</strong> 5 asenkron toplayıcı ve birleşik skorlamaya sahip FastAPI + SQLite panel."><strong>Solution:</strong> FastAPI + SQLite dashboard with 5 async collectors and unified scoring.</p>
+      <p class="case-point" data-en="<strong>Outcome:</strong> One operational view with actionable 0-100 pulse score." data-tr="<strong>Sonuç:</strong> Aksiyon alınabilir 0-100 pulse skoru ile tek operasyon ekranı."><strong>Outcome:</strong> One operational view with actionable 0-100 pulse score.</p>
+    </div>
+    <div class="case-card reveal">
+      <h3>Research Motor</h3>
+      <p class="case-point" data-en="<strong>Problem:</strong> Manual research cycles were slow and inconsistent." data-tr="<strong>Problem:</strong> Manuel araştırma döngüleri yavaştı ve tutarsızdı."><strong>Problem:</strong> Manual research cycles were slow and inconsistent.</p>
+      <p class="case-point" data-en="<strong>Solution:</strong> 5-source adapter pipeline with watch mode and scheduled runs." data-tr="<strong>Çözüm:</strong> Watch modu ve zamanlanmış çalıştırma ile 5 kaynaklı adapter hattı."><strong>Solution:</strong> 5-source adapter pipeline with watch mode and scheduled runs.</p>
+      <p class="case-point" data-en="<strong>Outcome:</strong> Repeatable intelligence reports and faster decision cycles." data-tr="<strong>Sonuç:</strong> Tekrarlanabilir istihbarat raporları ve daha hızlı karar döngüsü."><strong>Outcome:</strong> Repeatable intelligence reports and faster decision cycles.</p>
+    </div>
+  </div>
+</section>
 <section class="services" id="services">
   <div class="reveal">
     <p class="section-label" data-en="Services" data-tr="Hizmetler">Services</p>
@@ -338,16 +409,52 @@ footer a:hover { color: var(--text); }
       <span class="service-number">01</span>
       <h3 data-en="SaaS Development" data-tr="SaaS Geliştirme">SaaS Development</h3>
       <p data-en="End-to-end development of lightweight, test-driven SaaS products. From CLI tools to web dashboards, built with minimal dependencies and production-ready from day one." data-tr="Hafif, test odaklı SaaS ürünlerinin uçtan uca geliştirilmesi. CLI araçlarından web panellerine, minimum bağımlılık ve ilk günden üretime hazır mimari.">End-to-end development of lightweight, test-driven SaaS products. From CLI tools to web dashboards, built with minimal dependencies and production-ready from day one.</p>
+      <ul class="service-facts">
+        <li data-en="Timeline: 2-6 weeks" data-tr="Süre: 2-6 hafta">Timeline: 2-6 weeks</li>
+        <li data-en="Deliverables: architecture, MVP, CI/CD, handover docs" data-tr="Teslimatlar: mimari, MVP, CI/CD, devir dokümantasyonu">Deliverables: architecture, MVP, CI/CD, handover docs</li>
+        <li data-en="Starting budget: from 2,500 USD" data-tr="Başlangıç bütçesi: 2.500 USD+">Starting budget: from 2,500 USD</li>
+      </ul>
     </div>
     <div class="service-card reveal">
       <span class="service-number">02</span>
       <h3 data-en="App Development" data-tr="Uygulama Geliştirme">App Development</h3>
       <p data-en="Custom Python applications with robust architecture. Automation pipelines, data processing tools, AI integrations, and full CI/CD setup with GitHub Actions." data-tr="Sağlam mimariye sahip özel Python uygulamaları. Otomasyon hatları, veri işleme araçları, yapay zeka entegrasyonları ve GitHub Actions ile tam CI/CD kurulumu.">Custom Python applications with robust architecture. Automation pipelines, data processing tools, AI integrations, and full CI/CD setup with GitHub Actions.</p>
+      <ul class="service-facts">
+        <li data-en="Timeline: 1-4 weeks" data-tr="Süre: 1-4 hafta">Timeline: 1-4 weeks</li>
+        <li data-en="Deliverables: tested codebase, CLI/API, deployment setup" data-tr="Teslimatlar: testli kod tabanı, CLI/API, deployment kurulumu">Deliverables: tested codebase, CLI/API, deployment setup</li>
+        <li data-en="Starting budget: from 1,500 USD" data-tr="Başlangıç bütçesi: 1.500 USD+">Starting budget: from 1,500 USD</li>
+      </ul>
     </div>
     <div class="service-card reveal">
       <span class="service-number">03</span>
       <h3 data-en="Business Analytics" data-tr="İş Analitiği">Business Analytics</h3>
       <p data-en="Multi-source data collection, automated scoring systems, and reporting dashboards. Turn raw data streams into actionable intelligence with scheduled pipelines." data-tr="Çok kaynaklı veri toplama, otomatik skorlama sistemleri ve raporlama panelleri. Ham veri akışlarını zamanlanmış hatlarla eyleme dönüştürülebilir istihbarata çevirin.">Multi-source data collection, automated scoring systems, and reporting dashboards. Turn raw data streams into actionable intelligence with scheduled pipelines.</p>
+      <ul class="service-facts">
+        <li data-en="Timeline: 1-3 weeks" data-tr="Süre: 1-3 hafta">Timeline: 1-3 weeks</li>
+        <li data-en="Deliverables: scoring model, dashboard, scheduled reports" data-tr="Teslimatlar: skorlama modeli, dashboard, zamanlanmış raporlar">Deliverables: scoring model, dashboard, scheduled reports</li>
+        <li data-en="Starting budget: from 1,200 USD" data-tr="Başlangıç bütçesi: 1.200 USD+">Starting budget: from 1,200 USD</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="why" id="why">
+  <div class="reveal">
+    <p class="section-label" data-en="Why WinstonRed" data-tr="Neden WinstonRed">Why WinstonRed</p>
+    <h2 class="section-title" data-en="Built for Reliability, Not Demos" data-tr="Demo Değil, Güvenilirlik Odaklı">Built for Reliability, Not Demos</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="trust-grid">
+    <div class="trust-card reveal">
+      <h3 data-en="Test-First Delivery" data-tr="Test-Öncelikli Teslim">Test-First Delivery</h3>
+      <p data-en="Core flows are covered with automated tests before handover to reduce regressions." data-tr="Devir öncesi temel akışlar otomatik testlerle güvence altına alınır, regresyon riski düşer.">Core flows are covered with automated tests before handover to reduce regressions.</p>
+    </div>
+    <div class="trust-card reveal">
+      <h3 data-en="Low-Dependency Architecture" data-tr="Düşük Bağımlılık Mimarisi">Low-Dependency Architecture</h3>
+      <p data-en="Lean stacks, explicit contracts, and operational simplicity for long-term maintainability." data-tr="Uzun vadeli bakım için yalın teknoloji yığını, net sözleşmeler ve operasyonel sadelik.">Lean stacks, explicit contracts, and operational simplicity for long-term maintainability.</p>
+    </div>
+    <div class="trust-card reveal">
+      <h3 data-en="Operational Handover" data-tr="Operasyonel Devir">Operational Handover</h3>
+      <p data-en="Delivery includes runbooks, CI/CD setup, and practical onboarding so teams can continue safely." data-tr="Teslimat; runbook, CI/CD kurulumu ve ekiplerin güvenli devamı için pratik onboarding içerir.">Delivery includes runbooks, CI/CD setup, and practical onboarding so teams can continue safely.</p>
     </div>
   </div>
 </section>
@@ -359,23 +466,59 @@ footer a:hover { color: var(--text); }
   </div>
   <div class="contact-wrapper reveal">
     <p style="color: var(--text-muted); font-weight: 300; margin-bottom: 1rem;" data-en="I'm open to freelance projects, collaborations, and interesting problems. Reach out through any of the channels below." data-tr="Freelance projeler, iş birlikleri ve ilgi çekici problemler için açığım. Aşağıdaki kanallardan ulaşabilirsiniz.">I'm open to freelance projects, collaborations, and interesting problems. Reach out through any of the channels below.</p>
-    <div class="contact-links">
-      <a href="https://github.com/yakuphanycl" target="_blank" rel="noopener noreferrer" class="contact-link">
-        <div class="contact-link-icon">⌨</div>
-        <div class="contact-link-text"><h4>GitHub</h4><p>github.com/yakuphanycl</p></div>
-      </a>
-      <a href="https://x.com/rg_winston3375" target="_blank" rel="noopener noreferrer" class="contact-link">
-        <div class="contact-link-icon">𝕏</div>
-        <div class="contact-link-text"><h4>X / Twitter</h4><p>@rg_winston3375</p></div>
-      </a>
-      <a href="https://linkedin.com/in/yakuphanycl" target="_blank" rel="noopener noreferrer" class="contact-link">
-        <div class="contact-link-icon">💼</div>
-        <div class="contact-link-text"><h4>LinkedIn</h4><p>linkedin.com/in/yakuphanycl</p></div>
-      </a>
-      <a href="mailto:winstonrgsocial@gmail.com" class="contact-link">
-        <div class="contact-link-icon">✉</div>
-        <div class="contact-link-text"><h4>Email</h4><p>winstonrgsocial@gmail.com</p></div>
-      </a>
+    <div class="contact-grid">
+      <form class="contact-form" action="https://formsubmit.co/winstonrgsocial@gmail.com" method="POST">
+        <h3 data-en="Start with a short brief" data-tr="Kısa bir brief ile başlayın">Start with a short brief</h3>
+        <p data-en="I usually reply within 24 hours." data-tr="Genellikle 24 saat içinde dönüş yapıyorum.">I usually reply within 24 hours.</p>
+        <input type="hidden" name="_subject" value="New inquiry from WinstonRed website">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://yakuphanycl.github.io/?success=1#contact">
+        <input type="text" name="_honey" style="display:none">
+        <div class="form-row">
+          <label for="name" data-en="Name" data-tr="İsim">Name</label>
+          <input id="name" name="name" required>
+        </div>
+        <div class="form-row">
+          <label for="email" data-en="Email" data-tr="E-posta">Email</label>
+          <input id="email" name="email" type="email" required>
+        </div>
+        <div class="form-row">
+          <label for="budget" data-en="Budget Range" data-tr="Bütçe Aralığı">Budget Range</label>
+          <select id="budget" name="budget" required>
+            <option value="" data-en="Select range" data-tr="Aralık seçin">Select range</option>
+            <option data-en="Under 1,500 USD" data-tr="1.500 USD altı">Under 1,500 USD</option>
+            <option data-en="1,500 - 3,000 USD" data-tr="1.500 - 3.000 USD">1,500 - 3,000 USD</option>
+            <option data-en="3,000 - 7,000 USD" data-tr="3.000 - 7.000 USD">3,000 - 7,000 USD</option>
+            <option data-en="7,000 USD+" data-tr="7.000 USD+">7,000 USD+</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message" data-en="Project Need" data-tr="Proje İhtiyacı">Project Need</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn-primary" type="submit" data-en="Send Brief →" data-tr="Brief Gönder →">Send Brief →</button>
+        </div>
+        <p id="status-note" class="status-note" data-en="Thanks, your message has been sent." data-tr="Teşekkürler, mesajınız gönderildi.">Thanks, your message has been sent.</p>
+      </form>
+      <div class="contact-links">
+        <a href="https://github.com/yakuphanycl" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <div class="contact-link-icon">⌨</div>
+          <div class="contact-link-text"><h4>GitHub</h4><p>github.com/yakuphanycl</p></div>
+        </a>
+        <a href="https://x.com/rg_winston3375" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <div class="contact-link-icon">𝕏</div>
+          <div class="contact-link-text"><h4>X / Twitter</h4><p>@rg_winston3375</p></div>
+        </a>
+        <a href="https://linkedin.com/in/yakuphanycl" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <div class="contact-link-icon">💼</div>
+          <div class="contact-link-text"><h4>LinkedIn</h4><p>linkedin.com/in/yakuphanycl</p></div>
+        </a>
+        <a href="mailto:winstonrgsocial@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          <div class="contact-link-text"><h4>Email</h4><p>winstonrgsocial@gmail.com</p></div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -418,6 +561,11 @@ window.addEventListener('scroll', () => {
   else nav.style.transform = 'translateY(0)';
   lastScroll = st;
 });
+const params = new URLSearchParams(window.location.search);
+if (params.get('success') === '1') {
+  const note = document.getElementById('status-note');
+  if (note) note.classList.add('visible');
+}
 </script>
 </body>
 </html>
