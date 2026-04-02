@@ -1,96 +1,895 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WinstonRedGuard Case Study — WinstonRed</title>
-<meta name="description" content="Case study: how WinstonRedGuard improved governance, quality gates, and delivery reliability across a multi-app monorepo.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://yakuphanycl.github.io/projects/winstonredguard.html">
-<meta property="og:type" content="article">
-<meta property="og:title" content="WinstonRedGuard Case Study — WinstonRed">
-<meta property="og:description" content="Governance and quality gate system for a growing multi-app monorepo.">
-<meta property="og:url" content="https://yakuphanycl.github.io/projects/winstonredguard.html">
-<meta property="og:image" content="https://yakuphanycl.github.io/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="WinstonRedGuard Case Study — WinstonRed">
-<meta name="twitter:description" content="Governance and quality gate system for a growing multi-app monorepo.">
-<meta name="twitter:image" content="https://yakuphanycl.github.io/og-image.png">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<style>
-:root {
-  --bg: #0a0a0b;
-  --bg-elevated: #111113;
-  --bg-card: #18181b;
-  --border: #2a2a2e;
-  --text: #e8e8ec;
-  --muted: #8b8b95;
-  --accent: #e74c3c;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: "Outfit", system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
-.wrap { max-width: 980px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
-.top { margin-bottom: 2rem; }
-.top a { color: var(--accent); text-decoration: none; }
-h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 0.75rem; }
-.subtitle { color: var(--muted); max-width: 760px; margin-bottom: 1.5rem; }
-.meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-.meta span { font-size: 0.78rem; border: 1px solid var(--border); background: var(--bg-card); padding: 0.25rem 0.55rem; border-radius: 5px; color: var(--muted); }
-.grid { display: grid; gap: 1rem; }
-.card { border: 1px solid var(--border); background: var(--bg-card); border-radius: 10px; padding: 1.15rem; }
-.card h2 { font-size: 1.15rem; margin-bottom: 0.55rem; }
-.card p { color: var(--muted); }
-.result-list { padding-left: 1.1rem; color: var(--muted); }
-.result-list li { margin-bottom: 0.4rem; }
-.cta { margin-top: 1.5rem; display: flex; gap: 0.7rem; flex-wrap: wrap; }
-.btn { display: inline-flex; align-items: center; text-decoration: none; padding: 0.75rem 1rem; border-radius: 7px; border: 1px solid var(--border); color: var(--text); background: transparent; }
-.btn.primary { background: var(--accent); border-color: var(--accent); color: white; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WinstonRedGuard — AI-Powered Python Monorepo | WinstonRed</title>
+  <meta name="description" content="WinstonRedGuard is a 46+ app Python monorepo with governance, CI/CD, and full test coverage. Built by Yakuphan at WinstonRed. Stdlib-first, zero dependencies, local-first.">
+  <meta name="keywords" content="WinstonRedGuard, WinstonRed, Python monorepo, AI automation, PulseBoard, governance, CI/CD, stdlib-first, local-first">
+  <meta name="author" content="Yakuphan">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="7-VBvAmBA1YVMBbNnlzJYzDm4XfXfxYZKKJxMFSfB2g" />
+  <link rel="canonical" href="https://yakuphanycl.github.io/projects/winstonredguard.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WinstonRedGuard — AI-Powered Python Monorepo">
+  <meta property="og:description" content="46+ Python apps, 61/61 governance checks, 17/18 CI green, full test coverage. Built with V0 discipline: stdlib-first, zero external dependencies, SQLite, local-first.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yakuphanycl.github.io/projects/winstonredguard.html">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WinstonRedGuard — AI-Powered Python Monorepo">
+  <meta name="twitter:description" content="46+ Python apps, governance, CI/CD, full test coverage. Stdlib-first, local-first.">
+  <meta name="twitter:creator" content="@rg_winston3375">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #111118;
+      --bg-card-hover: #16161f;
+      --border: #1e1e2a;
+      --border-accent: #2a2a3a;
+      --text: #e4e4ed;
+      --text-muted: #8888a0;
+      --text-dim: #55556a;
+      --accent: #c8ff00;
+      --accent-dim: rgba(200, 255, 0, 0.08);
+      --accent-mid: rgba(200, 255, 0, 0.15);
+      --red: #ff4060;
+      --green: #00e07b;
+      --blue: #4090ff;
+      --orange: #ff8830;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-display);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(200, 255, 0, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(200, 255, 0, 0.12);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .hero-tag .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+    h1 .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.7;
+      font-weight: 300;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a0f;
+    }
+    .btn-primary:hover { background: #d4ff33; opacity: 1; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-accent);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 60px 0;
+    }
+    .stat-item {
+      background: var(--bg-card);
+      padding: 28px 20px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .stat-item:hover { background: var(--bg-card-hover); }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 6px;
+    }
+
+    /* SECTIONS */
+    section { padding: 80px 0; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    /* PRINCIPLES */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .principle-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      transition: all 0.3s;
+    }
+    .principle-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .principle-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .principle-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .principle-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* APP CATEGORIES */
+    .app-categories { display: flex; flex-direction: column; gap: 32px; }
+    .app-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .category-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .category-header h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .category-header .count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      background: var(--accent-dim);
+      padding: 2px 10px;
+      border-radius: 100px;
+      margin-left: auto;
+    }
+    .app-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .app-chip {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .app-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .app-chip .tests {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-left: 4px;
+    }
+
+    /* HIGHLIGHT: PULSEBOARD */
+    .highlight-card {
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(200,255,0,0.03) 100%);
+      border: 1px solid rgba(200,255,0,0.12);
+      border-radius: 16px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin: 48px 0;
+    }
+    .highlight-card h3 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .highlight-card .sub {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .highlight-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .highlight-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .highlight-feature .check {
+      color: var(--green);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 14px;
+    }
+    .pricing-mini {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .tier {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tier.featured { border-color: var(--accent); }
+    .tier-name { font-weight: 600; font-size: 15px; }
+    .tier-price {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .tier-price small { font-size: 12px; color: var(--text-dim); font-weight: 400; }
+    .tier-detail { font-size: 12px; color: var(--text-dim); }
+
+    /* ARCHITECTURE */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 48px 0 0;
+    }
+    .arch-node {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 24px;
+      text-align: center;
+      min-width: 140px;
+      transition: all 0.25s;
+    }
+    .arch-node:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .arch-node .label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .arch-node .desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    .arch-arrow {
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      font-size: 18px;
+      padding: 0 8px;
+    }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 36px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 6px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+    .timeline-item.current::before {
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(200,255,0,0.3);
+    }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .timeline-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .timeline-item p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 100px 0;
+    }
+    .cta-section h2 { margin-bottom: 12px; }
+    .cta-section p {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+    .cta-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    footer a { color: var(--text-muted); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .highlight-card { grid-template-columns: 1fr; padding: 32px 24px; }
+      .arch-flow { flex-direction: column; }
+      .arch-arrow { transform: rotate(90deg); }
+      .nav-links { gap: 16px; }
+      section { padding: 60px 0; }
+    }
+  </style>
 </head>
 <body>
-<main class="wrap">
-  <div class="top">
-    <a href="/#projects">← Back to projects</a>
-  </div>
 
-  <h1>WinstonRedGuard Case Study</h1>
-  <p class="subtitle">A governance and quality-gate system designed to keep a growing multi-app monorepo reliable, test-driven, and operationally consistent.</p>
-  <div class="meta">
-    <span>Python</span>
-    <span>PowerShell</span>
-    <span>Policy Gate</span>
-    <span>Monorepo</span>
-  </div>
-
-  <section class="grid">
-    <article class="card">
-      <h2>Problem</h2>
-      <p>As app count grew, standards drift and manual checks slowed down delivery. It became harder to keep naming, metadata, testing, and governance policies aligned across the repo.</p>
-    </article>
-
-    <article class="card">
-      <h2>Approach</h2>
-      <p>Implemented automated governance checks, app registry alignment, and repeatable policy gates in the release flow. Added clear classification metadata and actionable feedback for each failed rule.</p>
-    </article>
-
-    <article class="card">
-      <h2>Outcome</h2>
-      <ul class="result-list">
-        <li>59+ apps managed in a single operational model</li>
-        <li>1200+ tests continuously enforced</li>
-        <li>CI/CD pipeline stayed consistently green with clearer release confidence</li>
-      </ul>
-    </article>
-
-    <article class="card">
-      <h2>What You Can Reuse</h2>
-      <p>If you run multiple internal tools or products, the same model can be adapted to enforce structure, reduce manual review load, and make releases predictable.</p>
-      <div class="cta">
-        <a class="btn primary" href="mailto:winstonrgsocial@gmail.com?subject=WinstonRedGuard%20case%20study%20discussion">Discuss Your Setup</a>
-        <a class="btn" href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" rel="noopener noreferrer">View Repository</a>
+  <nav>
+    <div class="container">
+      <a href="https://yakuphanycl.github.io" class="nav-brand"><span>~/</span>yakuphanycl</a>
+      <div class="nav-links">
+        <a href="https://yakuphanycl.github.io">Home</a>
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank">GitHub</a>
+        <a href="https://x.com/rg_winston3375" target="_blank">X</a>
       </div>
-    </article>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        CI Green &middot; 61/61 Governance
+      </div>
+      <h1>Winston<span class="accent">Red</span>Guard</h1>
+      <p class="hero-sub">
+        A 46+ app Python monorepo built with V0 discipline — stdlib-first, zero external dependencies, SQLite-backed, local-first. Every app ships with full test coverage and passes automated governance.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-primary">
+          &#9733; View on GitHub
+        </a>
+        <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-ghost">
+          PulseBoard Live &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num">46+</span>
+        <div class="stat-label">Apps</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">61/61</span>
+        <div class="stat-label">Governance</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">17/18</span>
+        <div class="stat-label">CI Jobs</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">134</span>
+        <div class="stat-label">PulseBoard Tests</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">112</span>
+        <div class="stat-label">Control Center Tests</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">0</span>
+        <div class="stat-label">Ext Dependencies</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- V0 DISCIPLINE -->
+  <section>
+    <div class="container">
+      <div class="section-label">// Philosophy</div>
+      <h2>V0 Discipline</h2>
+      <p class="section-desc">
+        Every app in the monorepo follows a strict engineering protocol. No shortcuts, no bloat, no exceptions.
+      </p>
+      <div class="principles-grid">
+        <div class="principle-card">
+          <span class="principle-icon">&#9881;</span>
+          <h3>Stdlib-First</h3>
+          <p>Zero external Python dependencies. If the standard library can do it, we use it. Period.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9636;</span>
+          <h3>SQLite Everywhere</h3>
+          <p>Every app uses SQLite for persistence. No Postgres, no Redis, no managed databases. Ship local.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#10003;</span>
+          <h3>Full Test Coverage</h3>
+          <p>Every app ships with comprehensive tests. No exceptions — governance blocks release without it.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9878;</span>
+          <h3>Automated Governance</h3>
+          <p>61 automated checks validate structure, tests, README, version, and registry before any release.</p>
+        </div>
+      </div>
+    </div>
   </section>
-</main>
+
+  <!-- APPS OVERVIEW -->
+  <section>
+    <div class="container">
+      <div class="section-label">// Ecosystem</div>
+      <h2>App Portfolio</h2>
+      <p class="section-desc">
+        46+ specialized apps organized by domain. Each app is self-contained with its own tests, CLI, and governance compliance.
+      </p>
+
+      <div class="app-categories">
+
+        <div class="app-category">
+          <div class="category-header">
+            <div class="category-icon" style="background:var(--accent-dim);">&#9889;</div>
+            <h3>SaaS & Products</h3>
+            <span class="count">3 apps</span>
+          </div>
+          <div class="app-chips">
+            <span class="app-chip">pulseboard <span class="tests">134 tests</span></span>
+            <span class="app-chip">wrg_control_center <span class="tests">112 tests</span></span>
+            <span class="app-chip">ai_hub_dashboard</span>
+          </div>
+        </div>
+
+        <div class="app-category">
+          <div class="category-header">
+            <div class="category-icon" style="background:rgba(64,144,255,0.1);">&#128270;</div>
+            <h3>Research & Intelligence</h3>
+            <span class="count">6 apps</span>
+          </div>
+          <div class="app-chips">
+            <span class="app-chip">research_motor <span class="tests">88 tests</span></span>
+            <span class="app-chip">opportunity_radar <span class="tests">17 tests</span></span>
+            <span class="app-chip">paper_impact <span class="tests">156 tests</span></span>
+            <span class="app-chip">signal_merger</span>
+            <span class="app-chip">knowledge_base</span>
+            <span class="app-chip">rag_engine</span>
+          </div>
+        </div>
+
+        <div class="app-category">
+          <div class="category-header">
+            <div class="category-icon" style="background:rgba(255,128,48,0.1);">&#9881;</div>
+            <h3>Infrastructure & Tooling</h3>
+            <span class="count">12 apps</span>
+          </div>
+          <div class="app-chips">
+            <span class="app-chip">wrg_cli</span>
+            <span class="app-chip">wrg_pipeline</span>
+            <span class="app-chip">wrg_memory</span>
+            <span class="app-chip">wrg_reporter</span>
+            <span class="app-chip">wrg_scheduler</span>
+            <span class="app-chip">wrg_notifier3</span>
+            <span class="app-chip">wrg_deploy</span>
+            <span class="app-chip">wrg_bridge <span class="tests">31 tests</span></span>
+            <span class="app-chip">wrg_mcp_server</span>
+            <span class="app-chip">data_janitor</span>
+            <span class="app-chip">data_toolkit</span>
+            <span class="app-chip">gov_service</span>
+          </div>
+        </div>
+
+        <div class="app-category">
+          <div class="category-header">
+            <div class="category-icon" style="background:rgba(255,64,96,0.1);">&#128200;</div>
+            <h3>AI & Content</h3>
+            <span class="count">7 apps</span>
+          </div>
+          <div class="app-chips">
+            <span class="app-chip">local_ai_chat <span class="tests">20 tests</span></span>
+            <span class="app-chip">comment_copilot <span class="tests">89 tests</span></span>
+            <span class="app-chip">content_engine</span>
+            <span class="app-chip">prompt_lab</span>
+            <span class="app-chip">affiliate_engine <span class="tests">26 tests</span></span>
+            <span class="app-chip">experiment_engine <span class="tests">57 tests</span></span>
+            <span class="app-chip">model_sizer</span>
+          </div>
+        </div>
+
+        <div class="app-category">
+          <div class="category-header">
+            <div class="category-icon" style="background:rgba(0,224,123,0.1);">&#9917;</div>
+            <h3>Domain-Specific</h3>
+            <span class="count">6 apps</span>
+          </div>
+          <div class="app-chips">
+            <span class="app-chip">match_radar</span>
+            <span class="app-chip">odds_collector</span>
+            <span class="app-chip">sports_analytics_platform</span>
+            <span class="app-chip">mali_musavir</span>
+            <span class="app-chip">metric_tracker</span>
+            <span class="app-chip">kv_bench_lab</span>
+          </div>
+        </div>
+
+        <div class="app-category">
+          <div class="category-header">
+            <div class="category-icon" style="background:rgba(200,255,0,0.08);">&#128218;</div>
+            <h3>Libraries & SDKs</h3>
+            <span class="count">2 apps</span>
+          </div>
+          <div class="app-chips">
+            <span class="app-chip">rule_lab <span class="tests">PyPI: rule-lab</span></span>
+            <span class="app-chip">pulse_hook</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PULSEBOARD HIGHLIGHT -->
+  <section>
+    <div class="container">
+      <div class="section-label">// Flagship Product</div>
+      <div class="highlight-card">
+        <div>
+          <h3>PulseBoard <span style="color:var(--text-dim);font-weight:300;">by WinstonRed</span></h3>
+          <p class="sub">
+            GitHub repo health scoring as a service. Connect your repos, get a Pulse Score (0–100), 
+            track health trends over time. Built on FastAPI + aiosqlite, deployed on Railway.
+          </p>
+          <div class="highlight-features">
+            <div class="highlight-feature"><span class="check">&#10003;</span> GitHub OAuth integration</div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> Webhook auto-refresh (HMAC-SHA256)</div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> Pulse Score algorithm (0–100)</div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> SEO optimized with full meta tags</div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> 134 tests passing</div>
+          </div>
+        </div>
+        <div class="pricing-mini">
+          <div class="tier">
+            <div>
+              <div class="tier-name">Free</div>
+              <div class="tier-detail">3 repos</div>
+            </div>
+            <div class="tier-price">$0</div>
+          </div>
+          <div class="tier featured">
+            <div>
+              <div class="tier-name">Pro</div>
+              <div class="tier-detail">10 repos + webhook + private</div>
+            </div>
+            <div class="tier-price">$9<small>/mo</small></div>
+          </div>
+          <div class="tier">
+            <div>
+              <div class="tier-name">Agency</div>
+              <div class="tier-detail">Unlimited + team + multi-org</div>
+            </div>
+            <div class="tier-price">$29<small>/mo</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section>
+    <div class="container">
+      <div class="section-label">// Architecture</div>
+      <h2>Factory Pipeline</h2>
+      <p class="section-desc">
+        Every app flows through the WinstonRed factory — from idea to governed, tested, deployed product.
+      </p>
+      <div class="arch-flow">
+        <div class="arch-node">
+          <div class="label">idea</div>
+          <div class="desc">Concept &amp; scope</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">promote</div>
+          <div class="desc">Validate &amp; plan</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">pipeline_build</div>
+          <div class="desc">Scaffold &amp; code</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">factory_build</div>
+          <div class="desc">Test &amp; package</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">governor_check</div>
+          <div class="desc">61 automated gates</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">approve</div>
+          <div class="desc">Release &amp; deploy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section>
+    <div class="container">
+      <div class="section-label">// Roadmap</div>
+      <h2>What's Next</h2>
+      <p class="section-desc">
+        PulseBoard is live. The path from SaaS to product suite.
+      </p>
+      <div class="timeline">
+        <div class="timeline-item current">
+          <div class="timeline-date">Now</div>
+          <h4>PulseBoard SaaS</h4>
+          <p>Live on Railway. Free/Pro/Agency tiers. GitHub OAuth, webhook auto-refresh, Pulse Score.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">3–6 Months</div>
+          <h4>Agency Pulse</h4>
+          <p>Multi-client repo monitoring for dev agencies. Team dashboards, org-wide analytics.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">6–12 Months</div>
+          <h4>VC Portfolio Monitor</h4>
+          <p>Technical due diligence tool for VCs. Automated repo health scoring across portfolio companies.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Ongoing</div>
+          <h4>Monorepo Expansion</h4>
+          <p>New apps through the factory pipeline. Research automation, AI tooling, domain-specific products.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Built in Public</h2>
+      <p>Follow the journey. Check the code. Try the product.</p>
+      <div class="cta-links">
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-primary">GitHub Repo</a>
+        <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-ghost">Try PulseBoard</a>
+        <a href="https://x.com/rg_winston3375" target="_blank" class="btn btn-ghost">Follow on X</a>
+        <a href="https://pypi.org/project/rule-lab/" target="_blank" class="btn btn-ghost">rule-lab on PyPI</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 <a href="https://yakuphanycl.github.io">Yakuphan</a> &middot; WinstonRed &middot; &Ccedil;anakkale, Turkey</p>
+    </div>
+  </footer>
+
 </body>
 </html>
