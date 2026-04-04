@@ -98,7 +98,7 @@
       letter-spacing: 0.5px;
     }
     .nav-brand span { color: var(--accent); }
-    .nav-links { display: flex; gap: 24px; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
     .nav-links a {
       font-size: 13px;
       font-weight: 500;
@@ -107,6 +107,19 @@
       text-transform: uppercase;
     }
     .nav-links a:hover { color: var(--accent); }
+    .lang-toggle {
+      background: rgba(200,255,0,0.08);
+      border: 1px solid rgba(200,255,0,0.15);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    .lang-toggle:hover { background: rgba(200,255,0,0.15); border-color: var(--accent); }
 
     /* HERO */
     .hero {
@@ -547,9 +560,10 @@
     <div class="container">
       <a href="https://yakuphanycl.github.io" class="nav-brand"><span>~/</span>yakuphanycl</a>
       <div class="nav-links">
-        <a href="https://yakuphanycl.github.io">Home</a>
+        <a href="https://yakuphanycl.github.io" data-en="Home" data-tr="Ana Sayfa">Home</a>
         <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank">GitHub</a>
         <a href="https://x.com/rg_winston3375" target="_blank">X</a>
+        <button class="lang-toggle" onclick="toggleLang()">TR</button>
       </div>
     </div>
   </nav>
@@ -559,17 +573,17 @@
     <div class="container">
       <div class="hero-tag">
         <span class="dot"></span>
-        CI Green &middot; 61/61 Governance
+        <span data-en="CI Green &middot; 61/61 Governance" data-tr="CI Ye&#351;il &middot; 61/61 Y&ouml;neti&#351;im">CI Green &middot; 61/61 Governance</span>
       </div>
       <h1>Winston<span class="accent">Red</span>Guard</h1>
-      <p class="hero-sub">
-        A 61+ app Python monorepo built with V0 discipline — stdlib-first, zero external dependencies, SQLite-backed, local-first. Every app ships with full test coverage and passes automated governance.
+      <p class="hero-sub" data-en="A 61+ app Python monorepo built with V0 discipline &mdash; stdlib-first, zero external dependencies, SQLite-backed, local-first. Every app ships with full test coverage and passes automated governance." data-tr="V0 disipliniyle in&#351;a edilmi&#351; 61+ uygulamal&#305; Python monorepo &mdash; stdlib-&ouml;ncelikli, s&#305;f&#305;r d&#305;&#351; ba&#287;&#305;ml&#305;l&#305;k, SQLite tabanl&#305;, yerel-&ouml;ncelikli. Her uygulama tam test kapsam&#305;yla ve otomatik y&ouml;neti&#351;imden ge&ccedil;erek g&ouml;nderilir.">
+        A 61+ app Python monorepo built with V0 discipline &mdash; stdlib-first, zero external dependencies, SQLite-backed, local-first. Every app ships with full test coverage and passes automated governance.
       </p>
       <div class="hero-actions">
-        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-primary">
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-primary" data-en="&#9733; View on GitHub" data-tr="&#9733; GitHub'da G&ouml;r&uuml;nt&uuml;le">
           &#9733; View on GitHub
         </a>
-        <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-ghost">
+        <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-ghost" data-en="PulseBoard Live &rarr;" data-tr="PulseBoard Canl&#305; &rarr;">
           PulseBoard Live &rarr;
         </a>
       </div>
@@ -581,27 +595,27 @@
     <div class="stats-bar">
       <div class="stat-item">
         <span class="stat-num">61+</span>
-        <div class="stat-label">Apps</div>
+        <div class="stat-label" data-en="Apps" data-tr="Uygulama">Apps</div>
       </div>
       <div class="stat-item">
         <span class="stat-num">61/61</span>
-        <div class="stat-label">Governance</div>
+        <div class="stat-label" data-en="Governance" data-tr="Y&ouml;neti&#351;im">Governance</div>
       </div>
       <div class="stat-item">
         <span class="stat-num">17/18</span>
-        <div class="stat-label">CI Jobs</div>
+        <div class="stat-label" data-en="CI Jobs" data-tr="CI &#304;&#351;leri">CI Jobs</div>
       </div>
       <div class="stat-item">
         <span class="stat-num">134</span>
-        <div class="stat-label">PulseBoard Tests</div>
+        <div class="stat-label" data-en="PulseBoard Tests" data-tr="PulseBoard Testleri">PulseBoard Tests</div>
       </div>
       <div class="stat-item">
         <span class="stat-num">112</span>
-        <div class="stat-label">Control Center Tests</div>
+        <div class="stat-label" data-en="Control Center Tests" data-tr="Kontrol Merkezi Testleri">Control Center Tests</div>
       </div>
       <div class="stat-item">
         <span class="stat-num">0</span>
-        <div class="stat-label">Ext Dependencies</div>
+        <div class="stat-label" data-en="Ext Dependencies" data-tr="D&#305;&#351; Ba&#287;&#305;ml&#305;l&#305;k">Ext Dependencies</div>
       </div>
     </div>
   </div>
@@ -609,31 +623,31 @@
   <!-- V0 DISCIPLINE -->
   <section>
     <div class="container">
-      <div class="section-label">// Philosophy</div>
-      <h2>V0 Discipline</h2>
-      <p class="section-desc">
+      <div class="section-label" data-en="// Philosophy" data-tr="// Felsefe">// Philosophy</div>
+      <h2 data-en="V0 Discipline" data-tr="V0 Disiplini">V0 Discipline</h2>
+      <p class="section-desc" data-en="Every app in the monorepo follows a strict engineering protocol. No shortcuts, no bloat, no exceptions." data-tr="Monorepo'daki her uygulama kat&#305; bir m&uuml;hendislik protokol&uuml;n&uuml; takip eder. K&#305;sayol yok, &#351;i&#351;kinlik yok, istisna yok.">
         Every app in the monorepo follows a strict engineering protocol. No shortcuts, no bloat, no exceptions.
       </p>
       <div class="principles-grid">
         <div class="principle-card">
           <span class="principle-icon">&#9881;</span>
-          <h3>Stdlib-First</h3>
-          <p>Zero external Python dependencies. If the standard library can do it, we use it. Period.</p>
+          <h3 data-en="Stdlib-First" data-tr="Stdlib-&Ouml;ncelikli">Stdlib-First</h3>
+          <p data-en="Zero external Python dependencies. If the standard library can do it, we use it. Period." data-tr="S&#305;f&#305;r d&#305;&#351; Python ba&#287;&#305;ml&#305;l&#305;&#287;&#305;. Standart k&uuml;t&uuml;phane yapabiliyorsa, onu kullan&#305;r&#305;z. Nokta.">Zero external Python dependencies. If the standard library can do it, we use it. Period.</p>
         </div>
         <div class="principle-card">
           <span class="principle-icon">&#9636;</span>
-          <h3>SQLite Everywhere</h3>
-          <p>Every app uses SQLite for persistence. No Postgres, no Redis, no managed databases. Ship local.</p>
+          <h3 data-en="SQLite Everywhere" data-tr="Her Yerde SQLite">SQLite Everywhere</h3>
+          <p data-en="Every app uses SQLite for persistence. No Postgres, no Redis, no managed databases. Ship local." data-tr="Her uygulama kal&#305;c&#305;l&#305;k i&ccedil;in SQLite kullan&#305;r. Postgres yok, Redis yok, y&ouml;netilen veritaban&#305; yok. Yerel g&ouml;nder.">Every app uses SQLite for persistence. No Postgres, no Redis, no managed databases. Ship local.</p>
         </div>
         <div class="principle-card">
           <span class="principle-icon">&#10003;</span>
-          <h3>Full Test Coverage</h3>
-          <p>Every app ships with comprehensive tests. No exceptions — governance blocks release without it.</p>
+          <h3 data-en="Full Test Coverage" data-tr="Tam Test Kapsam&#305;">Full Test Coverage</h3>
+          <p data-en="Every app ships with comprehensive tests. No exceptions &mdash; governance blocks release without it." data-tr="Her uygulama kapsaml&#305; testlerle g&ouml;nderilir. &#304;stisna yok &mdash; y&ouml;neti&#351;im, test olmadan yay&#305;n&#305; engeller.">Every app ships with comprehensive tests. No exceptions &mdash; governance blocks release without it.</p>
         </div>
         <div class="principle-card">
           <span class="principle-icon">&#9878;</span>
-          <h3>Automated Governance</h3>
-          <p>61 automated checks validate structure, tests, README, version, and registry before any release.</p>
+          <h3 data-en="Automated Governance" data-tr="Otomatik Y&ouml;neti&#351;im">Automated Governance</h3>
+          <p data-en="61 automated checks validate structure, tests, README, version, and registry before any release." data-tr="61 otomatik kontrol; yap&#305;, testler, README, versiyon ve registry'yi her yay&#305;ndan &ouml;nce do&#287;rular.">61 automated checks validate structure, tests, README, version, and registry before any release.</p>
         </div>
       </div>
     </div>
@@ -642,9 +656,9 @@
   <!-- APPS OVERVIEW -->
   <section>
     <div class="container">
-      <div class="section-label">// Ecosystem</div>
-      <h2>App Portfolio</h2>
-      <p class="section-desc">
+      <div class="section-label" data-en="// Ecosystem" data-tr="// Ekosistem">// Ecosystem</div>
+      <h2 data-en="App Portfolio" data-tr="Uygulama Portf&ouml;y&uuml;">App Portfolio</h2>
+      <p class="section-desc" data-en="61+ specialized apps organized by domain. Each app is self-contained with its own tests, CLI, and governance compliance." data-tr="Alana g&ouml;re organize edilmi&#351; 61+ uzmanla&#351;m&#305;&#351; uygulama. Her uygulama kendi testleri, CLI'&#305; ve y&ouml;neti&#351;im uyumuyla ba&#287;&#305;ms&#305;zd&#305;r.">
         61+ specialized apps organized by domain. Each app is self-contained with its own tests, CLI, and governance compliance.
       </p>
 
@@ -653,8 +667,8 @@
         <div class="app-category">
           <div class="category-header">
             <div class="category-icon" style="background:var(--accent-dim);">&#9889;</div>
-            <h3>SaaS & Products</h3>
-            <span class="count">3 apps</span>
+            <h3 data-en="SaaS &amp; Products" data-tr="SaaS ve &Uuml;r&uuml;nler">SaaS &amp; Products</h3>
+            <span class="count" data-en="3 apps" data-tr="3 uygulama">3 apps</span>
           </div>
           <div class="app-chips">
             <span class="app-chip">pulseboard <span class="tests">134 tests</span></span>
@@ -666,8 +680,8 @@
         <div class="app-category">
           <div class="category-header">
             <div class="category-icon" style="background:rgba(64,144,255,0.1);">&#128270;</div>
-            <h3>Research & Intelligence</h3>
-            <span class="count">6 apps</span>
+            <h3 data-en="Research &amp; Intelligence" data-tr="Ara&#351;t&#305;rma ve &#304;stihbarat">Research &amp; Intelligence</h3>
+            <span class="count" data-en="6 apps" data-tr="6 uygulama">6 apps</span>
           </div>
           <div class="app-chips">
             <span class="app-chip">research_motor <span class="tests">88 tests</span></span>
@@ -682,8 +696,8 @@
         <div class="app-category">
           <div class="category-header">
             <div class="category-icon" style="background:rgba(255,128,48,0.1);">&#9881;</div>
-            <h3>Infrastructure & Tooling</h3>
-            <span class="count">12 apps</span>
+            <h3 data-en="Infrastructure &amp; Tooling" data-tr="Altyap&#305; ve Ara&ccedil;lar">Infrastructure &amp; Tooling</h3>
+            <span class="count" data-en="12 apps" data-tr="12 uygulama">12 apps</span>
           </div>
           <div class="app-chips">
             <span class="app-chip">wrg_cli</span>
@@ -704,8 +718,8 @@
         <div class="app-category">
           <div class="category-header">
             <div class="category-icon" style="background:rgba(255,64,96,0.1);">&#128200;</div>
-            <h3>AI & Content</h3>
-            <span class="count">7 apps</span>
+            <h3 data-en="AI &amp; Content" data-tr="Yapay Zeka ve &#304;&ccedil;erik">AI &amp; Content</h3>
+            <span class="count" data-en="7 apps" data-tr="7 uygulama">7 apps</span>
           </div>
           <div class="app-chips">
             <span class="app-chip">local_ai_chat <span class="tests">20 tests</span></span>
@@ -721,8 +735,8 @@
         <div class="app-category">
           <div class="category-header">
             <div class="category-icon" style="background:rgba(0,224,123,0.1);">&#9917;</div>
-            <h3>Domain-Specific</h3>
-            <span class="count">6 apps</span>
+            <h3 data-en="Domain-Specific" data-tr="Alana &Ouml;zel">Domain-Specific</h3>
+            <span class="count" data-en="6 apps" data-tr="6 uygulama">6 apps</span>
           </div>
           <div class="app-chips">
             <span class="app-chip">match_radar</span>
@@ -737,8 +751,8 @@
         <div class="app-category">
           <div class="category-header">
             <div class="category-icon" style="background:rgba(200,255,0,0.08);">&#128218;</div>
-            <h3>Libraries & SDKs</h3>
-            <span class="count">2 apps</span>
+            <h3 data-en="Libraries &amp; SDKs" data-tr="K&uuml;t&uuml;phaneler ve SDK'lar">Libraries &amp; SDKs</h3>
+            <span class="count" data-en="2 apps" data-tr="2 uygulama">2 apps</span>
           </div>
           <div class="app-chips">
             <span class="app-chip">rule_lab <span class="tests">PyPI: rule-lab</span></span>
@@ -753,41 +767,41 @@
   <!-- PULSEBOARD HIGHLIGHT -->
   <section>
     <div class="container">
-      <div class="section-label">// Flagship Product</div>
+      <div class="section-label" data-en="// Flagship Product" data-tr="// Amiral Gemisi &Uuml;r&uuml;n&uuml;">// Flagship Product</div>
       <div class="highlight-card">
         <div>
           <h3>PulseBoard <span style="color:var(--text-dim);font-weight:300;">by WinstonRed</span></h3>
-          <p class="sub">
-            GitHub repo health scoring as a service. Connect your repos, get a Pulse Score (0–100), 
+          <p class="sub" data-en="GitHub repo health scoring as a service. Connect your repos, get a Pulse Score (0&ndash;100), track health trends over time. Built on FastAPI + aiosqlite, deployed on Railway." data-tr="Hizmet olarak GitHub repo sa&#287;l&#305;k skorlamas&#305;. Repolar&#305;n&#305;z&#305; ba&#287;lay&#305;n, Pulse Skoru (0&ndash;100) al&#305;n, sa&#287;l&#305;k trendlerini takip edin. FastAPI + aiosqlite &uuml;zerine in&#351;a edildi, Railway'de yay&#305;nda.">
+            GitHub repo health scoring as a service. Connect your repos, get a Pulse Score (0&ndash;100),
             track health trends over time. Built on FastAPI + aiosqlite, deployed on Railway.
           </p>
           <div class="highlight-features">
-            <div class="highlight-feature"><span class="check">&#10003;</span> GitHub OAuth integration</div>
-            <div class="highlight-feature"><span class="check">&#10003;</span> Webhook auto-refresh (HMAC-SHA256)</div>
-            <div class="highlight-feature"><span class="check">&#10003;</span> Pulse Score algorithm (0–100)</div>
-            <div class="highlight-feature"><span class="check">&#10003;</span> SEO optimized with full meta tags</div>
-            <div class="highlight-feature"><span class="check">&#10003;</span> 134 tests passing</div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="GitHub OAuth integration" data-tr="GitHub OAuth entegrasyonu">GitHub OAuth integration</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Webhook auto-refresh (HMAC-SHA256)" data-tr="Webhook otomatik yenileme (HMAC-SHA256)">Webhook auto-refresh (HMAC-SHA256)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Pulse Score algorithm (0&ndash;100)" data-tr="Pulse Skor algoritmas&#305; (0&ndash;100)">Pulse Score algorithm (0&ndash;100)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="SEO optimized with full meta tags" data-tr="Tam meta etiketleriyle SEO optimize">SEO optimized with full meta tags</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="134 tests passing" data-tr="134 test ge&ccedil;iyor">134 tests passing</span></div>
           </div>
         </div>
         <div class="pricing-mini">
           <div class="tier">
             <div>
               <div class="tier-name">Free</div>
-              <div class="tier-detail">3 repos</div>
+              <div class="tier-detail" data-en="3 repos" data-tr="3 repo">3 repos</div>
             </div>
             <div class="tier-price">$0</div>
           </div>
           <div class="tier featured">
             <div>
               <div class="tier-name">Pro</div>
-              <div class="tier-detail">10 repos + webhook + private</div>
+              <div class="tier-detail" data-en="10 repos + webhook + private" data-tr="10 repo + webhook + &ouml;zel">10 repos + webhook + private</div>
             </div>
             <div class="tier-price">$9<small>/mo</small></div>
           </div>
           <div class="tier">
             <div>
               <div class="tier-name">Agency</div>
-              <div class="tier-detail">Unlimited + team + multi-org</div>
+              <div class="tier-detail" data-en="Unlimited + team + multi-org" data-tr="S&#305;n&#305;rs&#305;z + tak&#305;m + &ccedil;oklu-org">Unlimited + team + multi-org</div>
             </div>
             <div class="tier-price">$29<small>/mo</small></div>
           </div>
@@ -799,40 +813,40 @@
   <!-- ARCHITECTURE -->
   <section>
     <div class="container">
-      <div class="section-label">// Architecture</div>
-      <h2>Factory Pipeline</h2>
-      <p class="section-desc">
-        Every app flows through the WinstonRed factory — from idea to governed, tested, deployed product.
+      <div class="section-label" data-en="// Architecture" data-tr="// Mimari">// Architecture</div>
+      <h2 data-en="Factory Pipeline" data-tr="Fabrika Hatt&#305;">Factory Pipeline</h2>
+      <p class="section-desc" data-en="Every app flows through the WinstonRed factory &mdash; from idea to governed, tested, deployed product." data-tr="Her uygulama WinstonRed fabrikas&#305;ndan ge&ccedil;er &mdash; fikirden y&ouml;netilen, test edilen, da&#287;&#305;t&#305;lan &uuml;r&uuml;ne.">
+        Every app flows through the WinstonRed factory &mdash; from idea to governed, tested, deployed product.
       </p>
       <div class="arch-flow">
         <div class="arch-node">
           <div class="label">idea</div>
-          <div class="desc">Concept &amp; scope</div>
+          <div class="desc" data-en="Concept &amp; scope" data-tr="Konsept ve kapsam">Concept &amp; scope</div>
         </div>
         <span class="arch-arrow">&rarr;</span>
         <div class="arch-node">
           <div class="label">promote</div>
-          <div class="desc">Validate &amp; plan</div>
+          <div class="desc" data-en="Validate &amp; plan" data-tr="Do&#287;rula ve planla">Validate &amp; plan</div>
         </div>
         <span class="arch-arrow">&rarr;</span>
         <div class="arch-node">
           <div class="label">pipeline_build</div>
-          <div class="desc">Scaffold &amp; code</div>
+          <div class="desc" data-en="Scaffold &amp; code" data-tr="&#304;skele ve kod">Scaffold &amp; code</div>
         </div>
         <span class="arch-arrow">&rarr;</span>
         <div class="arch-node">
           <div class="label">factory_build</div>
-          <div class="desc">Test &amp; package</div>
+          <div class="desc" data-en="Test &amp; package" data-tr="Test ve paketleme">Test &amp; package</div>
         </div>
         <span class="arch-arrow">&rarr;</span>
         <div class="arch-node">
           <div class="label">governor_check</div>
-          <div class="desc">61 automated gates</div>
+          <div class="desc" data-en="61 automated gates" data-tr="61 otomatik kap&#305;">61 automated gates</div>
         </div>
         <span class="arch-arrow">&rarr;</span>
         <div class="arch-node">
           <div class="label">approve</div>
-          <div class="desc">Release &amp; deploy</div>
+          <div class="desc" data-en="Release &amp; deploy" data-tr="Yay&#305;n ve da&#287;&#305;t&#305;m">Release &amp; deploy</div>
         </div>
       </div>
     </div>
@@ -841,31 +855,31 @@
   <!-- ROADMAP -->
   <section>
     <div class="container">
-      <div class="section-label">// Roadmap</div>
-      <h2>What's Next</h2>
-      <p class="section-desc">
+      <div class="section-label" data-en="// Roadmap" data-tr="// Yol Haritas&#305;">// Roadmap</div>
+      <h2 data-en="What's Next" data-tr="S&#305;rada Ne Var">What's Next</h2>
+      <p class="section-desc" data-en="PulseBoard is live. The path from SaaS to product suite." data-tr="PulseBoard yay&#305;nda. SaaS'tan &uuml;r&uuml;n paketine giden yol.">
         PulseBoard is live. The path from SaaS to product suite.
       </p>
       <div class="timeline">
         <div class="timeline-item current">
-          <div class="timeline-date">Now</div>
+          <div class="timeline-date" data-en="Now" data-tr="&#350;imdi">Now</div>
           <h4>PulseBoard SaaS</h4>
-          <p>Live on Railway. Free/Pro/Agency tiers. GitHub OAuth, webhook auto-refresh, Pulse Score.</p>
+          <p data-en="Live on Railway. Free/Pro/Agency tiers. GitHub OAuth, webhook auto-refresh, Pulse Score." data-tr="Railway'de yay&#305;nda. Free/Pro/Agency kademeleri. GitHub OAuth, webhook otomatik yenileme, Pulse Skoru.">Live on Railway. Free/Pro/Agency tiers. GitHub OAuth, webhook auto-refresh, Pulse Score.</p>
         </div>
         <div class="timeline-item">
-          <div class="timeline-date">3–6 Months</div>
+          <div class="timeline-date" data-en="3&ndash;6 Months" data-tr="3&ndash;6 Ay">3&ndash;6 Months</div>
           <h4>Agency Pulse</h4>
-          <p>Multi-client repo monitoring for dev agencies. Team dashboards, org-wide analytics.</p>
+          <p data-en="Multi-client repo monitoring for dev agencies. Team dashboards, org-wide analytics." data-tr="Yaz&#305;l&#305;m ajanslar&#305; i&ccedil;in &ccedil;ok-m&uuml;&#351;terili repo izleme. Tak&#305;m panelleri, organizasyon geneli analitik.">Multi-client repo monitoring for dev agencies. Team dashboards, org-wide analytics.</p>
         </div>
         <div class="timeline-item">
-          <div class="timeline-date">6–12 Months</div>
-          <h4>VC Portfolio Monitor</h4>
-          <p>Technical due diligence tool for VCs. Automated repo health scoring across portfolio companies.</p>
+          <div class="timeline-date" data-en="6&ndash;12 Months" data-tr="6&ndash;12 Ay">6&ndash;12 Months</div>
+          <h4 data-en="VC Portfolio Monitor" data-tr="VC Portf&ouml;y &#304;zleme">VC Portfolio Monitor</h4>
+          <p data-en="Technical due diligence tool for VCs. Automated repo health scoring across portfolio companies." data-tr="VC'ler i&ccedil;in teknik durum tespiti arac&#305;. Portf&ouml;y &#351;irketleri genelinde otomatik repo sa&#287;l&#305;k skorlamas&#305;.">Technical due diligence tool for VCs. Automated repo health scoring across portfolio companies.</p>
         </div>
         <div class="timeline-item">
-          <div class="timeline-date">Ongoing</div>
-          <h4>Monorepo Expansion</h4>
-          <p>New apps through the factory pipeline. Research automation, AI tooling, domain-specific products.</p>
+          <div class="timeline-date" data-en="Ongoing" data-tr="Devam Eden">Ongoing</div>
+          <h4 data-en="Monorepo Expansion" data-tr="Monorepo Geni&#351;lemesi">Monorepo Expansion</h4>
+          <p data-en="New apps through the factory pipeline. Research automation, AI tooling, domain-specific products." data-tr="Fabrika hatt&#305; &uuml;zerinden yeni uygulamalar. Ara&#351;t&#305;rma otomasyonu, AI ara&ccedil;lar&#305;, alana &ouml;zel &uuml;r&uuml;nler.">New apps through the factory pipeline. Research automation, AI tooling, domain-specific products.</p>
         </div>
       </div>
     </div>
@@ -874,12 +888,12 @@
   <!-- CTA -->
   <section class="cta-section">
     <div class="container">
-      <h2>Built in Public</h2>
-      <p>Follow the journey. Check the code. Try the product.</p>
+      <h2 data-en="Built in Public" data-tr="A&ccedil;&#305;k Geli&#351;tirme">Built in Public</h2>
+      <p data-en="Follow the journey. Check the code. Try the product." data-tr="Yolculu&#287;u takip edin. Kodu inceleyin. &Uuml;r&uuml;n&uuml; deneyin.">Follow the journey. Check the code. Try the product.</p>
       <div class="cta-links">
         <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-primary">GitHub Repo</a>
-        <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-ghost">Try PulseBoard</a>
-        <a href="https://x.com/rg_winston3375" target="_blank" class="btn btn-ghost">Follow on X</a>
+        <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-ghost" data-en="Try PulseBoard" data-tr="PulseBoard'u Dene">Try PulseBoard</a>
+        <a href="https://x.com/rg_winston3375" target="_blank" class="btn btn-ghost" data-en="Follow on X" data-tr="X'te Takip Et">Follow on X</a>
         <a href="https://pypi.org/project/rule-lab/" target="_blank" class="btn btn-ghost">rule-lab on PyPI</a>
       </div>
     </div>
@@ -891,5 +905,16 @@
     </div>
   </footer>
 
+<script>
+let lang = 'en';
+function toggleLang() {
+  lang = lang === 'en' ? 'tr' : 'en';
+  document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'TR' : 'EN';
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const text = el.getAttribute('data-' + lang);
+    if (text) el.innerHTML = text;
+  });
+}
+</script>
 </body>
 </html>
