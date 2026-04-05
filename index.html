@@ -311,12 +311,12 @@ footer a:hover { color: var(--text); }
   <div class="proof-strip">
     <div class="proof-chip">
       <span class="proof-k" data-en="Tests" data-tr="Test">Tests</span>
-      <strong data-count="1400" data-suffix="+">0</strong>
+      <strong data-count="1400" data-suffix="+">1400+</strong>
       <small data-en="Passing in CI" data-tr="CI üzerinde geçen">Passing in CI</small>
     </div>
     <div class="proof-chip">
       <span class="proof-k" data-en="Apps" data-tr="Uygulama">Apps</span>
-      <strong data-count="61" data-suffix="+">0</strong>
+      <strong data-count="61" data-suffix="+">61+</strong>
       <small data-en="Built in WinstonRedGuard" data-tr="WinstonRedGuard içinde">Built in WinstonRedGuard</small>
     </div>
     <div class="proof-chip">
@@ -460,6 +460,18 @@ footer a:hover { color: var(--text); }
       <h3>Local AI Chat</h3>
       <p data-en="Fully local AI chat powered by Ollama with RAG and ModelOps. SQLite vector store, FTS5 keyword search, model lifecycle management, and support for multiple models including Gemma and Qwen." data-tr="Ollama, RAG ve ModelOps destekli tamamen yerel yapay zeka sohbeti. SQLite vektör deposu, FTS5 anahtar kelime araması, model yaşam döngüsü yönetimi, Gemma ve Qwen dahil çoklu model desteği.">Fully local AI chat powered by Ollama with RAG and ModelOps. SQLite vector store, FTS5 keyword search, model lifecycle management, and support for multiple models including Gemma and Qwen.</p>
       <div class="project-meta"><span>Python</span><span>53 tests</span><span>Ollama</span><span>RAG</span><span>ModelOps</span></div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-icon">⚡</div>
+      <h3><a href="https://github.com/yakuphanycl/instinct" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">instinct-mcp</a></h3>
+      <p data-en="Self-learning pattern memory for AI coding agents. Observe repeated tool sequences, user preferences, and fix patterns — auto-promote to suggestions when confidence is high. Works with Claude Code, Cursor, Windsurf." data-tr="AI kodlama ajanları için kendi kendine öğrenen kalıp hafızası. Tekrarlayan araç dizilerini, kullanıcı tercihlerini ve düzeltme kalıplarını gözlemle — güven yükseldikçe otomatik öneri yap. Claude Code, Cursor, Windsurf ile çalışır.">Self-learning pattern memory for AI coding agents. Observe repeated tool sequences, user preferences, and fix patterns — auto-promote to suggestions when confidence is high. Works with Claude Code, Cursor, Windsurf.</p>
+      <div class="project-proof">
+        <div data-en="<strong>Problem:</strong> AI agents forget learned patterns between sessions." data-tr="<strong>Problem:</strong> AI ajanları oturumlar arasında öğrenilmiş kalıpları unutuyor."><strong>Problem:</strong> AI agents forget learned patterns between sessions.</div>
+        <div data-en="<strong>Solution:</strong> Observe → track → promote pipeline with SQLite persistence and MCP integration." data-tr="<strong>Çözüm:</strong> SQLite kalıcılığı ve MCP entegrasyonu ile gözlemle → takip et → terfi et hattı."><strong>Solution:</strong> Observe → track → promote pipeline with SQLite persistence and MCP integration.</div>
+        <div data-en="<strong>Outcome:</strong> Agents build reusable instincts that improve over time." data-tr="<strong>Sonuç:</strong> Ajanlar zamanla gelişen yeniden kullanılabilir içgüdüler oluşturur."><strong>Outcome:</strong> Agents build reusable instincts that improve over time.</div>
+      </div>
+      <p class="project-link"><a href="https://pypi.org/project/instinct-mcp/" target="_blank" data-en="View on PyPI →" data-tr="PyPI'de Gör →">View on PyPI →</a></p>
+      <div class="project-meta"><span>Python</span><span>MCP</span><span>PyPI</span><span>SQLite</span></div>
     </div>
     <div class="project-card reveal">
       <div class="project-icon">📦</div>
@@ -691,6 +703,7 @@ function animateCounters() {
     const duration = 1500;
     const start = performance.now();
     el.dataset.counted = '1';
+    el.textContent = '0' + suffix;
     function step(now) {
       const progress = Math.min((now - start) / duration, 1);
       const ease = 1 - Math.pow(1 - progress, 3);
