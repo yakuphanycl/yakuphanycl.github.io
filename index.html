@@ -99,7 +99,26 @@ nav {
 .nav-links a:hover { color: var(--text); }
 .lang-toggle { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem; padding: 0.35rem 0.75rem; border-radius: 4px; cursor: pointer; transition: all 0.3s; }
 .lang-toggle:hover { border-color: var(--accent); color: var(--text); }
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 4rem 4rem; position: relative; overflow: hidden; }
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 8rem 4rem 4rem; position: relative; overflow: hidden; gap: 2rem; }
+.hero-content { display: flex; flex-direction: column; justify-content: center; }
+.hero-terminal { animation: fadeUp 0.8s ease-out 0.5s both; }
+.term-window { background: #0d0d12; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 12px 48px rgba(0,0,0,0.5); }
+.term-header { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); }
+.term-dot { width: 10px; height: 10px; border-radius: 50%; }
+.term-dot.r { background: #ff5f57; }
+.term-dot.y { background: #febc2e; }
+.term-dot.g { background: #28c840; }
+.term-title { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); margin-left: 8px; }
+.term-body { padding: 16px 18px; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.7; min-height: 280px; }
+.term-line { opacity: 0; animation: termFade 0.3s ease-out forwards; }
+.term-prompt { color: var(--accent-light); }
+.term-cmd { color: #e4e4ed; }
+.term-ok { color: #28c840; }
+.term-val { color: #d4a853; }
+.term-dim { color: #555; }
+.term-bar { color: var(--accent-light); }
+.term-cursor { display: inline-block; width: 7px; height: 14px; background: var(--accent-light); animation: cursorBlink 0.8s ease-in-out infinite; vertical-align: text-bottom; }
+@keyframes termFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 .hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); pointer-events: none; animation: pulse 6s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.1); } }
 .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-light); background: rgba(192,57,43,0.08); border: 1px solid rgba(192,57,43,0.2); padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 2rem; width: fit-content; animation: fadeUp 0.8s ease-out both; }
@@ -122,7 +141,7 @@ nav {
 .proof-chip small { display: block; margin-top: 0.2rem; color: var(--text-muted); font-size: 0.72rem; line-height: 1.35; }
 .proof-k { display: block; font-size: 0.68rem; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.2rem; font-family: var(--font-mono); }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; animation: fadeUp 0.8s ease-out 0.5s both; }
+.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; animation: fadeUp 0.8s ease-out 0.5s both; }
 .scroll-hint span { width: 1px; height: 30px; background: linear-gradient(to bottom, var(--text-muted), transparent); animation: scrollPulse 2s ease-in-out infinite; }
 @keyframes scrollPulse { 0%, 100% { opacity: 1; height: 30px; } 50% { opacity: 0.3; height: 20px; } }
 section { padding: 6rem 4rem; }
@@ -223,8 +242,9 @@ footer a:hover { color: var(--text); }
   .lang-toggle { width: 100%; text-align: center; padding: 0.6rem; }
   .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; opacity: 0; visibility: hidden; transition: all 0.3s; }
   .menu-overlay.visible { opacity: 1; visibility: visible; }
-  .hero { padding: 6rem 1.5rem 3rem; min-height: auto; min-height: 100svh; }
+  .hero { padding: 6rem 1.5rem 3rem; min-height: auto; min-height: 100svh; grid-template-columns: 1fr; }
   .hero::before { width: 300px; height: 300px; top: -100px; right: -100px; }
+  .hero-terminal { display: none; }
   .hero h1 { font-size: 2.2rem; }
   .hero-sub { font-size: 1rem; }
   .proof-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 100%; }
@@ -303,41 +323,54 @@ footer a:hover { color: var(--text); }
 <div class="menu-overlay" onclick="closeMenu()"></div>
 
 <section class="hero" id="hero">
-  <div class="hero-badge">
-    <span data-en="2026 Q2 — Available for projects" data-tr="2026 Q2 — Projelere açık">2026 Q2 — Available for projects</span>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span data-en="2026 Q2 — Available for projects" data-tr="2026 Q2 — Projelere açık">2026 Q2 — Available for projects</span>
+    </div>
+    <h1 data-en="Production-grade <em>AI &amp; OSINT systems</em> with measurable outcomes." data-tr="Ölçülebilir sonuç üreten <em>AI &amp; OSINT</em> sistemleri geliştiriyorum.">Production-grade <em>AI &amp; OSINT systems</em> with measurable outcomes.</h1>
+    <p class="hero-sub" data-en="Founder at WinstonRed. I ship automation, OSINT platforms, and research engines with governance gates, test-first delivery, and clear operational handover." data-tr="WinstonRed kurucusu. Yönetişim kapıları, test-öncelikli teslim ve net operasyonel devir ile otomasyon, OSINT platformları ve araştırma motorları geliştiriyorum.">Founder at WinstonRed. I ship automation, OSINT platforms, and research engines with governance gates, test-first delivery, and clear operational handover.</p>
+    <div class="proof-strip">
+      <div class="proof-chip">
+        <span class="proof-k" data-en="Tests" data-tr="Test">Tests</span>
+        <strong data-count="1400" data-suffix="+">1400+</strong>
+        <small data-en="Passing in CI" data-tr="CI üzerinde geçen">Passing in CI</small>
+      </div>
+      <div class="proof-chip">
+        <span class="proof-k" data-en="Apps" data-tr="Uygulama">Apps</span>
+        <strong data-count="61" data-suffix="+">61+</strong>
+        <small data-en="Built in WinstonRedGuard" data-tr="WinstonRedGuard içinde">Built in WinstonRedGuard</small>
+      </div>
+      <div class="proof-chip">
+        <span class="proof-k" data-en="Governance" data-tr="Yönetişim">Governance</span>
+        <strong data-en="Policy Gates ON" data-tr="Policy Gate AKTİF">Policy Gates ON</strong>
+        <small data-en="Registry + quality checks" data-tr="Registry + kalite kontrolleri">Registry + quality checks</small>
+      </div>
+      <div class="proof-chip">
+        <span class="proof-k" data-en="Snapshot" data-tr="Anlık Durum">Snapshot</span>
+        <strong id="proof-updated">--:--</strong>
+        <small data-en="Updated from current profile data" data-tr="Güncel profil verisinden güncellendi">Updated from current profile data</small>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary" data-en="Get in Touch →" data-tr="İletişime Geç →">Get in Touch →</a>
+      <a href="#projects" class="btn-secondary" data-en="View Projects" data-tr="Projeleri Gör">View Projects</a>
+    </div>
+    <p class="hero-mini-cta">
+      <span data-en="Need fast scope clarity? " data-tr="Kapsamı hızlı netleştirelim: ">Need fast scope clarity? </span>
+      <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20discovery%20call" data-en="Book a 15-minute discovery call" data-tr="15 dakikalık keşif görüşmesi planlayın">Book a 15-minute discovery call</a>.
+    </p>
   </div>
-  <h1 data-en="Production-grade <em>AI &amp; OSINT systems</em> with measurable outcomes." data-tr="Ölçülebilir sonuç üreten <em>AI &amp; OSINT</em> sistemleri geliştiriyorum.">Production-grade <em>AI &amp; OSINT systems</em> with measurable outcomes.</h1>
-  <p class="hero-sub" data-en="Founder at WinstonRed. I ship automation, OSINT platforms, and research engines with governance gates, test-first delivery, and clear operational handover." data-tr="WinstonRed kurucusu. Yönetişim kapıları, test-öncelikli teslim ve net operasyonel devir ile otomasyon, OSINT platformları ve araştırma motorları geliştiriyorum.">Founder at WinstonRed. I ship automation, OSINT platforms, and research engines with governance gates, test-first delivery, and clear operational handover.</p>
-  <div class="proof-strip">
-    <div class="proof-chip">
-      <span class="proof-k" data-en="Tests" data-tr="Test">Tests</span>
-      <strong data-count="1400" data-suffix="+">1400+</strong>
-      <small data-en="Passing in CI" data-tr="CI üzerinde geçen">Passing in CI</small>
-    </div>
-    <div class="proof-chip">
-      <span class="proof-k" data-en="Apps" data-tr="Uygulama">Apps</span>
-      <strong data-count="61" data-suffix="+">61+</strong>
-      <small data-en="Built in WinstonRedGuard" data-tr="WinstonRedGuard içinde">Built in WinstonRedGuard</small>
-    </div>
-    <div class="proof-chip">
-      <span class="proof-k" data-en="Governance" data-tr="Yönetişim">Governance</span>
-      <strong data-en="Policy Gates ON" data-tr="Policy Gate AKTİF">Policy Gates ON</strong>
-      <small data-en="Registry + quality checks" data-tr="Registry + kalite kontrolleri">Registry + quality checks</small>
-    </div>
-    <div class="proof-chip">
-      <span class="proof-k" data-en="Snapshot" data-tr="Anlık Durum">Snapshot</span>
-      <strong id="proof-updated">--:--</strong>
-      <small data-en="Updated from current profile data" data-tr="Güncel profil verisinden güncellendi">Updated from current profile data</small>
+  <div class="hero-terminal">
+    <div class="term-window">
+      <div class="term-header">
+        <span class="term-dot r"></span>
+        <span class="term-dot y"></span>
+        <span class="term-dot g"></span>
+        <span class="term-title">wrg — pulse &amp; instinct</span>
+      </div>
+      <div class="term-body" id="term-output"></div>
     </div>
   </div>
-  <div class="hero-cta">
-    <a href="#contact" class="btn-primary" data-en="Get in Touch →" data-tr="İletişime Geç →">Get in Touch →</a>
-    <a href="#projects" class="btn-secondary" data-en="View Projects" data-tr="Projeleri Gör">View Projects</a>
-  </div>
-  <p class="hero-mini-cta">
-    <span data-en="Need fast scope clarity? " data-tr="Kapsamı hızlı netleştirelim: ">Need fast scope clarity? </span>
-    <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20discovery%20call" data-en="Book a 15-minute discovery call" data-tr="15 dakikalık keşif görüşmesi planlayın">Book a 15-minute discovery call</a>.
-  </p>
   <div class="scroll-hint"><span></span></div>
 </section>
 <section class="about" id="about">
@@ -765,6 +798,50 @@ if (params.get('success') === '1') {
   if (note) note.classList.add('visible');
 }
 renderProofTimestamp();
+
+/* ── Terminal typing animation ── */
+(function initTerminal() {
+  const el = document.getElementById('term-output');
+  if (!el) return;
+  const lines = [
+    { type: 'cmd', text: 'wrg pulse --check' },
+    { type: 'ok',  text: '  \u2713 61 apps registered' },
+    { type: 'ok',  text: '  \u2713 61/61 governance passing' },
+    { type: 'ok',  text: '  \u2713 18/18 CI green' },
+    { type: 'val', text: '  Score: 97/100 \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588' },
+    { type: 'br' },
+    { type: 'cmd', text: 'instinct suggest' },
+    { type: 'val', text: '  seq:test\u2192fix\u2192test          conf=8  [mature]' },
+    { type: 'val', text: '  pref:stdlib-first           conf=12 [rule]' },
+    { type: 'dim', text: '  2 suggestions' },
+    { type: 'br' },
+    { type: 'cmd', text: 'wrg governance --status' },
+    { type: 'ok',  text: '  All 61 gates passing \u2713' },
+    { type: 'dim', text: '  Last run: 2m ago' },
+  ];
+  let i = 0;
+  function addLine() {
+    if (i >= lines.length) {
+      const cur = document.createElement('span');
+      cur.className = 'term-cursor';
+      el.appendChild(cur);
+      return;
+    }
+    const l = lines[i];
+    if (l.type === 'br') { el.appendChild(document.createElement('br')); i++; setTimeout(addLine, 200); return; }
+    const div = document.createElement('div');
+    div.className = 'term-line';
+    if (l.type === 'cmd') {
+      div.innerHTML = '<span class="term-prompt">$ </span><span class="term-cmd">' + l.text + '</span>';
+    } else {
+      div.innerHTML = '<span class="term-' + l.type + '">' + l.text + '</span>';
+    }
+    el.appendChild(div);
+    i++;
+    setTimeout(addLine, l.type === 'cmd' ? 600 : 150);
+  }
+  setTimeout(addLine, 1200);
+})();
 </script>
 </body>
 </html>
