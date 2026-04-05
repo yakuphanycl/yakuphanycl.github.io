@@ -98,6 +98,14 @@ body > nav {
 .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
 .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.3s; }
 .nav-links a:hover { color: var(--text); }
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { cursor: pointer; }
+.nav-dropdown > a::after { content: ' ▾'; font-size: 0.65rem; opacity: 0.6; }
+.dropdown-menu { position: absolute; top: calc(100% + 0.75rem); left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 0; min-width: 180px; opacity: 0; visibility: hidden; transition: all 0.25s; z-index: 120; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+.nav-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; }
+.dropdown-menu a { display: block; padding: 0.6rem 1.25rem; font-size: 0.8rem !important; letter-spacing: 0.03em; white-space: nowrap; border-bottom: 1px solid var(--border); }
+.dropdown-menu a:last-child { border-bottom: none; }
+.dropdown-menu a:hover { background: rgba(231,76,60,0.1); color: var(--accent-light) !important; }
 .lang-toggle { background: rgba(231,76,60,0.1); border: 1px solid var(--accent); color: var(--accent-light); font-family: var(--font-mono); font-size: 0.75rem; padding: 0.35rem 0.75rem; border-radius: 4px; cursor: pointer; transition: all 0.3s; font-weight: 600; }
 .lang-toggle:hover { background: rgba(231,76,60,0.2); color: #fff; }
 .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 8rem 4rem 4rem; position: relative; overflow: hidden; gap: 2rem; }
@@ -246,6 +254,10 @@ footer a:hover { color: var(--text); }
   .nav-links.open { right: 0; }
   .nav-links a { font-size: 1.05rem; letter-spacing: 0.02em; padding: 0.85rem 0; display: block; border-bottom: 1px solid var(--border); color: #fff; font-weight: 600; }
   .nav-links a:active { color: var(--accent-light); }
+  .nav-dropdown > a::after { display: none; }
+  .dropdown-menu { position: static; transform: none; opacity: 1; visibility: visible; background: transparent; border: none; box-shadow: none; padding: 0 0 0 1rem; min-width: 0; }
+  .dropdown-menu a { padding: 0.6rem 0; font-size: 0.95rem !important; color: var(--text-muted) !important; font-weight: 500 !important; }
+  .dropdown-menu a:hover { background: transparent; }
   .nav-links li:last-child { border-bottom: none; margin-top: 1rem; }
   .lang-toggle { width: 100%; text-align: center; padding: 0.6rem; }
   .menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; opacity: 0; visibility: hidden; transition: all 0.3s; }
@@ -323,11 +335,15 @@ footer a:hover { color: var(--text); }
   </button>
   <ul class="nav-links">
     <li><a href="#about" data-en="About" data-tr="Hakkında" onclick="closeMenu()">About</a></li>
-    <li><a href="#projects" data-en="Projects" data-tr="Projeler" onclick="closeMenu()">Projects</a></li>
-    <li><a href="/projects/winstonredguard.html" data-en="WRG" data-tr="WRG" onclick="closeMenu()">WRG</a></li>
-    <li><a href="/projects/pulseboard.html" data-en="PulseBoard" data-tr="PulseBoard" onclick="closeMenu()">PulseBoard</a></li>
-    <li><a href="/projects/instinct.html" data-en="Instinct" data-tr="Instinct" onclick="closeMenu()">Instinct</a></li>
-    <li><a href="#cases" data-en="Case Studies" data-tr="Vaka Çalışmaları" onclick="closeMenu()">Case Studies</a></li>
+    <li class="nav-dropdown">
+      <a href="#projects" data-en="Projects" data-tr="Projeler" onclick="closeMenu()">Projects</a>
+      <div class="dropdown-menu">
+        <a href="/projects/winstonredguard.html">WinstonRedGuard</a>
+        <a href="/projects/pulseboard.html">PulseBoard</a>
+        <a href="/projects/instinct.html">Instinct</a>
+        <a href="#cases" data-en="Case Studies" data-tr="Vaka Çalışmaları" onclick="closeMenu()">Case Studies</a>
+      </div>
+    </li>
     <li><a href="#services" data-en="Services" data-tr="Hizmetler" onclick="closeMenu()">Services</a></li>
     <li><a href="#contact" data-en="Contact" data-tr="İletişim" onclick="closeMenu()">Contact</a></li>
     <li><button class="lang-toggle" onclick="toggleLang()">TR</button></li>
