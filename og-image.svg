@@ -11,16 +11,47 @@
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
-  <text x="96" y="215" fill="#e8e8ec" font-family="Georgia, serif" font-size="84">WinstonRed</text>
-  <text x="100" y="285" fill="#e74c3c" font-family="Arial, sans-serif" font-size="34">Yakuphan Yucel</text>
-  <text x="100" y="360" fill="#c4c4cc" font-family="Arial, sans-serif" font-size="36">
+
+  <!-- Brand -->
+  <text x="96" y="180" fill="#e8e8ec" font-family="Georgia, serif" font-size="84">WinstonRed</text>
+  <text x="100" y="240" fill="#e74c3c" font-family="Arial, sans-serif" font-size="34">Yakuphan Yucel</text>
+
+  <!-- Headline -->
+  <text x="100" y="310" fill="#c4c4cc" font-family="Arial, sans-serif" font-size="36">
     Production-grade AI &amp; OSINT systems.
   </text>
-  <text x="100" y="418" fill="#8b8b95" font-family="Arial, sans-serif" font-size="28">
-    61+ apps · 1400+ tests · OSINT · Sports Analytics · Research Engines
+  <text x="100" y="370" fill="#8b8b95" font-family="Arial, sans-serif" font-size="26">
+    61+ apps · 1400+ tests · MCP · Governance · Research Engines
   </text>
-  <rect x="96" y="468" width="370" height="56" rx="10" fill="#c0392b"/>
-  <text x="122" y="505" fill="#ffffff" font-family="Arial, sans-serif" font-size="28">
+
+  <!-- Terminal mockup -->
+  <rect x="700" y="400" width="430" height="180" rx="10" fill="#0d0d12" stroke="#2a2a35" stroke-width="1"/>
+  <circle cx="720" cy="420" r="5" fill="#ff5f57"/>
+  <circle cx="738" cy="420" r="5" fill="#febc2e"/>
+  <circle cx="756" cy="420" r="5" fill="#28c840"/>
+  <text x="780" y="424" fill="#8b8b95" font-family="monospace" font-size="11">wrg terminal</text>
+  <text x="720" y="458" fill="#e74c3c" font-family="monospace" font-size="14">$</text>
+  <text x="735" y="458" fill="#e4e4ed" font-family="monospace" font-size="14">wrg pulse --check</text>
+  <text x="720" y="480" fill="#28c840" font-family="monospace" font-size="13">  &#x2713; 61/61 governance passing</text>
+  <text x="720" y="500" fill="#28c840" font-family="monospace" font-size="13">  &#x2713; 18/18 CI green</text>
+  <text x="720" y="524" fill="#e74c3c" font-family="monospace" font-size="14">$</text>
+  <text x="735" y="524" fill="#e4e4ed" font-family="monospace" font-size="14">instinct suggest</text>
+  <text x="720" y="546" fill="#d4a853" font-family="monospace" font-size="13">  seq:test&#x2192;fix&#x2192;test  conf=8 [mature]</text>
+  <text x="720" y="566" fill="#d4a853" font-family="monospace" font-size="13">  pref:stdlib-first   conf=12 [rule]</text>
+
+  <!-- CTA -->
+  <rect x="96" y="430" width="370" height="56" rx="10" fill="#c0392b"/>
+  <text x="122" y="467" fill="#ffffff" font-family="Arial, sans-serif" font-size="28">
     yakuphanycl.github.io
   </text>
+
+  <!-- Tags -->
+  <rect x="96" y="510" width="90" height="32" rx="6" fill="none" stroke="#2a2a35" stroke-width="1"/>
+  <text x="118" y="531" fill="#8b8b95" font-family="monospace" font-size="13">Python</text>
+  <rect x="196" y="510" width="70" height="32" rx="6" fill="none" stroke="#2a2a35" stroke-width="1"/>
+  <text x="213" y="531" fill="#8b8b95" font-family="monospace" font-size="13">MCP</text>
+  <rect x="276" y="510" width="80" height="32" rx="6" fill="none" stroke="#2a2a35" stroke-width="1"/>
+  <text x="293" y="531" fill="#8b8b95" font-family="monospace" font-size="13">SQLite</text>
+  <rect x="366" y="510" width="100" height="32" rx="6" fill="none" stroke="#2a2a35" stroke-width="1"/>
+  <text x="377" y="531" fill="#8b8b95" font-family="monospace" font-size="13">instinct</text>
 </svg>

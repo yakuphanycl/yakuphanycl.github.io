@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseBoard by WinstonRed — GitHub Repo Health Scoring as a Service</title>
+  <meta name="description" content="PulseBoard is a GitHub repo health dashboard SaaS. Connect repos via OAuth, get a Pulse Score 0-100, track health with 5 async collectors. Built on FastAPI + aiosqlite, deployed on Railway.">
+  <meta name="keywords" content="PulseBoard, WinstonRed, GitHub health, repo scoring, Pulse Score, FastAPI, SaaS, developer tools, code health dashboard">
+  <meta name="author" content="Yakuphan">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="7-VBvAmBA1YVMBbNnlzJYzDm4XfXfxYZKKJxMFSfB2g" />
+  <link rel="canonical" href="https://yakuphanycl.github.io/projects/pulseboard.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PulseBoard by WinstonRed — GitHub Repo Health Scoring">
+  <meta property="og:description" content="Connect your GitHub repos, get a Pulse Score 0-100, track health trends. 5 async collectors, webhook auto-refresh, SEO optimized. Free/Pro/Agency tiers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yakuphanycl.github.io/projects/pulseboard.html">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PulseBoard by WinstonRed — GitHub Repo Health Scoring">
+  <meta name="twitter:description" content="GitHub repo health scoring as a service. Pulse Score 0-100, 5 async collectors, webhook auto-refresh. Free/Pro/Agency.">
+  <meta name="twitter:creator" content="@rg_winston3375">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #111118;
+      --bg-card-hover: #16161f;
+      --border: #1e1e2a;
+      --border-accent: #2a2a3a;
+      --text: #e4e4ed;
+      --text-muted: #8888a0;
+      --text-dim: #55556a;
+      --accent: #c8ff00;
+      --accent-dim: rgba(200, 255, 0, 0.08);
+      --accent-mid: rgba(200, 255, 0, 0.15);
+      --red: #ff4060;
+      --green: #00e07b;
+      --blue: #4090ff;
+      --orange: #ff8830;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-display);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .lang-toggle {
+      background: rgba(200,255,0,0.08);
+      border: 1px solid rgba(200,255,0,0.15);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    .lang-toggle:hover { background: rgba(200,255,0,0.15); border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(200, 255, 0, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(200, 255, 0, 0.12);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .hero-tag .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+    h1 .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.7;
+      font-weight: 300;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a0f;
+    }
+    .btn-primary:hover { background: #d4ff33; opacity: 1; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-accent);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 60px 0;
+    }
+    .stat-item {
+      background: var(--bg-card);
+      padding: 28px 20px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .stat-item:hover { background: var(--bg-card-hover); }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 6px;
+    }
+
+    /* SECTIONS */
+    section { padding: 80px 0; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    /* FEATURES GRID (reuses principles-grid pattern) */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      transition: all 0.3s;
+    }
+    .feature-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* PROBLEM / SOLUTION / OUTCOME */
+    .pso-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .pso-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      transition: all 0.3s;
+    }
+    .pso-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .pso-card.solution { border-color: rgba(200,255,0,0.12); }
+    .pso-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .pso-tag.problem { color: var(--red); }
+    .pso-tag.solution { color: var(--accent); }
+    .pso-tag.outcome { color: var(--green); }
+    .pso-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .pso-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ARCHITECTURE */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 48px 0 0;
+    }
+    .arch-node {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 24px;
+      text-align: center;
+      min-width: 140px;
+      transition: all 0.25s;
+    }
+    .arch-node:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .arch-node .label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .arch-node .desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    .arch-arrow {
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      font-size: 18px;
+      padding: 0 8px;
+    }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 28px;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .pricing-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(200,255,0,0.03) 100%);
+    }
+    .pricing-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 4px 12px;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .pricing-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .pricing-price {
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .pricing-price .period {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-dim);
+    }
+    .pricing-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+    }
+    .pricing-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .pricing-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .pricing-feature .check {
+      color: var(--green);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 14px;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 100px 0;
+    }
+    .cta-section h2 { margin-bottom: 12px; }
+    .cta-section p {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+    .cta-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    footer a { color: var(--text-muted); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pso-grid { grid-template-columns: 1fr; }
+      .arch-flow { flex-direction: column; }
+      .arch-arrow { transform: rotate(90deg); }
+      .nav-links { gap: 16px; }
+      section { padding: 60px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="https://yakuphanycl.github.io" class="nav-brand"><span>~/</span>yakuphanycl</a>
+      <div class="nav-links">
+        <a href="https://yakuphanycl.github.io" data-en="Home" data-tr="Ana Sayfa">Home</a>
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank">GitHub</a>
+        <a href="https://x.com/rg_winston3375" target="_blank">X</a>
+        <button class="lang-toggle" onclick="toggleLang()">TR</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        <span data-en="Live on Railway &middot; 119 Tests Passing" data-tr="Railway'de Yay&#305;nda &middot; 119 Test Ge&#231;iyor">Live on Railway &middot; 119 Tests Passing</span>
+      </div>
+      <h1>Pulse<span class="accent">Board</span></h1>
+      <p class="hero-sub" data-en="GitHub repo health scoring as a service. Connect your repos via OAuth, get a Pulse Score (0&ndash;100), and track health trends with 5 async collectors and webhook auto-refresh. Built on FastAPI + aiosqlite, deployed on Railway." data-tr="Hizmet olarak GitHub repo sa&#287;l&#305;k skorlamas&#305;. Repolar&#305;n&#305;z&#305; OAuth ile ba&#287;lay&#305;n, Pulse Skoru (0&ndash;100) al&#305;n ve 5 asenkron toplay&#305;c&#305; ile webhook otomatik yenilemeyle sa&#287;l&#305;k trendlerini takip edin. FastAPI + aiosqlite &#252;zerine in&#351;a edildi, Railway'de yay&#305;nda.">
+        GitHub repo health scoring as a service. Connect your repos via OAuth, get a Pulse Score (0&ndash;100), and track health trends with 5 async collectors and webhook auto-refresh. Built on FastAPI + aiosqlite, deployed on Railway.
+      </p>
+      <div class="hero-actions">
+        <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-primary" data-en="Try PulseBoard Live &rarr;" data-tr="PulseBoard'u Dene &rarr;">
+          Try PulseBoard Live &rarr;
+        </a>
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-ghost" data-en="View Source on GitHub" data-tr="Kayna&#287;&#305; GitHub'da G&#246;r">
+          View Source on GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num">119</span>
+        <div class="stat-label" data-en="Tests" data-tr="Test">Tests</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">5</span>
+        <div class="stat-label" data-en="Collectors" data-tr="Toplay&#305;c&#305;">Collectors</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">0&ndash;100</span>
+        <div class="stat-label" data-en="Pulse Score" data-tr="Pulse Skoru">Pulse Score</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">Railway</span>
+        <div class="stat-label" data-en="Deployed" data-tr="Yay&#305;nda">Deployed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM / SOLUTION / OUTCOME -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Why PulseBoard" data-tr="// Neden PulseBoard">// Why PulseBoard</div>
+      <h2 data-en="The Problem We Solve" data-tr="&#199;&#246;zd&#252;&#287;&#252;m&#252;z Sorun">The Problem We Solve</h2>
+      <div class="pso-grid">
+        <div class="pso-card">
+          <span class="pso-tag problem" data-en="Problem" data-tr="Sorun">Problem</span>
+          <h3 data-en="Scattered Health Signals" data-tr="Da&#287;&#305;n&#305;k Sa&#287;l&#305;k Sinyalleri">Scattered Health Signals</h3>
+          <p data-en="Repo health signals were scattered across GitHub tabs, CI dashboards, and manual checks. Hard to prioritize what actually matters." data-tr="Repo sa&#287;l&#305;k sinyalleri GitHub sekmeleri, CI panelleri ve manuel kontroller aras&#305;nda da&#287;&#305;n&#305;kt&#305;. Ger&#231;ekten neyin &#246;nemli oldu&#287;unu &#246;nceliklendirmek zordu.">
+            Repo health signals were scattered across GitHub tabs, CI dashboards, and manual checks. Hard to prioritize what actually matters.
+          </p>
+        </div>
+        <div class="pso-card solution">
+          <span class="pso-tag solution" data-en="Solution" data-tr="&#199;&#246;z&#252;m">Solution</span>
+          <h3 data-en="5 Collectors + Unified Score" data-tr="5 Toplay&#305;c&#305; + Birle&#351;ik Skor">5 Collectors + Unified Score</h3>
+          <p data-en="5 async collectors gather signals in parallel. A unified 0&ndash;100 scoring engine distills them into one actionable number on a single dashboard." data-tr="5 asenkron toplay&#305;c&#305; sinyalleri paralel toplar. Birle&#351;ik 0&ndash;100 puanlama motoru, bunlar&#305; tek bir panelde eyleme d&#246;n&#252;&#351;t&#252;r&#252;lebilir bir say&#305;ya d&#246;n&#252;&#351;t&#252;r&#252;r.">
+            5 async collectors gather signals in parallel. A unified 0&ndash;100 scoring engine distills them into one actionable number on a single dashboard.
+          </p>
+        </div>
+        <div class="pso-card">
+          <span class="pso-tag outcome" data-en="Outcome" data-tr="Sonu&#231;">Outcome</span>
+          <h3 data-en="One Operational View" data-tr="Tek Operasyonel G&#246;r&#252;n&#252;m">One Operational View</h3>
+          <p data-en="A single operational view for health-based decisions. Know which repos need attention, track trends, and act on data instead of gut feeling." data-tr="Sa&#287;l&#305;k tabanl&#305; kararlar i&#231;in tek operasyonel g&#246;r&#252;n&#252;m. Hangi repolar&#305;n ilgiye ihtiyac&#305; oldu&#287;unu bilin, trendleri takip edin ve i&#231;g&#252;d&#252; yerine veriye g&#246;re hareket edin.">
+            A single operational view for health-based decisions. Know which repos need attention, track trends, and act on data instead of gut feeling.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS (ARCHITECTURE) -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// How It Works" data-tr="// Nas&#305;l &#199;al&#305;&#351;&#305;r">// How It Works</div>
+      <h2 data-en="Architecture Flow" data-tr="Mimari Ak&#305;&#351;">Architecture Flow</h2>
+      <p class="section-desc" data-en="From GitHub OAuth to your health dashboard in five steps. Every signal is collected asynchronously and scored in real time." data-tr="GitHub OAuth'tan sa&#287;l&#305;k panonuza be&#351; ad&#305;mda. Her sinyal asenkron toplan&#305;r ve ger&#231;ek zamanl&#305; puanlan&#305;r.">
+        From GitHub OAuth to your health dashboard in five steps. Every signal is collected asynchronously and scored in real time.
+      </p>
+      <div class="arch-flow">
+        <div class="arch-node">
+          <div class="label">GitHub OAuth</div>
+          <div class="desc" data-en="Authenticate &amp; connect" data-tr="Kimlik do&#287;rula ve ba&#287;la">Authenticate &amp; connect</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">Webhook Register</div>
+          <div class="desc" data-en="HMAC-SHA256 verified" data-tr="HMAC-SHA256 do&#287;rulanm&#305;&#351;">HMAC-SHA256 verified</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">5 Collectors</div>
+          <div class="desc" data-en="Async data gathering" data-tr="Asenkron veri toplama">Async data gathering</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">Score Engine</div>
+          <div class="desc" data-en="Pulse Score 0&ndash;100" data-tr="Pulse Skoru 0&ndash;100">Pulse Score 0&ndash;100</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">Dashboard</div>
+          <div class="desc" data-en="Health at a glance" data-tr="Sa&#287;l&#305;k bir bak&#305;&#351;ta">Health at a glance</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Features" data-tr="// &#214;zellikler">// Features</div>
+      <h2 data-en="What You Get" data-tr="Neler Elde Edersiniz">What You Get</h2>
+      <p class="section-desc" data-en="Every feature is built for speed, security, and clarity. No bloat, no guesswork." data-tr="Her &#246;zellik h&#305;z, g&#252;venlik ve netlik i&#231;in tasarland&#305;. &#350;i&#351;kinlik yok, tahmin yok.">
+        Every feature is built for speed, security, and clarity. No bloat, no guesswork.
+      </p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">&#128274;</span>
+          <h3 data-en="GitHub OAuth" data-tr="GitHub OAuth">GitHub OAuth</h3>
+          <p data-en="One-click authentication. Connect your GitHub account securely and start tracking repos instantly." data-tr="Tek t&#305;kla kimlik do&#287;rulama. GitHub hesab&#305;n&#305;z&#305; g&#252;venle ba&#287;lay&#305;n ve repolar&#305; an&#305;nda takip etmeye ba&#351;lay&#305;n.">One-click authentication. Connect your GitHub account securely and start tracking repos instantly.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">&#128259;</span>
+          <h3 data-en="Webhook Auto-Refresh" data-tr="Webhook Otomatik Yenileme">Webhook Auto-Refresh</h3>
+          <p data-en="HMAC-SHA256 verified webhooks keep your scores fresh. Push events trigger instant re-collection." data-tr="HMAC-SHA256 do&#287;rulanm&#305;&#351; webhook'lar skorlar&#305;n&#305;z&#305; g&#252;ncel tutar. Push olaylar&#305; anl&#305;k yeniden toplama tetikler.">HMAC-SHA256 verified webhooks keep your scores fresh. Push events trigger instant re-collection.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">&#127919;</span>
+          <h3 data-en="Pulse Score 0&ndash;100" data-tr="Pulse Skoru 0&ndash;100">Pulse Score 0&ndash;100</h3>
+          <p data-en="A single number that tells you how healthy your repo is. Weighted across 5 dimensions, updated in real time." data-tr="Reponuzun ne kadar sa&#287;l&#305;kl&#305; oldu&#287;unu s&#246;yleyen tek bir say&#305;. 5 boyut &#252;zerinden a&#287;&#305;rl&#305;kl&#305;, ger&#231;ek zamanl&#305; g&#252;ncellenir.">A single number that tells you how healthy your repo is. Weighted across 5 dimensions, updated in real time.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">&#9889;</span>
+          <h3 data-en="5 Async Collectors" data-tr="5 Asenkron Toplay&#305;c&#305;">5 Async Collectors</h3>
+          <p data-en="Parallel data collection across commits, issues, PRs, CI status, and repo metadata. Fast and thorough." data-tr="Commit, issue, PR, CI durumu ve repo meta verileri &#252;zerinde paralel veri toplama. H&#305;zl&#305; ve kapsaml&#305;.">Parallel data collection across commits, issues, PRs, CI status, and repo metadata. Fast and thorough.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">&#128269;</span>
+          <h3 data-en="SEO Optimized" data-tr="SEO Optimize">SEO Optimized</h3>
+          <p data-en="Full meta tags, Open Graph, Twitter cards, canonical URLs. Your public dashboard is search-engine friendly." data-tr="Tam meta etiketler, Open Graph, Twitter kartlar&#305;, kanonik URL'ler. Herkese a&#231;&#305;k panonuz arama motoru dostu.">Full meta tags, Open Graph, Twitter cards, canonical URLs. Your public dashboard is search-engine friendly.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">&#128640;</span>
+          <h3 data-en="FastAPI + aiosqlite" data-tr="FastAPI + aiosqlite">FastAPI + aiosqlite</h3>
+          <p data-en="Async Python stack for maximum throughput. SQLite for zero-ops persistence. Deployed on Railway with zero config." data-tr="Maksimum verim i&#231;in asenkron Python y&#305;&#287;&#305;n&#305;. S&#305;f&#305;r operasyonlu kal&#305;c&#305;l&#305;k i&#231;in SQLite. S&#305;f&#305;r config ile Railway'de yay&#305;nda.">Async Python stack for maximum throughput. SQLite for zero-ops persistence. Deployed on Railway with zero config.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Pricing" data-tr="// Fiyatland&#305;rma">// Pricing</div>
+      <h2 data-en="Simple, Transparent Pricing" data-tr="Basit, &#350;effaf Fiyatland&#305;rma">Simple, Transparent Pricing</h2>
+      <p class="section-desc" data-en="Start free. Scale when you need to. No hidden fees, no surprises." data-tr="&#220;cretsiz ba&#351;lay&#305;n. &#304;htiyac&#305;n&#305;z oldu&#287;unda &#246;l&#231;eklendirin. Gizli &#252;cret yok, s&#252;rpriz yok.">
+        Start free. Scale when you need to. No hidden fees, no surprises.
+      </p>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <h3 data-en="Free" data-tr="&#220;cretsiz">Free</h3>
+          <div class="pricing-price">$0</div>
+          <div class="pricing-desc" data-en="For individual developers getting started" data-tr="Ba&#351;lang&#305;&#231; yapan bireysel geli&#351;tiriciler i&#231;in">For individual developers getting started</div>
+          <div class="pricing-features">
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="3 public repos" data-tr="3 herkese a&#231;&#305;k repo">3 public repos</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Pulse Score 0&ndash;100" data-tr="Pulse Skoru 0&ndash;100">Pulse Score 0&ndash;100</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="5 async collectors" data-tr="5 asenkron toplay&#305;c&#305;">5 async collectors</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Public dashboard" data-tr="Herkese a&#231;&#305;k pano">Public dashboard</span></div>
+          </div>
+        </div>
+        <div class="pricing-card featured">
+          <span class="pricing-badge" data-en="Most Popular" data-tr="En Pop&#252;ler">Most Popular</span>
+          <h3>Pro</h3>
+          <div class="pricing-price">$9 <span class="period" data-en="/mo" data-tr="/ay">/mo</span></div>
+          <div class="pricing-desc" data-en="For developers who ship seriously" data-tr="Ciddi &#351;ekilde &#252;reten geli&#351;tiriciler i&#231;in">For developers who ship seriously</div>
+          <div class="pricing-features">
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="10 repos (public + private)" data-tr="10 repo (herkese a&#231;&#305;k + &#246;zel)">10 repos (public + private)</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Webhook auto-refresh" data-tr="Webhook otomatik yenileme">Webhook auto-refresh</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Private repo support" data-tr="&#214;zel repo deste&#287;i">Private repo support</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Health trend history" data-tr="Sa&#287;l&#305;k trend ge&#231;mi&#351;i">Health trend history</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Priority scoring" data-tr="&#214;ncelikli puanlama">Priority scoring</span></div>
+          </div>
+        </div>
+        <div class="pricing-card">
+          <h3>Agency</h3>
+          <div class="pricing-price">$29 <span class="period" data-en="/mo" data-tr="/ay">/mo</span></div>
+          <div class="pricing-desc" data-en="For teams and agencies managing multiple clients" data-tr="Birden fazla m&#252;&#351;teri y&#246;neten tak&#305;mlar ve ajanslar i&#231;in">For teams and agencies managing multiple clients</div>
+          <div class="pricing-features">
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Unlimited repos" data-tr="S&#305;n&#305;rs&#305;z repo">Unlimited repos</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Team access &amp; roles" data-tr="Tak&#305;m eri&#351;imi ve roller">Team access &amp; roles</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Multi-org support" data-tr="&#199;oklu organizasyon deste&#287;i">Multi-org support</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Webhook + auto-refresh" data-tr="Webhook + otomatik yenileme">Webhook + auto-refresh</span></div>
+            <div class="pricing-feature"><span class="check">&#10003;</span> <span data-en="Everything in Pro" data-tr="Pro'daki her &#351;ey">Everything in Pro</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 data-en="Start Tracking Repo Health" data-tr="Repo Sa&#287;l&#305;&#287;&#305;n&#305; Takip Etmeye Ba&#351;la">Start Tracking Repo Health</h2>
+      <p data-en="Connect your GitHub. Get your Pulse Score. Ship with confidence." data-tr="GitHub'&#305;n&#305;z&#305; ba&#287;lay&#305;n. Pulse Skorunuzu al&#305;n. G&#252;venle g&#246;nderin.">Connect your GitHub. Get your Pulse Score. Ship with confidence.</p>
+      <div class="cta-links">
+        <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-primary" data-en="Try PulseBoard Free" data-tr="PulseBoard'u &#220;cretsiz Dene">Try PulseBoard Free</a>
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-ghost" data-en="View on GitHub" data-tr="GitHub'da G&#246;r">View on GitHub</a>
+        <a href="https://x.com/rg_winston3375" target="_blank" class="btn btn-ghost" data-en="Follow on X" data-tr="X'te Takip Et">Follow on X</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 <a href="https://yakuphanycl.github.io">Yakuphan</a> &middot; WinstonRed &middot; &Ccedil;anakkale, Turkey</p>
+    </div>
+  </footer>
+
+<script>
+let lang = 'en';
+function toggleLang() {
+  lang = lang === 'en' ? 'tr' : 'en';
+  document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'TR' : 'EN';
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const text = el.getAttribute('data-' + lang);
+    if (text) el.innerHTML = text;
+  });
+}
+</script>
+</body>
+</html>

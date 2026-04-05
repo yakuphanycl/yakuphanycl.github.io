@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>instinct-mcp — Self-Learning Memory for AI Agents | WinstonRed</title>
+  <meta name="description" content="Self-learning pattern memory for AI coding agents. Observe, track, promote, and suggest patterns across sessions. MCP native, SQLite-backed, works with Claude Code, Cursor, and Windsurf.">
+  <meta name="keywords" content="instinct-mcp, MCP, AI agents, pattern memory, Claude Code, Cursor, Windsurf, self-learning, SQLite, Python, PyPI">
+  <meta name="author" content="Yakuphan">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="7-VBvAmBA1YVMBbNnlzJYzDm4XfXfxYZKKJxMFSfB2g" />
+  <link rel="canonical" href="https://yakuphanycl.github.io/projects/instinct.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="instinct-mcp — Self-Learning Memory for AI Agents">
+  <meta property="og:description" content="Self-learning pattern memory for AI coding agents. Observe, track, promote, and suggest patterns with SQLite persistence and MCP integration.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yakuphanycl.github.io/projects/instinct.html">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="instinct-mcp — Self-Learning Memory for AI Agents">
+  <meta name="twitter:description" content="Self-learning pattern memory for AI coding agents. MCP native, SQLite-backed, zero dependencies.">
+  <meta name="twitter:creator" content="@rg_winston3375">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #111118;
+      --bg-card-hover: #16161f;
+      --border: #1e1e2a;
+      --border-accent: #2a2a3a;
+      --text: #e4e4ed;
+      --text-muted: #8888a0;
+      --text-dim: #55556a;
+      --accent: #c8ff00;
+      --accent-dim: rgba(200, 255, 0, 0.08);
+      --accent-mid: rgba(200, 255, 0, 0.15);
+      --red: #ff4060;
+      --green: #00e07b;
+      --blue: #4090ff;
+      --orange: #ff8830;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-display);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .lang-toggle {
+      background: rgba(200,255,0,0.08);
+      border: 1px solid rgba(200,255,0,0.15);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    .lang-toggle:hover { background: rgba(200,255,0,0.15); border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(200, 255, 0, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(200, 255, 0, 0.12);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .hero-tag .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+    h1 .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.7;
+      font-weight: 300;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a0f;
+    }
+    .btn-primary:hover { background: #d4ff33; opacity: 1; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-accent);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 60px 0;
+    }
+    .stat-item {
+      background: var(--bg-card);
+      padding: 28px 20px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .stat-item:hover { background: var(--bg-card-hover); }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 6px;
+    }
+
+    /* SECTIONS */
+    section { padding: 80px 0; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    /* PRINCIPLES / FEATURES GRID */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .principle-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      transition: all 0.3s;
+    }
+    .principle-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .principle-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .principle-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .principle-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ARCHITECTURE FLOW */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 48px 0 0;
+    }
+    .arch-node {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 24px;
+      text-align: center;
+      min-width: 140px;
+      transition: all 0.25s;
+    }
+    .arch-node:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .arch-node .label {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .arch-node .desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+    .arch-arrow {
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      font-size: 18px;
+      padding: 0 8px;
+    }
+
+    /* HIGHLIGHT CARD */
+    .highlight-card {
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(200,255,0,0.03) 100%);
+      border: 1px solid rgba(200,255,0,0.12);
+      border-radius: 16px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin: 48px 0;
+    }
+    .highlight-card h3 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .highlight-card .sub {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .highlight-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .highlight-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .highlight-feature .check {
+      color: var(--green);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 14px;
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      overflow-x: auto;
+    }
+    .code-block .prompt { color: var(--accent); user-select: none; }
+    .code-block .comment { color: var(--text-dim); }
+    .code-block .flag { color: var(--orange); }
+    .code-block .string { color: var(--green); }
+
+    /* PATTERN TYPES */
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .pattern-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: all 0.3s;
+    }
+    .pattern-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .pattern-prefix {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .pattern-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .pattern-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* INSTALL BOX */
+    .install-box {
+      background: var(--bg-card);
+      border: 1px solid rgba(200,255,0,0.12);
+      border-radius: 10px;
+      padding: 20px 28px;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .install-box:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+    .install-box .dollar { color: var(--text-dim); user-select: none; }
+    .install-box .copy-hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-left: 8px;
+    }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 36px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 6px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+    .timeline-item.current::before {
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(200,255,0,0.3);
+    }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .timeline-item h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .timeline-item p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 100px 0;
+    }
+    .cta-section h2 { margin-bottom: 12px; }
+    .cta-section p {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+    .cta-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    footer a { color: var(--text-muted); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .highlight-card { grid-template-columns: 1fr; padding: 32px 24px; }
+      .arch-flow { flex-direction: column; }
+      .arch-arrow { transform: rotate(90deg); }
+      .nav-links { gap: 16px; }
+      section { padding: 60px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="https://yakuphanycl.github.io" class="nav-brand"><span>~/</span>yakuphanycl</a>
+      <div class="nav-links">
+        <a href="https://yakuphanycl.github.io" data-en="Home" data-tr="Ana Sayfa">Home</a>
+        <a href="https://github.com/yakuphanycl/instinct" target="_blank">GitHub</a>
+        <a href="https://pypi.org/project/instinct-mcp/" target="_blank">PyPI</a>
+        <a href="https://x.com/rg_winston3375" target="_blank">X</a>
+        <button class="lang-toggle" onclick="toggleLang()">TR</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        <span data-en="PyPI Published &middot; MCP Native" data-tr="PyPI Yay&#305;nland&#305; &middot; MCP Destekli">PyPI Published &middot; MCP Native</span>
+      </div>
+      <h1>instinct<span class="accent">-mcp</span></h1>
+      <p class="hero-sub" data-en="Self-learning pattern memory for AI coding agents. Observe patterns, track confidence, promote to rules, and suggest across sessions &mdash; with SQLite persistence and MCP integration." data-tr="Yapay zeka kodlama ajanlar&#305; i&ccedil;in kendi kendine &ouml;&#287;renen &ouml;r&uuml;nt&uuml; haf&#305;zas&#305;. &Ouml;r&uuml;nt&uuml;leri g&ouml;zlemle, g&uuml;veni takip et, kurallara y&uuml;kselt ve oturumlar aras&#305; &ouml;ner &mdash; SQLite kal&#305;c&#305;l&#305;&#287;&#305; ve MCP entegrasyonuyla.">
+        Self-learning pattern memory for AI coding agents. Observe patterns, track confidence, promote to rules, and suggest across sessions &mdash; with SQLite persistence and MCP integration.
+      </p>
+      <div class="hero-actions">
+        <a href="https://github.com/yakuphanycl/instinct" target="_blank" class="btn btn-primary" data-en="&#9733; View on GitHub" data-tr="&#9733; GitHub'da G&ouml;r&uuml;nt&uuml;le">
+          &#9733; View on GitHub
+        </a>
+        <a href="https://pypi.org/project/instinct-mcp/" target="_blank" class="btn btn-ghost" data-en="PyPI Package &rarr;" data-tr="PyPI Paketi &rarr;">
+          PyPI Package &rarr;
+        </a>
+      </div>
+      <div class="install-box" onclick="navigator.clipboard.writeText('pip install instinct-mcp')">
+        <span class="dollar">$</span> pip install instinct-mcp
+        <span class="copy-hint" data-en="click to copy" data-tr="kopyalamak i&ccedil;in t&#305;kla">click to copy</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num">PyPI</span>
+        <div class="stat-label" data-en="Published" data-tr="Yay&#305;nland&#305;">Published</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">MCP</span>
+        <div class="stat-label" data-en="Native Protocol" data-tr="Yerel Protokol">Native Protocol</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">SQLite</span>
+        <div class="stat-label" data-en="Persistence" data-tr="Kal&#305;c&#305;l&#305;k">Persistence</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">0</span>
+        <div class="stat-label" data-en="Dependencies" data-tr="Ba&#287;&#305;ml&#305;l&#305;k">Dependencies</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM / SOLUTION / OUTCOME -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Why" data-tr="// Neden">// Why</div>
+      <h2 data-en="The Problem" data-tr="Problem">The Problem</h2>
+      <p class="section-desc" data-en="AI agents forget learned patterns between sessions. Every conversation starts from scratch &mdash; no memory of what worked, what failed, or what you prefer." data-tr="Yapay zeka ajanlar&#305; oturumlar aras&#305;nda &ouml;&#287;renilen &ouml;r&uuml;nt&uuml;leri unutur. Her konu&#351;ma s&#305;f&#305;rdan ba&#351;lar &mdash; neyin i&#351;e yarad&#305;&#287;&#305;n&#305;, neyin ba&#351;ar&#305;s&#305;z oldu&#287;unu veya neyi tercih etti&#287;inizi hat&#305;rlamaz.">
+        AI agents forget learned patterns between sessions. Every conversation starts from scratch &mdash; no memory of what worked, what failed, or what you prefer.
+      </p>
+      <div class="principles-grid">
+        <div class="principle-card">
+          <span class="principle-icon">&#10007;</span>
+          <h3 data-en="Problem" data-tr="Problem">Problem</h3>
+          <p data-en="AI agents forget learned patterns between sessions. Repeated mistakes, lost preferences, no continuity." data-tr="AI ajanlar&#305; oturumlar aras&#305;nda &ouml;&#287;renilen &ouml;r&uuml;nt&uuml;leri unutur. Tekrarlanan hatalar, kaybolmu&#351; tercihler, s&uuml;reklilik yok.">AI agents forget learned patterns between sessions. Repeated mistakes, lost preferences, no continuity.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9881;</span>
+          <h3 data-en="Solution" data-tr="&Ccedil;&ouml;z&uuml;m">Solution</h3>
+          <p data-en="Observe &rarr; track &rarr; promote pipeline with SQLite persistence and MCP integration. Patterns gain confidence over time." data-tr="G&ouml;zlemle &rarr; takip et &rarr; y&uuml;kselt hatt&#305;, SQLite kal&#305;c&#305;l&#305;&#287;&#305; ve MCP entegrasyonuyla. &Ouml;r&uuml;nt&uuml;ler zamanla g&uuml;ven kazan&#305;r.">Observe &rarr; track &rarr; promote pipeline with SQLite persistence and MCP integration. Patterns gain confidence over time.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#10003;</span>
+          <h3 data-en="Outcome" data-tr="Sonu&ccedil;">Outcome</h3>
+          <p data-en="Open-source on PyPI, reusable across Claude Code, Cursor, and Windsurf. Agents learn and remember." data-tr="PyPI'da a&ccedil;&#305;k kaynak, Claude Code, Cursor ve Windsurf genelinde tekrar kullan&#305;labilir. Ajanlar &ouml;&#287;renir ve hat&#305;rlar.">Open-source on PyPI, reusable across Claude Code, Cursor, and Windsurf. Agents learn and remember.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS: PIPELINE -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// How It Works" data-tr="// Nas&#305;l &Ccedil;al&#305;&#351;&#305;r">// How It Works</div>
+      <h2 data-en="Learning Pipeline" data-tr="&Ouml;&#287;renme Hatt&#305;">Learning Pipeline</h2>
+      <p class="section-desc" data-en="Patterns flow through a confidence-based promotion pipeline. Observed patterns gain confidence with each occurrence and automatically mature into actionable rules." data-tr="&Ouml;r&uuml;nt&uuml;ler g&uuml;ven tabanl&#305; bir y&uuml;kseltme hatt&#305;ndan ge&ccedil;er. G&ouml;zlenen &ouml;r&uuml;nt&uuml;ler her tekrarla g&uuml;ven kazan&#305;r ve otomatik olarak eyleme d&ouml;n&uuml;&#351;t&uuml;r&uuml;lebilir kurallara olgunla&#351;&#305;r.">
+        Patterns flow through a confidence-based promotion pipeline. Observed patterns gain confidence with each occurrence and automatically mature into actionable rules.
+      </p>
+      <div class="arch-flow">
+        <div class="arch-node">
+          <div class="label">observe</div>
+          <div class="desc" data-en="Record a pattern" data-tr="Bir &ouml;r&uuml;nt&uuml; kaydet">Record a pattern</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">track</div>
+          <div class="desc" data-en="confidence++" data-tr="g&uuml;ven++">confidence++</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">mature</div>
+          <div class="desc" data-en="conf &ge; 5" data-tr="g&uuml;ven &ge; 5">conf &ge; 5</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">rule</div>
+          <div class="desc" data-en="conf &ge; 10" data-tr="g&uuml;ven &ge; 10">conf &ge; 10</div>
+        </div>
+        <span class="arch-arrow">&rarr;</span>
+        <div class="arch-node">
+          <div class="label">suggest</div>
+          <div class="desc" data-en="Guide behavior" data-tr="Davran&#305;&#351; y&ouml;nlendir">Guide behavior</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATTERN TYPES -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Pattern Types" data-tr="// &Ouml;r&uuml;nt&uuml; T&uuml;rleri">// Pattern Types</div>
+      <h2 data-en="What It Learns" data-tr="Ne &Ouml;&#287;renir">What It Learns</h2>
+      <p class="section-desc" data-en="Four pattern types cover the full spectrum of agent behavior &mdash; from tool sequences to user preferences." data-tr="D&ouml;rt &ouml;r&uuml;nt&uuml; t&uuml;r&uuml;, ajan davran&#305;&#351;&#305;n&#305;n tam spektrumunu kapsar &mdash; ara&ccedil; dizilerinden kullan&#305;c&#305; tercihlerine.">
+        Four pattern types cover the full spectrum of agent behavior &mdash; from tool sequences to user preferences.
+      </p>
+      <div class="pattern-grid">
+        <div class="pattern-card">
+          <div class="pattern-prefix">seq:</div>
+          <h3 data-en="Tool Sequences" data-tr="Ara&ccedil; Dizileri">Tool Sequences</h3>
+          <p data-en="Track sequences of tools/actions that commonly follow each other. e.g. seq:read->edit->test" data-tr="Birbirini takip eden ara&ccedil;/eylem dizilerini takip eder. &ouml;rn. seq:read->edit->test">Track sequences of tools/actions that commonly follow each other. e.g. seq:read-&gt;edit-&gt;test</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-prefix">pref:</div>
+          <h3 data-en="User Preferences" data-tr="Kullan&#305;c&#305; Tercihleri">User Preferences</h3>
+          <p data-en="Remember user style choices and conventions. e.g. pref:commit_style=conventional" data-tr="Kullan&#305;c&#305; stil se&ccedil;imlerini ve kurallar&#305;n&#305; hat&#305;rlar. &ouml;rn. pref:commit_style=conventional">Remember user style choices and conventions. e.g. pref:commit_style=conventional</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-prefix">fix:</div>
+          <h3 data-en="Recurring Fixes" data-tr="Tekrarlayan D&uuml;zeltmeler">Recurring Fixes</h3>
+          <p data-en="Capture solutions to problems that keep coming back. e.g. fix:import-order-stdlib-first" data-tr="S&uuml;rekli geri gelen sorunlara &ccedil;&ouml;z&uuml;mleri yakalar. &ouml;rn. fix:import-order-stdlib-first">Capture solutions to problems that keep coming back. e.g. fix:import-order-stdlib-first</p>
+        </div>
+        <div class="pattern-card">
+          <div class="pattern-prefix">combo:</div>
+          <h3 data-en="Used Together" data-tr="Birlikte Kullan&#305;lan">Used Together</h3>
+          <p data-en="Things that are commonly used as a pair. e.g. combo:pytest+coverage" data-tr="Genellikle birlikte kullan&#305;lan &#351;eyler. &ouml;rn. combo:pytest+coverage">Things that are commonly used as a pair. e.g. combo:pytest+coverage</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Features" data-tr="// &Ouml;zellikler">// Features</div>
+      <h2 data-en="Built for Agents" data-tr="Ajanlar &#304;&ccedil;in &Uuml;retildi">Built for Agents</h2>
+      <p class="section-desc" data-en="Everything an AI agent needs to build persistent memory &mdash; no configuration, no external services, no dependencies." data-tr="Bir AI ajan&#305;n&#305;n kal&#305;c&#305; bellek olu&#351;turmak i&ccedil;in ihtiyac&#305; olan her &#351;ey &mdash; yap&#305;land&#305;rma yok, d&#305;&#351; hizmet yok, ba&#287;&#305;ml&#305;l&#305;k yok.">
+        Everything an AI agent needs to build persistent memory &mdash; no configuration, no external services, no dependencies.
+      </p>
+      <div class="principles-grid">
+        <div class="principle-card">
+          <span class="principle-icon">&#9636;</span>
+          <h3 data-en="SQLite Persistence" data-tr="SQLite Kal&#305;c&#305;l&#305;&#287;&#305;">SQLite Persistence</h3>
+          <p data-en="All patterns stored in ~/.instinct/instinct.db. Survives restarts, works offline, zero setup." data-tr="T&uuml;m &ouml;r&uuml;nt&uuml;ler ~/.instinct/instinct.db'de saklan&#305;r. Yeniden ba&#351;latmalara dayan&#305;r, &ccedil;evrimd&#305;&#351;&#305; &ccedil;al&#305;&#351;&#305;r, s&#305;f&#305;r kurulum.">All patterns stored in ~/.instinct/instinct.db. Survives restarts, works offline, zero setup.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9889;</span>
+          <h3 data-en="MCP Protocol Native" data-tr="MCP Protokol&uuml; Destekli">MCP Protocol Native</h3>
+          <p data-en="First-class MCP server. Works out of the box with any MCP-compatible AI agent or editor." data-tr="Birinci s&#305;n&#305;f MCP sunucusu. MCP uyumlu herhangi bir AI ajan&#305; veya edit&ouml;rle kutudan &ccedil;&#305;kt&#305;&#287;&#305; gibi &ccedil;al&#305;&#351;&#305;r.">First-class MCP server. Works out of the box with any MCP-compatible AI agent or editor.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9878;</span>
+          <h3 data-en="Multi-Agent Ready" data-tr="&Ccedil;oklu Ajan Deste&#287;i">Multi-Agent Ready</h3>
+          <p data-en="Works with Claude Code, Cursor, and Windsurf. All agents share the same pattern database." data-tr="Claude Code, Cursor ve Windsurf ile &ccedil;al&#305;&#351;&#305;r. T&uuml;m ajanlar ayn&#305; &ouml;r&uuml;nt&uuml; veritaban&#305;n&#305; payla&#351;&#305;r.">Works with Claude Code, Cursor, and Windsurf. All agents share the same pattern database.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#10003;</span>
+          <h3 data-en="CLI + Python Library" data-tr="CLI + Python K&uuml;t&uuml;phanesi">CLI + Python Library</h3>
+          <p data-en="Use from the command line or import as a Python library. Both interfaces, same database." data-tr="Komut sat&#305;r&#305;ndan veya Python k&uuml;t&uuml;phanesi olarak kullan&#305;n. Her iki aray&uuml;z, ayn&#305; veritaban&#305;.">Use from the command line or import as a Python library. Both interfaces, same database.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#128274;</span>
+          <h3 data-en="Project-Scoped" data-tr="Proje Kapsam&#305;">Project-Scoped</h3>
+          <p data-en="Fingerprint-based scoping ensures patterns are relevant to the current project context." data-tr="Parmak izi tabanl&#305; kapsam, &ouml;r&uuml;nt&uuml;lerin mevcut proje ba&#287;lam&#305;yla ilgili olmas&#305;n&#305; sa&#287;lar.">Fingerprint-based scoping ensures patterns are relevant to the current project context.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9881;</span>
+          <h3 data-en="Zero Dependencies" data-tr="S&#305;f&#305;r Ba&#287;&#305;ml&#305;l&#305;k">Zero Dependencies</h3>
+          <p data-en="Pure Python, stdlib only. No external packages required. Install and run anywhere." data-tr="Saf Python, sadece standart k&uuml;t&uuml;phane. D&#305;&#351; paket gerektirmez. Her yerde kurun ve &ccedil;al&#305;&#351;t&#305;r&#305;n.">Pure Python, stdlib only. No external packages required. Install and run anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLI COMMANDS -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// CLI" data-tr="// Komut Sat&#305;r&#305;">// CLI</div>
+      <h2 data-en="Commands" data-tr="Komutlar">Commands</h2>
+      <p class="section-desc" data-en="Simple CLI for observing, suggesting, consolidating, and listing patterns." data-tr="&Ouml;r&uuml;nt&uuml;leri g&ouml;zlemlemek, &ouml;nermek, birle&#351;tirmek ve listelemek i&ccedil;in basit CLI.">
+        Simple CLI for observing, suggesting, consolidating, and listing patterns.
+      </p>
+      <div class="code-block">
+        <span class="comment"># Record a new pattern</span><br>
+        <span class="prompt">$ </span>instinct observe <span class="flag">--name</span> <span class="string">"seq:read->edit->test"</span> <span class="flag">--description</span> <span class="string">"Always run tests after editing"</span><br><br>
+        <span class="comment"># Get suggestions for current context</span><br>
+        <span class="prompt">$ </span>instinct suggest<br><br>
+        <span class="comment"># Auto-promote high-confidence patterns</span><br>
+        <span class="prompt">$ </span>instinct consolidate<br><br>
+        <span class="comment"># List all tracked patterns</span><br>
+        <span class="prompt">$ </span>instinct list
+      </div>
+    </div>
+  </section>
+
+  <!-- MULTI-AGENT SETUP -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Multi-Agent" data-tr="// &Ccedil;oklu Ajan">// Multi-Agent</div>
+      <div class="highlight-card">
+        <div>
+          <h3 data-en="Shared Memory Across Agents" data-tr="Ajanlar Aras&#305; Payla&#351;&#305;ml&#305; Haf&#305;za">Shared Memory Across Agents</h3>
+          <p class="sub" data-en="Multiple AI agents can share the same instinct database. Claude Code as primary, Cursor or Windsurf as secondary &mdash; all reading and writing to the same SQLite file." data-tr="Birden fazla AI ajan&#305; ayn&#305; instinct veritaban&#305;n&#305; payla&#351;abilir. Claude Code birincil, Cursor veya Windsurf ikincil olarak &mdash; hepsi ayn&#305; SQLite dosyas&#305;na okur ve yazar.">
+            Multiple AI agents can share the same instinct database. Claude Code as primary, Cursor or Windsurf as secondary &mdash; all reading and writing to the same SQLite file.
+          </p>
+          <div class="highlight-features">
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Claude Code (primary agent)" data-tr="Claude Code (birincil ajan)">Claude Code (primary agent)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Cursor (secondary agent)" data-tr="Cursor (ikincil ajan)">Cursor (secondary agent)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Windsurf (secondary agent)" data-tr="Windsurf (ikincil ajan)">Windsurf (secondary agent)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Single shared ~/.instinct/instinct.db" data-tr="Tek payla&#351;&#305;ml&#305; ~/.instinct/instinct.db">Single shared ~/.instinct/instinct.db</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Project-scoped fingerprinting" data-tr="Proje kapsam&#305;nda parmak izi">Project-scoped fingerprinting</span></div>
+          </div>
+        </div>
+        <div class="code-block">
+          <span class="comment"># Claude Code config (.claude.json)</span><br>
+          {<br>
+          &nbsp;&nbsp;<span class="string">"mcpServers"</span>: {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"instinct"</span>: {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"command"</span>: <span class="string">"instinct-mcp"</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+          &nbsp;&nbsp;}<br>
+          }<br><br>
+          <span class="comment"># Cursor / Windsurf use the same</span><br>
+          <span class="comment"># command &mdash; shared DB, zero config</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Roadmap" data-tr="// Yol Haritas&#305;">// Roadmap</div>
+      <h2 data-en="What's Next" data-tr="S&#305;rada Ne Var">What's Next</h2>
+      <p class="section-desc" data-en="instinct-mcp is live on PyPI. The path to universal agent memory." data-tr="instinct-mcp PyPI'da yay&#305;nda. Evrensel ajan haf&#305;zas&#305;na giden yol.">
+        instinct-mcp is live on PyPI. The path to universal agent memory.
+      </p>
+      <div class="timeline">
+        <div class="timeline-item current">
+          <div class="timeline-date" data-en="Now" data-tr="&#350;imdi">Now</div>
+          <h4 data-en="PyPI + MCP Server" data-tr="PyPI + MCP Sunucusu">PyPI + MCP Server</h4>
+          <p data-en="Published on PyPI. MCP native server, CLI, Python library. SQLite persistence with project-scoped fingerprinting." data-tr="PyPI'da yay&#305;nland&#305;. MCP yerel sunucusu, CLI, Python k&uuml;t&uuml;phanesi. Proje kapsam&#305;nda parmak izi ile SQLite kal&#305;c&#305;l&#305;&#287;&#305;.">Published on PyPI. MCP native server, CLI, Python library. SQLite persistence with project-scoped fingerprinting.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date" data-en="Next" data-tr="Sonraki">Next</div>
+          <h4 data-en="Pattern Analytics" data-tr="&Ouml;r&uuml;nt&uuml; Analiti&#287;i">Pattern Analytics</h4>
+          <p data-en="Insights dashboard showing pattern trends, promotion rates, and agent learning curves over time." data-tr="Zaman i&ccedil;inde &ouml;r&uuml;nt&uuml; trendlerini, y&uuml;kseltme oranlar&#305;n&#305; ve ajan &ouml;&#287;renme e&#287;rilerini g&ouml;steren i&ccedil;g&ouml;r&uuml; paneli.">Insights dashboard showing pattern trends, promotion rates, and agent learning curves over time.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date" data-en="Future" data-tr="Gelecek">Future</div>
+          <h4 data-en="Team Sync" data-tr="Tak&#305;m Senkronizasyonu">Team Sync</h4>
+          <p data-en="Share instinct databases across teams. Export/import rules, sync patterns between developers." data-tr="Instinct veritabanlar&#305;n&#305; tak&#305;mlar aras&#305; payla&#351;&#305;n. Kurallar&#305; d&#305;&#351;a/i&ccedil;e aktar&#305;n, geli&#351;tiriciler aras&#305; &ouml;r&uuml;nt&uuml;leri senkronize edin.">Share instinct databases across teams. Export/import rules, sync patterns between developers.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date" data-en="Ongoing" data-tr="Devam Eden">Ongoing</div>
+          <h4 data-en="Ecosystem Growth" data-tr="Ekosistem B&uuml;y&uuml;mesi">Ecosystem Growth</h4>
+          <p data-en="More agent integrations, more pattern types, community-contributed rule packs." data-tr="Daha fazla ajan entegrasyonu, daha fazla &ouml;r&uuml;nt&uuml; t&uuml;r&uuml;, topluluk katk&#305;l&#305; kural paketleri.">More agent integrations, more pattern types, community-contributed rule packs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 data-en="Give Your Agent Memory" data-tr="Ajan&#305;n&#305;za Haf&#305;za Verin">Give Your Agent Memory</h2>
+      <p data-en="Install from PyPI. Check the source. Start learning." data-tr="PyPI'dan kurun. Kayna&#287;&#305; inceleyin. &Ouml;&#287;renmeye ba&#351;lay&#305;n.">Install from PyPI. Check the source. Start learning.</p>
+      <div class="cta-links">
+        <a href="https://github.com/yakuphanycl/instinct" target="_blank" class="btn btn-primary">GitHub Repo</a>
+        <a href="https://pypi.org/project/instinct-mcp/" target="_blank" class="btn btn-ghost" data-en="View on PyPI" data-tr="PyPI'da G&ouml;r&uuml;nt&uuml;le">View on PyPI</a>
+        <a href="https://x.com/rg_winston3375" target="_blank" class="btn btn-ghost" data-en="Follow on X" data-tr="X'te Takip Et">Follow on X</a>
+        <a href="https://yakuphanycl.github.io/projects/winstonredguard.html" class="btn btn-ghost" data-en="WinstonRedGuard &rarr;" data-tr="WinstonRedGuard &rarr;">WinstonRedGuard &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 <a href="https://yakuphanycl.github.io">Yakuphan</a> &middot; WinstonRed &middot; &Ccedil;anakkale, Turkey</p>
+    </div>
+  </footer>
+
+<script>
+let lang = 'en';
+function toggleLang() {
+  lang = lang === 'en' ? 'tr' : 'en';
+  document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'TR' : 'EN';
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const text = el.getAttribute('data-' + lang);
+    if (text) el.innerHTML = text;
+  });
+}
+</script>
+</body>
+</html>
