@@ -503,10 +503,11 @@ footer a:hover { color: var(--text); }
       <div class="project-meta"><span>Python</span><span>156 tests</span><span>arXiv API</span><span>Zero deps</span></div>
     </div>
     <div class="project-card reveal">
-      <div class="project-icon">🤖</div>
-      <h3>Agent Runtime</h3>
-      <p data-en="Lightweight agent execution engine with tool integration and chain-of-thought planning. Connected to Research Motor for a full artifact chain producing automated intelligence reports." data-tr="Araç entegrasyonu ve düşünce zinciri planlaması ile hafif ajan çalıştırma motoru. Otomatik istihbarat raporları üreten tam bir artifact zinciri için Research Motor'a bağlı.">Lightweight agent execution engine with tool integration and chain-of-thought planning. Connected to Research Motor for a full artifact chain producing automated intelligence reports.</p>
-      <div class="project-meta"><span>Python</span><span>31 tests</span><span>Tools</span><span>Agents</span></div>
+      <div class="project-icon">🤝</div>
+      <h3>wrg-agent / ACP</h3>
+      <p data-en="Three-layer coordination protocol for concurrent AI coding agents. SQLite runtime locks, .agents/ durable layer, SSE broadcast. Prevents file conflicts between Claude Code, Codex, and other agents running in parallel." data-tr="Paralel çalışan AI kodlama ajanları için üç katmanlı koordinasyon protokolü. SQLite runtime kilitleri, .agents/ kalıcı katman, SSE yayın. Claude Code, Codex ve diğer ajanlar arasındaki dosya çakışmalarını önler.">Three-layer coordination protocol for concurrent AI coding agents. SQLite runtime locks, .agents/ durable layer, SSE broadcast. Prevents file conflicts between Claude Code, Codex, and other agents running in parallel.</p>
+      <p class="project-link"><a href="https://github.com/yakuphanycl/WinstonRedGuard/blob/main/ACP_PAPER.md" target="_blank" rel="noopener noreferrer" data-en="Read paper →" data-tr="Makaleyi oku →">Read paper →</a></p>
+      <div class="project-meta"><span>Python</span><span>Multi-agent</span><span>Protocol</span><span>SSE</span></div>
     </div>
     <div class="project-card reveal">
       <div class="project-icon">🧪</div>
@@ -604,6 +605,12 @@ footer a:hover { color: var(--text); }
       <p class="case-point" data-en="<strong>Problem:</strong> Manual research cycles were slow and inconsistent." data-tr="<strong>Problem:</strong> Manuel araştırma döngüleri yavaştı ve tutarsızdı."><strong>Problem:</strong> Manual research cycles were slow and inconsistent.</p>
       <p class="case-point" data-en="<strong>Solution:</strong> 5-source adapter pipeline with watch mode and scheduled runs." data-tr="<strong>Çözüm:</strong> Watch modu ve zamanlanmış çalıştırma ile 5 kaynaklı adapter hattı."><strong>Solution:</strong> 5-source adapter pipeline with watch mode and scheduled runs.</p>
       <p class="case-point" data-en="<strong>Outcome:</strong> Repeatable intelligence reports and faster decision cycles." data-tr="<strong>Sonuç:</strong> Tekrarlanabilir istihbarat raporları ve daha hızlı karar döngüsü."><strong>Outcome:</strong> Repeatable intelligence reports and faster decision cycles.</p>
+    </div>
+    <div class="case-card reveal">
+      <h3>wrg-agent / ACP</h3>
+      <p class="case-point" data-en="<strong>Problem:</strong> Concurrent AI agents (Claude Code + Codex) had no visibility into each other's in-progress work — conflicts surfaced only at merge time." data-tr="<strong>Problem:</strong> Paralel çalışan AI ajanları (Claude Code + Codex) birbirinin devam eden çalışmasına görünürlüğe sahip değildi — çakışmalar ancak merge sırasında ortaya çıkıyordu."><strong>Problem:</strong> Concurrent AI agents (Claude Code + Codex) had no visibility into each other's in-progress work — conflicts surfaced only at merge time.</p>
+      <p class="case-point" data-en="<strong>Solution:</strong> Three-layer ACP: SQLite TTL locks (runtime), .agents/ JSON files (durable + auditable), SSE broadcast (real-time). 8-command CLI, pre-commit hook enforcement." data-tr="<strong>Çözüm:</strong> Üç katmanlı ACP: SQLite TTL kilitleri (runtime), .agents/ JSON dosyaları (kalıcı + denetlenebilir), SSE yayın (gerçek zamanlı). 8 komutlu CLI, pre-commit hook zorunluluğu."><strong>Solution:</strong> Three-layer ACP: SQLite TTL locks (runtime), .agents/ JSON files (durable + auditable), SSE broadcast (real-time). 8-command CLI, pre-commit hook enforcement.</p>
+      <p class="case-point" data-en="<strong>Outcome:</strong> Prevented duplicate work, structural and intent conflicts across 3 real multi-agent sessions. Protocol published as ACP_PAPER.md." data-tr="<strong>Sonuç:</strong> 3 gerçek çok-ajanlı oturumda tekrarlanan çalışma, yapısal ve niyet çakışmaları önlendi. Protokol ACP_PAPER.md olarak yayınlandı."><strong>Outcome:</strong> Prevented duplicate work, structural and intent conflicts across 3 real multi-agent sessions. Protocol published as ACP_PAPER.md.</p>
     </div>
     <div class="case-card reveal">
       <h3>instinct-mcp</h3>
