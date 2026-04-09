@@ -344,6 +344,7 @@ footer a:hover { color: var(--text); }
         <a href="#cases" data-en="Case Studies" data-tr="Vaka Çalışmaları" onclick="closeMenu()">Case Studies</a>
       </div>
     </li>
+    <li><a href="#research" data-en="Research" data-tr="Araştırma" onclick="closeMenu()">Research</a></li>
     <li><a href="#services" data-en="Services" data-tr="Hizmetler" onclick="closeMenu()">Services</a></li>
     <li><a href="#contact" data-en="Contact" data-tr="İletişim" onclick="closeMenu()">Contact</a></li>
     <li><button class="lang-toggle" onclick="toggleLang()">TR</button></li>
@@ -541,6 +542,40 @@ footer a:hover { color: var(--text); }
       <h3>Affiliate Engine</h3>
       <p data-en="Facebook affiliate post manager for home office niche. Product catalog, post generation, scheduling, tracking, and a Streamlit Cloud UI." data-tr="Ev ofis nişi için Facebook affiliate gönderi yöneticisi. Ürün kataloğu, gönderi üretimi, zamanlama, takip ve Streamlit Cloud arayüzü.">Facebook affiliate post manager for home office niche. Product catalog, post generation, scheduling, tracking, and a Streamlit Cloud UI.</p>
       <div class="project-meta"><span>Python</span><span>40 tests</span><span>Streamlit</span></div>
+    </div>
+  </div>
+</section>
+<section class="research" id="research" style="background:var(--bg-elevated)">
+  <div class="reveal">
+    <p class="section-label" data-en="Writing & Research" data-tr="Yazılar & Araştırma">Writing & Research</p>
+    <h2 class="section-title" data-en="Ideas Worth Publishing" data-tr="Yayına Değer Fikirler">Ideas Worth Publishing</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal" style="border-color:var(--gold);opacity:1">
+      <span class="featured-badge" data-en="Paper" data-tr="Makale">Paper</span>
+      <div class="project-icon">📄</div>
+      <h3>A Practical Coordination Protocol for Concurrent AI Coding Agents</h3>
+      <p data-en="When multiple AI agents (Claude Code, Codex, Cursor) work simultaneously on a shared codebase, git only handles committed state. This paper describes a three-layer protocol — runtime intent registry, durable file locks, and SSE broadcast — that fills the coordination gap from task inception to first commit." data-tr="Birden fazla AI ajanı (Claude Code, Codex, Cursor) aynı anda aynı kod tabanında çalışırken, git yalnızca commit edilmiş durumu yönetir. Bu makale, görev başlangıcından ilk commit'e kadar olan koordinasyon boşluğunu dolduran üç katmanlı bir protokol açıklar: runtime niyet kaydı, kalıcı dosya kilitleri ve SSE yayını.">When multiple AI agents (Claude Code, Codex, Cursor) work simultaneously on a shared codebase, git only handles committed state. This paper describes a three-layer protocol — runtime intent registry, durable file locks, and SSE broadcast — that fills the coordination gap from task inception to first commit.</p>
+      <div class="project-proof">
+        <div data-en="<strong>Problem:</strong> AI agents have no visibility into each other's in-progress work." data-tr="<strong>Problem:</strong> AI ajanlarının birbirinin devam eden çalışmasına görünürlüğü yok."><strong>Problem:</strong> AI agents have no visibility into each other's in-progress work.</div>
+        <div data-en="<strong>Contribution:</strong> Conflict taxonomy (Type I–IV) + minimal CLI-based coordination protocol." data-tr="<strong>Katkı:</strong> Çatışma taksonomisi (Tip I–IV) + minimal CLI tabanlı koordinasyon protokolü."><strong>Contribution:</strong> Conflict taxonomy (Type I–IV) + minimal CLI-based coordination protocol.</div>
+        <div data-en="<strong>Implementation:</strong> wrg-agent CLI + Control Center SSE + pre-commit enforcement." data-tr="<strong>Uygulama:</strong> wrg-agent CLI + Control Center SSE + pre-commit zorunluluğu."><strong>Implementation:</strong> wrg-agent CLI + Control Center SSE + pre-commit zorunluluğu.</div>
+      </div>
+      <p class="project-link"><a href="https://github.com/yakuphanycl/WinstonRedGuard/blob/main/ACP_PAPER.md" target="_blank" rel="noopener noreferrer" data-en="Read paper →" data-tr="Makaleyi oku →">Read paper →</a></p>
+      <div class="project-meta"><span>Multi-agent</span><span>Protocol Design</span><span>Python</span><span>2026</span></div>
+    </div>
+    <div class="project-card reveal">
+      <span class="featured-badge" data-en="Article" data-tr="Makale">Article</span>
+      <div class="project-icon">✍️</div>
+      <h3>Building a Self-Learning Memory System for AI Coding Agents</h3>
+      <p data-en="How I built instinct-mcp: a pattern memory layer for AI coding agents that observes tool sequences, user preferences, and recurring fixes — then auto-promotes high-confidence patterns as reusable suggestions." data-tr="instinct-mcp'yi nasıl inşa ettim: AI kodlama ajanları için araç dizilerini, kullanıcı tercihlerini ve tekrarlayan düzeltmeleri gözlemleyen, ardından yüksek güvenli kalıpları yeniden kullanılabilir öneriler olarak otomatik terfi eden bir kalıp hafıza katmanı.">How I built instinct-mcp: a pattern memory layer for AI coding agents that observes tool sequences, user preferences, and recurring fixes — then auto-promotes high-confidence patterns as reusable suggestions.</p>
+      <div class="project-proof">
+        <div data-en="<strong>Problem:</strong> AI agents forget learned patterns between sessions." data-tr="<strong>Problem:</strong> AI ajanları oturumlar arasında öğrenilmiş kalıpları unutuyor."><strong>Problem:</strong> AI agents forget learned patterns between sessions.</div>
+        <div data-en="<strong>Solution:</strong> SQLite-backed observe → promote pipeline with MCP integration." data-tr="<strong>Çözüm:</strong> MCP entegrasyonu ile SQLite destekli gözlemle → terfi et hattı."><strong>Solution:</strong> SQLite-backed observe → promote pipeline with MCP integration.</div>
+      </div>
+      <p class="project-link"><a href="https://medium.com/@yakuphan.yucel11" target="_blank" rel="noopener noreferrer" data-en="Read on Medium →" data-tr="Medium'da oku →">Read on Medium →</a></p>
+      <div class="project-meta"><span>MCP</span><span>Memory Systems</span><span>AI Agents</span><span>2025</span></div>
     </div>
   </div>
 </section>
