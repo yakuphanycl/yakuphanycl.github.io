@@ -859,6 +859,7 @@ function closeMenu() {
 }
 
 /* ── Language toggle ── */
+const LANG_STORAGE_KEY = 'winstonred_lang';
 let lang = 'en';
 function updateProjectsToggleText() {
   const btn = document.getElementById('toggle-projects');
@@ -876,8 +877,10 @@ function renderProofTimestamp() {
   const now = new Date();
   el.textContent = now.toLocaleString(locale, { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
 }
-function toggleLang() {
-  lang = lang === 'en' ? 'tr' : 'en';
+
+function applyLanguage(nextLang, persist = true) {
+  lang = nextLang === 'tr' ? 'tr' : 'en';
+  document.documentElement.lang = lang;
   document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'TR' : 'EN';
   document.querySelectorAll('[data-en]').forEach(el => {
     const text = el.getAttribute('data-' + lang);
@@ -885,6 +888,24 @@ function toggleLang() {
   });
   renderProofTimestamp();
   updateProjectsToggleText();
+  if (persist) {
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, lang);
+    } catch (_) {}
+  }
+}
+
+function getStoredLanguage() {
+  try {
+    const stored = localStorage.getItem(LANG_STORAGE_KEY);
+    return stored === 'tr' ? 'tr' : 'en';
+  } catch (_) {
+    return 'en';
+  }
+}
+
+function toggleLang() {
+  applyLanguage(lang === 'en' ? 'tr' : 'en');
 }
 
 /* ── Scroll reveal with stagger ── */
@@ -1013,8 +1034,7 @@ if (params.get('success') === '1') {
   const note = document.getElementById('status-note');
   if (note) note.classList.add('visible');
 }
-renderProofTimestamp();
-updateProjectsToggleText();
+applyLanguage(getStoredLanguage(), false);
 
 /* ── Terminal typing animation ── */
 (function initTerminal() {
