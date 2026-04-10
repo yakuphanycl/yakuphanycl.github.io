@@ -256,6 +256,15 @@ section { padding: 6rem 4rem; }
 .case-card h3 { font-size: 1rem; margin-bottom: 0.8rem; }
 .case-point { margin-bottom: 0.7rem; color: var(--text-muted); font-size: 0.9rem; }
 .case-point strong { color: var(--text); font-weight: 600; }
+.proof-signals { background: var(--bg); }
+.signals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 1100px; }
+.signal-card { border: 1px solid var(--border); background: var(--bg-card); border-radius: 10px; padding: 1.1rem; }
+.signal-label { display: block; font-size: 0.66rem; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.09em; font-family: var(--font-mono); margin-bottom: 0.3rem; }
+.signal-value { display: block; font-size: 1.3rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; }
+.signal-card p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.5; }
+.signal-links { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 0.7rem; max-width: 1100px; }
+.signal-links a { color: var(--accent-light); font-size: 0.86rem; text-decoration: none; border-bottom: 1px dashed rgba(231,76,60,0.45); }
+.signal-links a:hover { color: #fff; border-bottom-color: #fff; }
 .services { background: var(--bg-elevated); }
 .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 1100px; }
 .service-card { padding: 2.5rem 2rem; border: 1px solid var(--border); border-radius: 10px; transition: all 0.4s; position: relative; }
@@ -336,6 +345,7 @@ footer a:hover { color: var(--text); }
   .proof-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 100%; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   .case-grid { grid-template-columns: 1fr; }
+  .signals-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid { grid-template-columns: 1fr; }
   .trust-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
@@ -374,6 +384,8 @@ footer a:hover { color: var(--text); }
   .project-card h3 { font-size: 1rem; }
   .project-card p { font-size: 0.85rem; }
   .projects-actions { gap: 0.6rem; }
+  .signals-grid { grid-template-columns: 1fr; }
+  .signal-value { font-size: 1.15rem; }
   .service-number { font-size: 2.2rem; }
   .contact-link { padding: 1rem 1.25rem; }
   .contact-link-icon { width: 36px; height: 36px; font-size: 1rem; }
@@ -472,7 +484,7 @@ footer a:hover { color: var(--text); }
       </div>
     </div>
     <div class="hero-cta">
-      <a href="mailto:winstonrgsocial@gmail.com?subject=Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0AProject%20summary%3A%0ATimeline%3A%0ABudget%20range%3A" class="btn-call" data-en="Book 15-min Discovery Call" data-tr="15 dk Keşif Görüşmesi Al">Book 15-min Discovery Call</a>
+      <a href="mailto:winstonrgsocial@gmail.com?subject=Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0AProject%20summary%3A%0ATimeline%3A%0ABudget%20range%3A" class="btn-call" data-en="Book 15-min Discovery Call" data-tr="15 dk Keşif Görüşmesi Planla">Book 15-min Discovery Call</a>
       <a href="#contact" class="btn-primary" data-en="Send Project Brief →" data-tr="Proje Briefi Gönder →">Send Project Brief →</a>
       <a href="#projects" class="btn-secondary" data-en="View Projects" data-tr="Projeleri Gör">View Projects</a>
     </div>
@@ -738,6 +750,40 @@ footer a:hover { color: var(--text); }
       <p class="case-point" data-en="<strong>Solution:</strong> Observe → track → promote pipeline with SQLite and MCP integration." data-tr="<strong>Çözüm:</strong> SQLite ve MCP entegrasyonu ile gözlemle → takip et → terfi et hattı."><strong>Solution:</strong> Observe → track → promote pipeline with SQLite and MCP integration.</p>
       <p class="case-point" data-en="<strong>Outcome:</strong> Open-source on PyPI, reusable across Claude Code, Cursor, Windsurf." data-tr="<strong>Sonuç:</strong> PyPI'de açık kaynak, Claude Code, Cursor, Windsurf genelinde yeniden kullanılabilir."><strong>Outcome:</strong> Open-source on PyPI, reusable across Claude Code, Cursor, Windsurf.</p>
     </div>
+  </div>
+</section>
+<section class="proof-signals" id="proof-signals">
+  <div class="reveal">
+    <p class="section-label" data-en="Proof Signals" data-tr="Güven Sinyalleri">Proof Signals</p>
+    <h2 class="section-title" data-en="Execution You Can Verify" data-tr="Doğrulanabilir Teslim Kalitesi">Execution You Can Verify</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="signals-grid">
+    <article class="signal-card reveal">
+      <span class="signal-label" data-en="Portfolio Scale" data-tr="Portföy Ölçeği">Portfolio Scale</span>
+      <strong class="signal-value">61+ apps</strong>
+      <p data-en="Multi-app delivery experience across analytics, OSINT, automation, and agent tooling." data-tr="Analitik, OSINT, otomasyon ve ajan araçlarında çok uygulamalı teslim deneyimi.">Multi-app delivery experience across analytics, OSINT, automation, and agent tooling.</p>
+    </article>
+    <article class="signal-card reveal">
+      <span class="signal-label" data-en="Test Discipline" data-tr="Test Disiplini">Test Discipline</span>
+      <strong class="signal-value">1400+ tests</strong>
+      <p data-en="Test-first workflow with CI checks and reproducible quality gates before handover." data-tr="Teslim öncesi CI kontrolleri ve tekrarlanabilir kalite kapılarıyla test-öncelikli iş akışı.">Test-first workflow with CI checks and reproducible quality gates before handover.</p>
+    </article>
+    <article class="signal-card reveal">
+      <span class="signal-label" data-en="Response Rhythm" data-tr="Yanıt Ritmi">Response Rhythm</span>
+      <strong class="signal-value">&lt;24h</strong>
+      <p data-en="Typical first response window, with scope confirmation and milestone plan." data-tr="Tipik ilk dönüş süresi; kapsam netleştirme ve milestone planı ile birlikte.">Typical first response window, with scope confirmation and milestone plan.</p>
+    </article>
+    <article class="signal-card reveal">
+      <span class="signal-label" data-en="Governance" data-tr="Yönetişim">Governance</span>
+      <strong class="signal-value">61/61 gates</strong>
+      <p data-en="Policy checks and release discipline designed to reduce regressions and review friction." data-tr="Regresyonu ve review sürtünmesini azaltmak için policy kontrolleri ve release disiplini.">Policy checks and release discipline designed to reduce regressions and review friction.</p>
+    </article>
+  </div>
+  <div class="signal-links reveal">
+    <a href="/projects/winstonredguard.html" data-en="WinstonRedGuard case study →" data-tr="WinstonRedGuard vaka çalışması →">WinstonRedGuard case study →</a>
+    <a href="/projects/pulseboard.html" data-en="PulseBoard case study →" data-tr="PulseBoard vaka çalışması →">PulseBoard case study →</a>
+    <a href="https://github.com/yakuphanycl/WinstonRedGuard/actions" target="_blank" rel="noopener noreferrer" data-en="CI evidence (GitHub Actions) →" data-tr="CI kanıtı (GitHub Actions) →">CI evidence (GitHub Actions) →</a>
   </div>
 </section>
 <section class="services" id="services">
