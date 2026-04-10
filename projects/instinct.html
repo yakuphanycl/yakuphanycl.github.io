@@ -26,6 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -249,6 +250,22 @@
       letter-spacing: 0.8px;
       margin-top: 6px;
     }
+
+    .engage-strip {
+      margin: 22px 0 74px;
+      border: 1px solid rgba(231, 76, 60, 0.25);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(231, 76, 60, 0.11), rgba(17, 17, 24, 0.95));
+      padding: 24px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .engage-copy h3 { font-size: 21px; letter-spacing: -0.4px; margin-bottom: 6px; }
+    .engage-copy p { color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 640px; }
+    .engage-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
     /* SECTIONS */
     section { padding: 80px 0; }
@@ -542,6 +559,10 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
+      .engage-strip { padding: 20px; }
+      .engage-copy h3 { font-size: 18px; }
+      .engage-actions { width: 100%; }
+      .engage-actions .btn { width: 100%; justify-content: center; }
       .highlight-card { grid-template-columns: 1fr; padding: 32px 24px; }
       .arch-flow { flex-direction: column; }
       .arch-arrow { transform: rotate(90deg); }
@@ -559,6 +580,7 @@
         <a href="https://yakuphanycl.github.io" data-en="Home" data-tr="Ana Sayfa">Home</a>
         <a href="https://yakuphanycl.github.io/#projects" data-en="Projects" data-tr="Projeler">Projects</a>
         <a href="https://yakuphanycl.github.io/#services" data-en="Services" data-tr="Hizmetler">Services</a>
+        <a href="https://yakuphanycl.github.io/#pricing" data-en="Pricing" data-tr="Fiyatlandırma">Pricing</a>
         <a href="https://yakuphanycl.github.io/#contact" data-en="Contact" data-tr="İletişim">Contact</a>
         <a href="https://github.com/yakuphanycl/instinct" target="_blank">GitHub</a>
         <a href="https://pypi.org/project/instinct-mcp/" target="_blank">PyPI</a>
@@ -611,6 +633,16 @@
       <div class="stat-item">
         <span class="stat-num">0</span>
         <div class="stat-label" data-en="Dependencies" data-tr="Ba&#287;&#305;ml&#305;l&#305;k">Dependencies</div>
+      </div>
+    </div>
+    <div class="engage-strip">
+      <div class="engage-copy">
+        <h3 data-en="Need Agent Memory in Your Workflow?" data-tr="İş Akışına Ajan Hafızası Eklemek İster misin?">Need Agent Memory in Your Workflow?</h3>
+        <p data-en="I can integrate instinct-style pattern memory into your coding workflow with MCP and practical rollout guidance." data-tr="instinct tarzı örüntü hafızasını MCP ile kodlama iş akışınıza, pratik rollout planıyla birlikte entegre edebilirim.">I can integrate instinct-style pattern memory into your coding workflow with MCP and practical rollout guidance.</p>
+      </div>
+      <div class="engage-actions">
+        <a href="https://yakuphanycl.github.io/#pricing" class="btn btn-primary" data-en="View Guard Cloud Plans" data-tr="Guard Cloud Planlarını Gör">View Guard Cloud Plans</a>
+        <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn btn-ghost" data-book-call="1" data-en="Book Discovery Call" data-tr="Keşif Görüşmesi Planla">Book Discovery Call</a>
       </div>
     </div>
   </div>
@@ -847,12 +879,13 @@
   <!-- CTA -->
   <section class="cta-section">
     <div class="container">
-      <h2 data-en="Give Your Agent Memory" data-tr="Ajan&#305;n&#305;za Haf&#305;za Verin">Give Your Agent Memory</h2>
-      <p data-en="Install from PyPI. Check the source. Start learning." data-tr="PyPI'dan kurun. Kayna&#287;&#305; inceleyin. &Ouml;&#287;renmeye ba&#351;lay&#305;n.">Install from PyPI. Check the source. Start learning.</p>
+      <h2 data-en="Use This Blueprint in Your Team" data-tr="Bu Blueprint'i Kendi Ekibinde Uygula">Use This Blueprint in Your Team</h2>
+      <p data-en="Bring persistent pattern memory and multi-agent coordination readiness into your engineering workflow." data-tr="Kalıcı örüntü hafızasını ve çok-ajan koordinasyon hazırlığını mühendislik iş akışınıza taşıyın.">Bring persistent pattern memory and multi-agent coordination readiness into your engineering workflow.</p>
       <div class="cta-links">
-        <a href="https://github.com/yakuphanycl/instinct" target="_blank" class="btn btn-primary">GitHub Repo</a>
+        <a href="https://yakuphanycl.github.io/#pricing" class="btn btn-primary" data-en="Guard Cloud Pricing" data-tr="Guard Cloud Fiyatları">Guard Cloud Pricing</a>
+        <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn btn-ghost" data-book-call="1" data-en="Book Discovery Call" data-tr="Keşif Görüşmesi Planla">Book Discovery Call</a>
+        <a href="https://github.com/yakuphanycl/instinct" target="_blank" class="btn btn-ghost">GitHub Repo</a>
         <a href="https://pypi.org/project/instinct-mcp/" target="_blank" class="btn btn-ghost" data-en="View on PyPI" data-tr="PyPI'da G&ouml;r&uuml;nt&uuml;le">View on PyPI</a>
-        <a href="https://x.com/rg_winston3375" target="_blank" class="btn btn-ghost" data-en="Follow on X" data-tr="X'te Takip Et">Follow on X</a>
         <a href="https://yakuphanycl.github.io/projects/winstonredguard.html" class="btn btn-ghost" data-en="WinstonRedGuard &rarr;" data-tr="WinstonRedGuard &rarr;">WinstonRedGuard &rarr;</a>
       </div>
     </div>
@@ -864,16 +897,62 @@
     </div>
   </footer>
 
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
+const LANG_STORAGE_KEY = 'instinct_case_lang';
+const CALENDLY_BOOKING_URL = 'https://calendly.com/your-handle/15min'; // replace with your real Calendly URL
+const BOOKING_FALLBACK_MAILTO = 'mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request';
 let lang = 'en';
-function toggleLang() {
-  lang = lang === 'en' ? 'tr' : 'en';
+
+function applyLanguage(nextLang, persist = true) {
+  lang = nextLang === 'tr' ? 'tr' : 'en';
+  document.documentElement.lang = lang;
   document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'TR' : 'EN';
   document.querySelectorAll('[data-en]').forEach(el => {
     const text = el.getAttribute('data-' + lang);
     if (text) el.innerHTML = text;
   });
+  if (persist) {
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, lang);
+    } catch (_) {}
+  }
 }
+
+function toggleLang() {
+  applyLanguage(lang === 'en' ? 'tr' : 'en');
+}
+
+function getStoredLanguage() {
+  try {
+    const stored = localStorage.getItem(LANG_STORAGE_KEY);
+    return stored === 'tr' ? 'tr' : 'en';
+  } catch (_) {
+    return 'en';
+  }
+}
+
+function openBookingFlow() {
+  const hasCalendly = CALENDLY_BOOKING_URL && !CALENDLY_BOOKING_URL.includes('your-handle');
+  if (!hasCalendly) {
+    window.location.href = BOOKING_FALLBACK_MAILTO;
+    return;
+  }
+  if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+    window.Calendly.initPopupWidget({ url: CALENDLY_BOOKING_URL });
+    return;
+  }
+  window.open(CALENDLY_BOOKING_URL, '_blank', 'noopener,noreferrer');
+}
+
+document.querySelectorAll('[data-book-call]').forEach((el) => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    openBookingFlow();
+  });
+});
+
+applyLanguage(getStoredLanguage(), false);
 </script>
 </body>
 </html>

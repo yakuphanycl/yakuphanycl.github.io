@@ -26,6 +26,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -651,7 +652,7 @@
       </div>
       <div class="engage-actions">
         <a href="https://yakuphanycl.github.io/#pricing" class="btn btn-primary" data-en="View Guard Cloud Plans" data-tr="Guard Cloud Planlar&#305;n&#305; G&ouml;r">View Guard Cloud Plans</a>
-        <a href="https://yakuphanycl.github.io/#contact" class="btn btn-ghost" data-en="Start 15-min Discovery Call" data-tr="15 dk Ke&#351;if G&ouml;r&uuml;&#351;mesi Ba&#351;lat">Start 15-min Discovery Call</a>
+        <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn btn-ghost" data-book-call="1" data-en="Start 15-min Discovery Call" data-tr="15 dk Ke&#351;if G&ouml;r&uuml;&#351;mesi Ba&#351;lat">Start 15-min Discovery Call</a>
       </div>
     </div>
   </div>
@@ -926,7 +927,7 @@
       <p data-en="Get WinstonRed-style governance, CI discipline, and delivery reliability for your own repository." data-tr="Kendi repolar&#305;n&#305;z i&ccedil;in WinstonRed tarz&#305; y&ouml;neti&#351;im, CI disiplini ve teslim g&uuml;venilirli&#287;i kurun.">Get WinstonRed-style governance, CI discipline, and delivery reliability for your own repository.</p>
       <div class="cta-links">
         <a href="https://yakuphanycl.github.io/#pricing" class="btn btn-primary" data-en="Guard Cloud Pricing" data-tr="Guard Cloud Fiyatlar&#305;">Guard Cloud Pricing</a>
-        <a href="https://yakuphanycl.github.io/#contact" class="btn btn-ghost" data-en="Book Discovery Call" data-tr="Ke&#351;if G&ouml;r&uuml;&#351;mesi Planla">Book Discovery Call</a>
+        <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn btn-ghost" data-book-call="1" data-en="Book Discovery Call" data-tr="Ke&#351;if G&ouml;r&uuml;&#351;mesi Planla">Book Discovery Call</a>
         <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-ghost">GitHub Repo</a>
         <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-ghost" data-en="Try PulseBoard" data-tr="PulseBoard'u Dene">Try PulseBoard</a>
       </div>
@@ -939,8 +940,11 @@
     </div>
   </footer>
 
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
 const LANG_STORAGE_KEY = 'wrg_case_lang';
+const CALENDLY_BOOKING_URL = 'https://calendly.com/your-handle/15min'; // replace with your real Calendly URL
+const BOOKING_FALLBACK_MAILTO = 'mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request';
 let lang = 'en';
 
 function applyLanguage(nextLang, persist = true) {
@@ -970,6 +974,26 @@ function getStoredLanguage() {
     return 'en';
   }
 }
+
+function openBookingFlow() {
+  const hasCalendly = CALENDLY_BOOKING_URL && !CALENDLY_BOOKING_URL.includes('your-handle');
+  if (!hasCalendly) {
+    window.location.href = BOOKING_FALLBACK_MAILTO;
+    return;
+  }
+  if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+    window.Calendly.initPopupWidget({ url: CALENDLY_BOOKING_URL });
+    return;
+  }
+  window.open(CALENDLY_BOOKING_URL, '_blank', 'noopener,noreferrer');
+}
+
+document.querySelectorAll('[data-book-call]').forEach((el) => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    openBookingFlow();
+  });
+});
 
 applyLanguage(getStoredLanguage(), false);
 </script>

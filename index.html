@@ -109,6 +109,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <style>
 :root {
   --bg: #0a0a0b;
@@ -402,6 +403,40 @@ section { padding: 6rem 4rem; }
 .contact-form p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
 .form-row { display: grid; gap: 0.35rem; margin-bottom: 0.8rem; }
 .form-row-inline { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 0.8rem; }
+.brief-stepper { display: flex; gap: 0.45rem; margin: 0.25rem 0 1rem; flex-wrap: wrap; }
+.brief-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.24rem 0.58rem;
+}
+.brief-step-pill .num {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+}
+.brief-step-pill.active {
+  border-color: rgba(231,76,60,0.48);
+  color: #f5f5fa;
+  background: rgba(231,76,60,0.12);
+}
+.brief-step-pill.active .num {
+  border-color: rgba(231,76,60,0.7);
+  color: var(--accent-light);
+}
+.brief-step { display: none; }
+.brief-step.active { display: block; }
 .form-row label { font-size: 0.8rem; color: var(--text-muted); }
 .form-row input, .form-row select, .form-row textarea {
   width: 100%;
@@ -415,6 +450,11 @@ section { padding: 6rem 4rem; }
 }
 .form-row textarea { min-height: 120px; resize: vertical; }
 .form-actions { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; }
+.wizard-actions { display: flex; align-items: center; gap: 0.65rem; margin-top: 0.45rem; flex-wrap: wrap; }
+.wizard-actions .btn-secondary,
+.wizard-actions .btn-primary,
+.wizard-actions .btn-call { padding: 0.68rem 1rem; font-size: 0.82rem; }
+.wizard-actions .is-hidden { display: none !important; }
 .form-hint { margin-top: 0.35rem; font-size: 0.74rem; color: #7f8190; }
 .status-note { display: none; margin-top: 0.75rem; font-size: 0.82rem; color: #9edb9e; }
 .status-note.visible { display: block; }
@@ -567,6 +607,9 @@ footer a:hover { color: var(--text); }
   .contact-trust-grid { grid-template-columns: 1fr; }
   .status-actions { flex-direction: column; }
   .status-actions .btn-secondary { width: 100%; text-align: center; }
+  .wizard-actions { flex-direction: column; }
+  .wizard-actions .btn-secondary,
+  .wizard-actions .btn-primary { width: 100%; justify-content: center; }
   .service-number { font-size: 2.2rem; }
   .contact-link { padding: 1rem 1.25rem; }
   .contact-link-icon { width: 36px; height: 36px; font-size: 1rem; }
@@ -670,7 +713,7 @@ footer a:hover { color: var(--text); }
       </div>
     </div>
     <div class="hero-cta">
-      <a href="mailto:winstonrgsocial@gmail.com?subject=Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0AProject%20summary%3A%0ATimeline%3A%0ABudget%20range%3A" class="btn-call" data-en="Book 15-min Discovery Call" data-tr="15 dk Keşif Görüşmesi Planla">Book 15-min Discovery Call</a>
+      <a href="mailto:winstonrgsocial@gmail.com?subject=Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0AProject%20summary%3A%0ATimeline%3A%0ABudget%20range%3A" class="btn-call" data-book-call="1" data-en="Book 15-min Discovery Call" data-tr="15 dk Keşif Görüşmesi Planla">Book 15-min Discovery Call</a>
       <a href="#contact" class="btn-primary" data-en="Send Project Brief →" data-tr="Proje Briefi Gönder →">Send Project Brief →</a>
       <a href="#projects" class="btn-secondary" data-en="View Projects" data-tr="Projeleri Gör">View Projects</a>
     </div>
@@ -1196,28 +1239,33 @@ footer a:hover { color: var(--text); }
   <div class="contact-wrapper reveal">
     <p style="color: var(--text-muted); font-weight: 300; margin-bottom: 1rem;" data-en="I'm open to freelance projects, collaborations, and interesting problems. Reach out through any of the channels below." data-tr="Freelance projeler, iş birlikleri ve ilgi çekici problemler için açığım. Aşağıdaki kanallardan ulaşabilirsiniz.">I'm open to freelance projects, collaborations, and interesting problems. Reach out through any of the channels below.</p>
     <div class="contact-quick-actions">
-      <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0ATeam%20size%3A%0ARepo%20count%3A%0APreferred%20time%20window%3A" class="btn-call contact-track" data-track="contact_call_click" data-en="Schedule 15-min Call" data-tr="15 dk Görüşme Planla">Schedule 15-min Call</a>
+      <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0ATeam%20size%3A%0ARepo%20count%3A%0APreferred%20time%20window%3A" class="btn-call contact-track" data-book-call="1" data-track="contact_call_click" data-en="Schedule 15-min Call" data-tr="15 dk Görüşme Planla">Schedule 15-min Call</a>
       <a href="#contact-brief-form" class="btn-secondary contact-track" data-track="contact_brief_click" data-en="Send Project Brief" data-tr="Proje Briefi Gönder">Send Project Brief</a>
     </div>
     <div class="contact-grid">
       <form id="contact-brief-form" class="contact-form" action="https://formsubmit.co/winstonrgsocial@gmail.com" method="POST">
         <h3 data-en="Start with a short brief" data-tr="Kısa bir brief ile başlayın">Start with a short brief</h3>
         <p data-en="I usually reply within 24 hours." data-tr="Genellikle 24 saat içinde dönüş yapıyorum.">I usually reply within 24 hours.</p>
+        <div class="brief-stepper" id="brief-stepper">
+          <div class="brief-step-pill active" data-step="1"><span class="num">1</span><span data-en="Basics" data-tr="Temel">Basics</span></div>
+          <div class="brief-step-pill" data-step="2"><span class="num">2</span><span data-en="Scope" data-tr="Kapsam">Scope</span></div>
+          <div class="brief-step-pill" data-step="3"><span class="num">3</span><span data-en="Brief" data-tr="Brief">Brief</span></div>
+        </div>
         <input type="hidden" name="_subject" value="New inquiry from WinstonRed website">
         <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_next" value="https://yakuphanycl.github.io/?success=1#contact">
         <input type="text" name="_honey" style="display:none">
-        <div class="form-row-inline">
-          <div class="form-row">
-            <label for="name" data-en="Name" data-tr="İsim">Name</label>
-            <input id="name" name="name" required>
+        <div class="brief-step active" data-step="1">
+          <div class="form-row-inline">
+            <div class="form-row">
+              <label for="name" data-en="Name" data-tr="İsim">Name</label>
+              <input id="name" name="name" required>
+            </div>
+            <div class="form-row">
+              <label for="email" data-en="Email" data-tr="E-posta">Email</label>
+              <input id="email" name="email" type="email" required>
+            </div>
           </div>
-          <div class="form-row">
-            <label for="email" data-en="Email" data-tr="E-posta">Email</label>
-            <input id="email" name="email" type="email" required>
-          </div>
-        </div>
-        <div class="form-row-inline">
           <div class="form-row">
             <label for="service" data-en="Service Focus" data-tr="Hizmet Odağı">Service Focus</label>
             <select id="service" name="service" required>
@@ -1229,43 +1277,49 @@ footer a:hover { color: var(--text); }
               <option value="other" data-en="Other" data-tr="Diğer">Other</option>
             </select>
           </div>
-          <div class="form-row">
-            <label for="budget" data-en="Budget Range (USD)" data-tr="Bütçe Aralığı (USD)">Budget Range (USD)</label>
-            <select id="budget" name="budget" required>
-              <option value="" data-en="Select budget" data-tr="Bütçe seçin">Select budget</option>
-              <option value="500-2000">$500-$2,000</option>
-              <option value="2000-5000">$2,000-$5,000</option>
-              <option value="5000-plus">$5,000+</option>
-            </select>
-          </div>
         </div>
-        <div class="form-row-inline">
-          <div class="form-row">
-            <label for="timeline" data-en="Timeline" data-tr="Zamanlama">Timeline</label>
-            <select id="timeline" name="timeline" required>
-              <option value="" data-en="Select timeline" data-tr="Zamanlama seçin">Select timeline</option>
-              <option value="urgent" data-en="Urgent (this week)" data-tr="Acil (bu hafta)">Urgent (this week)</option>
-              <option value="2-4-weeks" data-en="2-4 weeks" data-tr="2-4 hafta">2-4 weeks</option>
-              <option value="flexible" data-en="Flexible" data-tr="Esnek">Flexible</option>
-            </select>
+        <div class="brief-step" data-step="2">
+          <div class="form-row-inline">
+            <div class="form-row">
+              <label for="budget" data-en="Budget Range (USD)" data-tr="Bütçe Aralığı (USD)">Budget Range (USD)</label>
+              <select id="budget" name="budget" required>
+                <option value="" data-en="Select budget" data-tr="Bütçe seçin">Select budget</option>
+                <option value="500-2000">$500-$2,000</option>
+                <option value="2000-5000">$2,000-$5,000</option>
+                <option value="5000-plus">$5,000+</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="timeline" data-en="Timeline" data-tr="Zamanlama">Timeline</label>
+              <select id="timeline" name="timeline" required>
+                <option value="" data-en="Select timeline" data-tr="Zamanlama seçin">Select timeline</option>
+                <option value="urgent" data-en="Urgent (this week)" data-tr="Acil (bu hafta)">Urgent (this week)</option>
+                <option value="2-4-weeks" data-en="2-4 weeks" data-tr="2-4 hafta">2-4 weeks</option>
+                <option value="flexible" data-en="Flexible" data-tr="Esnek">Flexible</option>
+              </select>
+            </div>
           </div>
           <div class="form-row">
             <label for="repo_count" data-en="Repo Count (if relevant)" data-tr="Repo Sayısı (varsa)">Repo Count (if relevant)</label>
             <input id="repo_count" name="repo_count" type="number" min="1" step="1" placeholder="1">
           </div>
         </div>
-        <div class="form-row">
-          <label for="message" data-en="Project Need" data-tr="Proje İhtiyacı">Project Need</label>
-          <textarea id="message" name="message" minlength="20" required placeholder="Goal, current stack, and expected outcome..."></textarea>
-          <p class="form-hint" data-en="Include your goal, current stack, and expected outcome for a faster scope draft." data-tr="Daha hızlı kapsam taslağı için hedefinizi, mevcut teknoloji yığınınızı ve beklenen çıktıyı ekleyin.">Include your goal, current stack, and expected outcome for a faster scope draft.</p>
+        <div class="brief-step" data-step="3">
+          <div class="form-row">
+            <label for="message" data-en="Project Need" data-tr="Proje İhtiyacı">Project Need</label>
+            <textarea id="message" name="message" minlength="20" required placeholder="Goal, current stack, and expected outcome..."></textarea>
+            <p class="form-hint" data-en="Include your goal, current stack, and expected outcome for a faster scope draft." data-tr="Daha hızlı kapsam taslağı için hedefinizi, mevcut teknoloji yığınınızı ve beklenen çıktıyı ekleyin.">Include your goal, current stack, and expected outcome for a faster scope draft.</p>
+          </div>
         </div>
-        <div class="form-actions">
-          <button class="btn-primary" type="submit" data-en="Send Brief →" data-tr="Brief Gönder →">Send Brief →</button>
+        <div class="wizard-actions">
+          <button id="brief-prev" class="btn-secondary is-hidden" type="button" data-en="Back" data-tr="Geri">Back</button>
+          <button id="brief-next" class="btn-primary" type="button" data-en="Continue →" data-tr="Devam Et →">Continue →</button>
+          <button id="brief-submit" class="btn-primary is-hidden" type="submit" data-en="Send Brief →" data-tr="Brief Gönder →">Send Brief →</button>
         </div>
         <p id="guard-note" class="status-note error" data-en="Please add a few more details about your project before sending." data-tr="Lütfen göndermeden önce projenizle ilgili birkaç detay daha ekleyin.">Please add a few more details about your project before sending.</p>
         <p id="status-note" class="status-note" data-en="Thanks, your message has been sent." data-tr="Teşekkürler, mesajınız gönderildi.">Thanks, your message has been sent.</p>
         <div id="status-actions" class="status-actions">
-          <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn-secondary contact-track" data-track="contact_success_call_click" data-en="Schedule 15-min Call" data-tr="15 dk Görüşme Planla">Schedule 15-min Call</a>
+          <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn-secondary contact-track" data-book-call="1" data-track="contact_success_call_click" data-en="Schedule 15-min Call" data-tr="15 dk Görüşme Planla">Schedule 15-min Call</a>
           <a href="https://linkedin.com/in/yakuphanycl" target="_blank" rel="noopener noreferrer" class="btn-secondary contact-track" data-track="contact_success_linkedin_click" data-en="Message on LinkedIn" data-tr="LinkedIn'den Yaz">Message on LinkedIn</a>
         </div>
       </form>
@@ -1337,6 +1391,7 @@ footer a:hover { color: var(--text); }
   </div>
   </div>
 </footer>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
 /* ── Menu ── */
 function toggleMenu() {
@@ -1403,6 +1458,23 @@ function toggleLang() {
 }
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CALENDLY_BOOKING_URL = 'https://calendly.com/your-handle/15min'; // replace with your real Calendly URL
+const BOOKING_FALLBACK_MAILTO = 'mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request';
+let currentBriefStep = 1;
+const totalBriefSteps = 3;
+
+function openBookingFlow() {
+  const hasCalendly = CALENDLY_BOOKING_URL && !CALENDLY_BOOKING_URL.includes('your-handle');
+  if (!hasCalendly) {
+    window.location.href = BOOKING_FALLBACK_MAILTO;
+    return;
+  }
+  if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+    window.Calendly.initPopupWidget({ url: CALENDLY_BOOKING_URL });
+    return;
+  }
+  window.open(CALENDLY_BOOKING_URL, '_blank', 'noopener,noreferrer');
+}
 
 function trackEvent(eventName, payload = {}) {
   try {
@@ -1548,12 +1620,73 @@ function copyEmail(btn) {
   });
 }
 
+document.querySelectorAll('[data-book-call]').forEach((el) => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    trackEvent('booking_open_click', { location: 'sitewide' });
+    openBookingFlow();
+  });
+});
+
 document.querySelectorAll('.contact-track').forEach((el) => {
   el.addEventListener('click', () => {
     const name = el.getAttribute('data-track') || 'contact_link_click';
     trackEvent(name, { location: 'contact' });
   });
 });
+
+function setBriefStep(nextStep) {
+  currentBriefStep = Math.max(1, Math.min(totalBriefSteps, nextStep));
+  document.querySelectorAll('.brief-step').forEach((stepEl) => {
+    const stepNum = Number(stepEl.getAttribute('data-step'));
+    stepEl.classList.toggle('active', stepNum === currentBriefStep);
+  });
+  document.querySelectorAll('.brief-step-pill').forEach((pill) => {
+    const stepNum = Number(pill.getAttribute('data-step'));
+    pill.classList.toggle('active', stepNum === currentBriefStep);
+  });
+  const prevBtn = document.getElementById('brief-prev');
+  const nextBtn = document.getElementById('brief-next');
+  const submitBtn = document.getElementById('brief-submit');
+  if (prevBtn) prevBtn.classList.toggle('is-hidden', currentBriefStep === 1);
+  if (nextBtn) nextBtn.classList.toggle('is-hidden', currentBriefStep === totalBriefSteps);
+  if (submitBtn) submitBtn.classList.toggle('is-hidden', currentBriefStep !== totalBriefSteps);
+}
+
+function validateBriefStep(stepNum) {
+  const stepEl = document.querySelector(`.brief-step[data-step="${stepNum}"]`);
+  if (!stepEl) return true;
+  const fields = stepEl.querySelectorAll('input, select, textarea');
+  for (const field of fields) {
+    if (field.type === 'hidden') continue;
+    if (!field.checkValidity()) {
+      field.reportValidity();
+      return false;
+    }
+  }
+  return true;
+}
+
+function initBriefWizard() {
+  const form = document.getElementById('contact-brief-form');
+  if (!form) return;
+  const nextBtn = document.getElementById('brief-next');
+  const prevBtn = document.getElementById('brief-prev');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (!validateBriefStep(currentBriefStep)) return;
+      setBriefStep(currentBriefStep + 1);
+      trackEvent('contact_wizard_next', { step: currentBriefStep });
+    });
+  }
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      setBriefStep(currentBriefStep - 1);
+      trackEvent('contact_wizard_back', { step: currentBriefStep });
+    });
+  }
+  setBriefStep(1);
+}
 
 /* ── Contact form anti-spam guard ── */
 const contactForm = document.querySelector('.contact-form');
@@ -1574,6 +1707,12 @@ if (contactForm) {
     const elapsed = Date.now() - formReadyAt;
     const tooFast = elapsed < 4000;
     const tooShort = message.length < 20;
+    if (currentBriefStep < totalBriefSteps) {
+      e.preventDefault();
+      setBriefStep(totalBriefSteps);
+      trackEvent('contact_wizard_forced_last_step', { step: currentBriefStep });
+      return;
+    }
     if (tooFast || tooShort) {
       e.preventDefault();
       if (guardNote) guardNote.classList.add('visible');
@@ -1598,6 +1737,7 @@ if (params.get('success') === '1') {
   if (actions) actions.classList.add('visible');
   trackEvent('contact_success_view', { location: 'contact' });
 }
+initBriefWizard();
 applyLanguage(getStoredLanguage(), false);
 
 /* ── Terminal typing animation ── */
