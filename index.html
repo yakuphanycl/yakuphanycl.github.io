@@ -329,6 +329,25 @@ section { padding: 6rem 4rem; }
 .demo-links { margin-top: 0.7rem; display: flex; gap: 0.65rem; flex-wrap: wrap; }
 .demo-links a { color: var(--accent-light); text-decoration: none; font-size: 0.83rem; border-bottom: 1px dashed rgba(231,76,60,0.45); }
 .demo-links a:hover { color: #fff; border-bottom-color: #fff; }
+.pricing { background: var(--bg); }
+.pricing-intro { max-width: 820px; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; max-width: 1200px; }
+.pricing-card { border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); padding: 1.2rem; position: relative; overflow: hidden; }
+.pricing-card.popular { border-color: rgba(231,76,60,0.42); box-shadow: 0 10px 30px rgba(192,57,43,0.14); }
+.pricing-card.popular::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(231,76,60,0.08), transparent 42%); }
+.plan-pill { display: inline-flex; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.09em; text-transform: uppercase; border: 1px solid rgba(212,168,83,0.35); color: var(--gold); border-radius: 999px; padding: 0.15rem 0.55rem; margin-bottom: 0.5rem; }
+.plan-name { font-size: 1.1rem; font-weight: 700; }
+.plan-price { margin-top: 0.2rem; font-family: var(--font-display); font-size: 2rem; line-height: 1; letter-spacing: -0.02em; }
+.plan-price small { font-family: var(--font-body); font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-left: 0.2rem; }
+.plan-lead { margin-top: 0.55rem; color: var(--text-muted); font-size: 0.84rem; line-height: 1.5; }
+.plan-features { margin-top: 0.8rem; display: grid; gap: 0.35rem; color: var(--text-muted); font-size: 0.84rem; line-height: 1.5; padding-left: 0.95rem; }
+.plan-features li strong { color: var(--text); }
+.pricing-addon { margin-top: 1rem; max-width: 1200px; border: 1px dashed rgba(212,168,83,0.36); border-radius: 10px; background: rgba(212,168,83,0.05); padding: 0.85rem 1rem; }
+.pricing-addon p { font-size: 0.86rem; color: var(--text-muted); }
+.pricing-addon strong { color: var(--text); }
+.pricing-cta { margin-top: 1.1rem; max-width: 1200px; border: 1px solid rgba(231,76,60,0.4); border-radius: 10px; padding: 1rem; background: linear-gradient(135deg, rgba(231,76,60,0.14), rgba(17,17,19,0.95)); display: flex; justify-content: space-between; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.pricing-cta p { color: #f3f3f8; font-size: 0.92rem; max-width: 720px; }
+.pricing-cta-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .projects,
 .proof-signals {
   position: relative;
@@ -467,6 +486,8 @@ footer a:hover { color: var(--text); }
   .trust-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
   .demo-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-cta { align-items: flex-start; }
   .project-card-primary { grid-column: span 1; }
   .contact-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
@@ -508,6 +529,11 @@ footer a:hover { color: var(--text); }
   .signal-value { font-size: 1.15rem; }
   .demo-card { padding: 0.85rem; }
   .demo-card h3 { font-size: 0.95rem; }
+  .plan-price { font-size: 1.7rem; }
+  .pricing-cta p { font-size: 0.86rem; }
+  .pricing-cta-actions { width: 100%; }
+  .pricing-cta-actions .btn-call,
+  .pricing-cta-actions .btn-secondary { width: 100%; justify-content: center; }
   .service-number { font-size: 2.2rem; }
   .contact-link { padding: 1rem 1.25rem; }
   .contact-link-icon { width: 36px; height: 36px; font-size: 1rem; }
@@ -574,6 +600,7 @@ footer a:hover { color: var(--text); }
     </li>
     <li><a href="#research" data-en="Research" data-tr="Araştırma" onclick="closeMenu()">Research</a></li>
     <li><a href="#services" data-en="Services" data-tr="Hizmetler" onclick="closeMenu()">Services</a></li>
+    <li><a href="#pricing" data-en="Pricing" data-tr="Fiyatlandırma" onclick="closeMenu()">Pricing</a></li>
     <li><a href="#contact" data-en="Contact" data-tr="İletişim" onclick="closeMenu()">Contact</a></li>
     <li><button class="lang-toggle" onclick="toggleLang()">TR</button></li>
   </ul>
@@ -862,6 +889,62 @@ footer a:hover { color: var(--text); }
     </article>
   </div>
 </section>
+<section class="pricing" id="pricing">
+  <div class="reveal">
+    <p class="section-label" data-en="Pricing" data-tr="Fiyatlandırma">Pricing</p>
+    <h2 class="section-title" data-en="WinstonRed Guard Cloud Plans" data-tr="WinstonRed Guard Cloud Planları">WinstonRed Guard Cloud Plans</h2>
+    <div class="section-divider"></div>
+  </div>
+  <p class="pricing-intro reveal" data-en="Clear monthly pricing for engineering teams that want measurable repo governance and early risk signals without enterprise overhead." data-tr="Kurumsal operasyon yüküne girmeden ölçülebilir repo yönetişimi ve erken risk sinyali isteyen mühendislik ekipleri için net aylık fiyatlandırma.">Clear monthly pricing for engineering teams that want measurable repo governance and early risk signals without enterprise overhead.</p>
+  <div class="pricing-grid">
+    <article class="pricing-card reveal">
+      <span class="plan-pill" data-en="Starter" data-tr="Başlangıç">Starter</span>
+      <h3 class="plan-name">Starter</h3>
+      <p class="plan-price">$49<small data-en="/month" data-tr="/ay">/month</small></p>
+      <p class="plan-lead" data-en="For solo builders and small repositories." data-tr="Tek geliştirici ve küçük repo portföyleri için.">For solo builders and small repositories.</p>
+      <ul class="plan-features">
+        <li data-en="<strong>5 repos</strong> monitored daily" data-tr="Günlük izleme ile <strong>5 repo</strong>"><strong>5 repos</strong> monitored daily</li>
+        <li data-en="CI, PR and dependency baseline risk score" data-tr="CI, PR ve dependency için temel risk skoru">CI, PR and dependency baseline risk score</li>
+        <li data-en="Weekly executive summary email" data-tr="Haftalık yönetici özeti e-postası">Weekly executive summary email</li>
+        <li data-en="<strong>3 governance policy</strong> templates" data-tr="<strong>3 yönetişim policy</strong> şablonu"><strong>3 governance policy</strong> templates</li>
+      </ul>
+    </article>
+    <article class="pricing-card popular reveal">
+      <span class="plan-pill" data-en="Most Popular" data-tr="En Çok Tercih Edilen">Most Popular</span>
+      <h3 class="plan-name">Growth</h3>
+      <p class="plan-price">$149<small data-en="/month" data-tr="/ay">/month</small></p>
+      <p class="plan-lead" data-en="For active teams shipping production weekly." data-tr="Haftalık üretim teslimi yapan aktif ekipler için.">For active teams shipping production weekly.</p>
+      <ul class="plan-features">
+        <li data-en="<strong>20 repos</strong> with hourly scans" data-tr="Saatlik tarama ile <strong>20 repo</strong>"><strong>20 repos</strong> with hourly scans</li>
+        <li data-en="Slack and Discord realtime alerts" data-tr="Slack ve Discord gerçek zamanlı alarmlar">Slack and Discord realtime alerts</li>
+        <li data-en="Secrets + branch protection checks" data-tr="Secrets + branch protection kontrolleri">Secrets + branch protection checks</li>
+        <li data-en="PR risk prioritization + monthly Guard Review call" data-tr="PR risk önceliklendirme + aylık Guard Review görüşmesi">PR risk prioritization + monthly Guard Review call</li>
+      </ul>
+    </article>
+    <article class="pricing-card reveal">
+      <span class="plan-pill" data-en="Scale" data-tr="Ölçek">Scale</span>
+      <h3 class="plan-name">Scale</h3>
+      <p class="plan-price">$399<small data-en="/month" data-tr="/ay">/month</small></p>
+      <p class="plan-lead" data-en="For agencies and portfolio-level delivery teams." data-tr="Ajanslar ve portföy seviyesinde teslim yapan ekipler için.">For agencies and portfolio-level delivery teams.</p>
+      <ul class="plan-features">
+        <li data-en="<strong>75 repos</strong> near realtime scans" data-tr="Neredeyse gerçek zamanlı tarama ile <strong>75 repo</strong>"><strong>75 repos</strong> near realtime scans</li>
+        <li data-en="Custom policy packs and threshold tuning" data-tr="Özel policy paketleri ve eşik ayarı">Custom policy packs and threshold tuning</li>
+        <li data-en="Audit exports (JSON/CSV), SSO and role-based access" data-tr="Denetim çıktısı (JSON/CSV), SSO ve rol bazlı erişim">Audit exports (JSON/CSV), SSO and role-based access</li>
+        <li data-en="Priority support and onboarding lane" data-tr="Öncelikli destek ve onboarding hattı">Priority support and onboarding lane</li>
+      </ul>
+    </article>
+  </div>
+  <div class="pricing-addon reveal">
+    <p data-en="<strong>Optional:</strong> Guard Setup Sprint — <strong>$600 one-time</strong>. Includes repo onboarding, policy tuning, alert calibration, and first 30-day risk reduction roadmap." data-tr="<strong>Opsiyonel:</strong> Guard Setup Sprint — <strong>tek seferlik $600</strong>. Repo onboarding, policy ayarı, alarm kalibrasyonu ve ilk 30 günlük risk azaltma yol haritasını içerir."><strong>Optional:</strong> Guard Setup Sprint — <strong>$600 one-time</strong>. Includes repo onboarding, policy tuning, alert calibration, and first 30-day risk reduction roadmap.</p>
+  </div>
+  <div class="pricing-cta reveal">
+    <p data-en="Stop manually chasing repo risk. Start WinstonRed Guard Cloud with a 15-minute discovery call and ship with clearer engineering confidence." data-tr="Repo riskini manuel takip etmeyi bırakın. WinstonRed Guard Cloud'a 15 dakikalık keşif görüşmesiyle başlayın ve daha net mühendislik güveniyle teslim yapın.">Stop manually chasing repo risk. Start WinstonRed Guard Cloud with a 15-minute discovery call and ship with clearer engineering confidence.</p>
+    <div class="pricing-cta-actions">
+      <a href="mailto:winstonrgsocial@gmail.com?subject=Guard%20Cloud%20Trial%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20start%20a%20Guard%20Cloud%20trial.%0ATeam%20size%3A%0ARepo%20count%3A%0ACurrent%20stack%3A" class="btn-call" data-en="Start 14-day Trial" data-tr="14 Günlük Denemeyi Başlat">Start 14-day Trial</a>
+      <a href="#contact" class="btn-secondary" data-en="Request Live Demo" data-tr="Canlı Demo İste">Request Live Demo</a>
+    </div>
+  </div>
+</section>
 <section class="research" id="research" style="background:var(--bg-elevated)">
   <div class="reveal">
     <p class="section-label" data-en="Writing & Research" data-tr="Yazılar & Araştırma">Writing & Research</p>
@@ -1143,6 +1226,7 @@ footer a:hover { color: var(--text); }
       <a href="#projects" data-en="Projects" data-tr="Projeler">Projects</a>
       <a href="/projects/winstonredguard.html">WRG</a>
       <a href="#services" data-en="Services" data-tr="Hizmetler">Services</a>
+      <a href="#pricing" data-en="Pricing" data-tr="Fiyatlandırma">Pricing</a>
       <a href="#contact" data-en="Contact" data-tr="İletişim">Contact</a>
       <a href="https://github.com/yakuphanycl" target="_blank">GitHub</a>
       <a href="https://pypi.org/project/instinct-mcp/" target="_blank">PyPI</a>
@@ -1244,7 +1328,7 @@ if (projectsSection && toggleProjectsBtn) {
 
 /* ── Card spotlight visual ── */
 (function initCardSpotlight() {
-  const cards = document.querySelectorAll('.project-card, .case-card, .service-card, .signal-card, .trust-card, .contact-link');
+  const cards = document.querySelectorAll('.project-card, .case-card, .service-card, .signal-card, .trust-card, .pricing-card, .contact-link');
   if (!cards.length) return;
   cards.forEach((card) => {
     card.classList.add('spotlight-card');
