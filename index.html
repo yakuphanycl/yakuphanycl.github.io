@@ -253,6 +253,22 @@ section { padding: 6rem 4rem; }
 .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--gold)); opacity: 0; transition: opacity 0.4s; }
 .project-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 8px 40px rgba(0,0,0,0.3); }
 .project-card:hover::before { opacity: 1; }
+.project-card-primary {
+  grid-column: span 2;
+  background:
+    radial-gradient(circle at 92% 12%, rgba(231, 76, 60, 0.2), transparent 48%),
+    linear-gradient(180deg, rgba(231, 76, 60, 0.08), rgba(24, 24, 27, 0.96));
+  border-color: rgba(231, 76, 60, 0.4);
+}
+.project-card-primary::before { opacity: 1; height: 3px; }
+.project-card-primary .project-icon { width: 50px; height: 50px; font-size: 1.35rem; }
+.project-card-primary h3 { font-size: 1.25rem; }
+.project-card-primary .project-meta span { background: rgba(231,76,60,0.12); border: 1px solid rgba(231,76,60,0.2); color: #e9e9ef; }
+.project-card-secondary {
+  border-color: rgba(212, 168, 83, 0.25);
+  background: linear-gradient(180deg, rgba(212, 168, 83, 0.04), rgba(24, 24, 27, 0.95));
+}
+.project-card-secondary .project-icon { box-shadow: inset 0 0 0 1px rgba(212,168,83,0.2); }
 .project-icon { width: 42px; height: 42px; background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 1.25rem; }
 .project-card h3 { font-family: var(--font-body); font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; }
 .project-card p { color: var(--text-muted); font-size: 0.9rem; font-weight: 300; line-height: 1.6; }
@@ -265,6 +281,33 @@ section { padding: 6rem 4rem; }
 .project-link a { color: var(--accent-light); text-decoration: none; font-size: 0.85rem; }
 .project-link a:hover { color: #fff; }
 .featured-badge { position: absolute; top: 1rem; right: 1rem; font-family: var(--font-mono); font-size: 0.65rem; padding: 0.2rem 0.6rem; background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.35); border-radius: 4px; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+.top-pick {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(231, 76, 60, 0.6);
+  background: linear-gradient(135deg, #b93327, #e74c3c);
+  box-shadow: 0 6px 18px rgba(185, 51, 39, 0.35);
+}
+.rank-chip {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  color: var(--gold);
+  background: rgba(212, 168, 83, 0.14);
+  border: 1px solid rgba(212, 168, 83, 0.42);
+}
 .projects-actions { display: flex; gap: 0.85rem; align-items: center; flex-wrap: wrap; margin-top: 1.4rem; }
 #projects .project-card-extra { display: none; }
 #projects.projects-expanded .project-card-extra { display: block; }
@@ -405,6 +448,7 @@ footer a:hover { color: var(--text); }
   .services-grid { grid-template-columns: 1fr; }
   .trust-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
+  .project-card-primary { grid-column: span 1; }
   .contact-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
   footer { padding: 2rem 1.5rem; }
@@ -438,6 +482,7 @@ footer a:hover { color: var(--text); }
   .tech-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.45rem; }
   .tech-tag { font-size: 0.7rem; padding: 0.35rem 0.4rem; min-height: 36px; }
   .project-card h3 { font-size: 1rem; }
+  .project-card-primary h3 { font-size: 1.05rem; }
   .project-card p { font-size: 0.85rem; }
   .projects-actions { gap: 0.6rem; }
   .signals-grid { grid-template-columns: 1fr; }
@@ -610,8 +655,9 @@ footer a:hover { color: var(--text); }
     <div class="section-divider"></div>
   </div>
   <div class="projects-grid">
-    <div class="project-card reveal">
+    <div class="project-card project-card-primary reveal">
       <span class="featured-badge" data-en="Featured" data-tr="Öne Çıkan">Featured</span>
+      <span class="top-pick" data-en="Top Pick" data-tr="En İyi Seçim">Top Pick</span>
       <div class="project-icon">🛡️</div>
       <h3><a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">WinstonRedGuard</a></h3>
       <p data-en="The core monorepo powering all WinstonRed applications — 61+ apps, 1400+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline." data-tr="Tüm WinstonRed uygulamalarını barındıran ana monorepo — 61+ uygulama, 1400+ test, CI/CD yeşil. Otomatik kalite kontrolleri, yönetişim kuralları ve günlük sinyal istihbarat hattı içeren Python &amp; PowerShell politika kapı sistemi.">The core monorepo powering all WinstonRed applications — 61+ apps, 1400+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline.</p>
@@ -623,8 +669,9 @@ footer a:hover { color: var(--text); }
       <p class="project-link"><a href="/projects/winstonredguard.html" data-en="Read case study →" data-tr="Vaka çalışmasını oku →">Read case study →</a></p>
       <div class="project-meta"><span>Python</span><span>PowerShell</span><span>GitHub Actions</span><span>Monorepo</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card project-card-secondary reveal">
       <span class="featured-badge" data-en="Featured" data-tr="Öne Çıkan">Featured</span>
+      <span class="rank-chip">#2</span>
       <div class="project-icon">📊</div>
       <h3><a href="https://winstonredguard-production.up.railway.app" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">PulseBoard by WinstonRed</a></h3>
       <p data-en="Live GitHub repo health SaaS on Railway. Tracks CI, coverage, PR age, dependencies, and release cadence with 7 collectors, then computes a single 0-100 Pulse Score for fast operational decisions." data-tr="Railway üzerinde canlı GitHub repo sağlık SaaS'ı. CI, coverage, PR yaşı, dependency ve release cadence sinyallerini 7 toplayıcıyla izler; hızlı operasyon kararları için tek bir 0-100 Pulse Skoru üretir.">Live GitHub repo health SaaS on Railway. Tracks CI, coverage, PR age, dependencies, and release cadence with 7 collectors, then computes a single 0-100 Pulse Score for fast operational decisions.</p>
@@ -636,8 +683,9 @@ footer a:hover { color: var(--text); }
       <p class="project-link"><a href="/projects/pulseboard.html" data-en="Read case study →" data-tr="Vaka çalışmasını oku →">Read case study →</a></p>
       <div class="project-meta"><span>FastAPI</span><span>186 tests</span><span>Railway</span><span>SaaS</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card project-card-secondary reveal">
       <span class="featured-badge" data-en="Featured" data-tr="Öne Çıkan">Featured</span>
+      <span class="rank-chip">#3</span>
       <div class="project-icon">🤝</div>
       <h3>wrg-agent / ACP</h3>
       <p data-en="A practical coordination protocol for concurrent AI coding agents. It combines SQLite TTL file locks, committed .agents durable state, and SSE broadcast to prevent merge conflicts before they happen." data-tr="Paralel AI kodlama ajanları için pratik koordinasyon protokolü. Merge çatışmalarını daha oluşmadan engellemek için SQLite TTL dosya kilitleri, commitlenen .agents kalıcı katmanı ve SSE yayını birleştirir.">A practical coordination protocol for concurrent AI coding agents. It combines SQLite TTL file locks, committed .agents durable state, and SSE broadcast to prevent merge conflicts before they happen.</p>
