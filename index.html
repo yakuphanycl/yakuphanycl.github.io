@@ -107,6 +107,46 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How quickly do projects start?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most projects start with a 15-minute discovery call and a scope draft within 24 to 48 hours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What stack do you usually use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "I usually build with Python, FastAPI, SQLite, and low-dependency infrastructure. For local AI flows I use Ollama and deterministic pipelines."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you work with an existing codebase?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. I can audit existing repositories, add governance gates, improve CI and test quality, and deliver phased upgrades without disrupting current delivery."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How are projects priced?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Projects are scoped either as fixed milestone packages or monthly retainers depending on repo count, integration complexity, and delivery cadence."
+      }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
@@ -349,6 +389,52 @@ section { padding: 6rem 4rem; }
 .pricing-cta { margin-top: 1.1rem; max-width: 1200px; border: 1px solid rgba(231,76,60,0.4); border-radius: 10px; padding: 1rem; background: linear-gradient(135deg, rgba(231,76,60,0.14), rgba(17,17,19,0.95)); display: flex; justify-content: space-between; gap: 1rem; align-items: center; flex-wrap: wrap; }
 .pricing-cta p { color: #f3f3f8; font-size: 0.92rem; max-width: 720px; }
 .pricing-cta-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.faq { background: var(--bg-elevated); }
+.faq-intro { max-width: 820px; color: var(--text-muted); font-size: 0.92rem; margin-bottom: 1.2rem; }
+.faq-grid { max-width: 980px; display: grid; gap: 0.7rem; }
+.faq-item { border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); overflow: hidden; }
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  padding: 1rem 1.1rem;
+}
+.faq-question:hover { background: rgba(255,255,255,0.02); }
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  color: var(--accent-light);
+  transition: transform 0.2s ease;
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.faq-answer p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  padding: 0 1.1rem 1rem;
+}
+.faq-item.open .faq-answer { max-height: 180px; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
 .projects,
 .proof-signals {
   position: relative;
@@ -626,6 +712,41 @@ footer a:hover { color: var(--text); }
 .copy-email-btn:hover { border-color: var(--accent); color: var(--text); }
 .copy-email-btn.copied { background: rgba(192,57,43,0.15); border-color: var(--accent); color: var(--accent-light); }
 .typing-cursor { display: inline-block; width: 3px; height: 0.9em; background: var(--accent-light); margin-left: 4px; animation: cursorBlink 0.8s ease-in-out infinite; vertical-align: baseline; }
+.mobile-cta-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 130;
+  padding: 0.7rem 0.9rem calc(0.7rem + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid rgba(231,76,60,0.35);
+  background: linear-gradient(180deg, rgba(10,10,11,0.92), rgba(10,10,11,0.98));
+  backdrop-filter: blur(8px);
+}
+.mobile-cta-inner {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: 1fr 1fr;
+}
+.mobile-cta-bar .btn-call,
+.mobile-cta-bar .btn-secondary {
+  width: 100%;
+  justify-content: center;
+  padding: 0.72rem 0.8rem;
+  font-size: 0.78rem;
+}
+@media (max-width: 900px) {
+  body { padding-bottom: 92px; }
+  .mobile-cta-bar { display: block; }
+}
+@media (max-width: 480px) {
+  .mobile-cta-inner { grid-template-columns: 1fr; }
+  .mobile-cta-bar {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
 @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -677,6 +798,7 @@ footer a:hover { color: var(--text); }
     <li><a href="#research" data-en="Research" data-tr="Araştırma" onclick="closeMenu()">Research</a></li>
     <li><a href="#services" data-en="Services" data-tr="Hizmetler" onclick="closeMenu()">Services</a></li>
     <li><a href="#pricing" data-en="Pricing" data-tr="Fiyatlandırma" onclick="closeMenu()">Pricing</a></li>
+    <li><a href="#faq" data-en="FAQ" data-tr="SSS" onclick="closeMenu()">FAQ</a></li>
     <li><a href="#contact" data-en="Contact" data-tr="İletişim" onclick="closeMenu()">Contact</a></li>
     <li><button class="lang-toggle" onclick="toggleLang()">TR</button></li>
   </ul>
@@ -1021,6 +1143,52 @@ footer a:hover { color: var(--text); }
     </div>
   </div>
 </section>
+<section class="faq" id="faq">
+  <div class="reveal">
+    <p class="section-label" data-en="FAQ" data-tr="SSS">FAQ</p>
+    <h2 class="section-title" data-en="Before We Start, Here Is What Teams Ask Most" data-tr="Başlamadan Önce Ekiplerin En Çok Sorduğu Sorular">Before We Start, Here Is What Teams Ask Most</h2>
+    <div class="section-divider"></div>
+  </div>
+  <p class="faq-intro reveal" data-en="If your case is slightly different, send a short brief. I will still map it to a clear scope, timeline, and delivery lane." data-tr="Durumunuz biraz farklıysa kısa bir brief gönderin. Yine de net kapsam, zaman planı ve teslim hattına dönüştürürüm.">If your case is slightly different, send a short brief. I will still map it to a clear scope, timeline, and delivery lane.</p>
+  <div class="faq-grid">
+    <article class="faq-item reveal">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-en="How quickly can we start?" data-tr="Ne kadar hızlı başlayabiliriz?">How quickly can we start?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">
+        <p data-en="Usually with a 15-minute discovery call and a written scope draft within 24-48 hours." data-tr="Genelde 15 dakikalık keşif görüşmesiyle başlayıp 24-48 saat içinde yazılı kapsam taslağı gönderiyorum.">Usually with a 15-minute discovery call and a written scope draft within 24-48 hours.</p>
+      </div>
+    </article>
+    <article class="faq-item reveal">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-en="Do you work on existing repositories?" data-tr="Mevcut repolar üzerinde çalışıyor musunuz?">Do you work on existing repositories?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">
+        <p data-en="Yes. I can onboard to your current repo, harden CI and governance gates, and deliver improvements without freezing active work." data-tr="Evet. Mevcut repoya onboarding yapıp CI ve governance gate'leri güçlendirir, aktif işi dondurmadan iyileştirme teslim ederim.">Yes. I can onboard to your current repo, harden CI and governance gates, and deliver improvements without freezing active work.</p>
+      </div>
+    </article>
+    <article class="faq-item reveal">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-en="What is your default stack?" data-tr="Varsayılan teknoloji yığınınız nedir?">What is your default stack?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">
+        <p data-en="Python, FastAPI, SQLite, and low-dependency architecture. For local AI workflows I use deterministic pipelines and Ollama-based setups." data-tr="Python, FastAPI, SQLite ve düşük bağımlılık mimarisi. Yerel AI iş akışlarında deterministik hatlar ve Ollama tabanlı kurulumlar kullanıyorum.">Python, FastAPI, SQLite, and low-dependency architecture. For local AI workflows I use deterministic pipelines and Ollama-based setups.</p>
+      </div>
+    </article>
+    <article class="faq-item reveal">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-en="How is pricing decided?" data-tr="Fiyatlandırma nasıl belirleniyor?">How is pricing decided?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">
+        <p data-en="I scope by repo count, integration depth, and risk profile. Then I propose either fixed milestones or a monthly lane." data-tr="Repo sayısı, entegrasyon derinliği ve risk profiline göre kapsam çıkarıyorum. Sonra sabit milestone ya da aylık teslim hattı öneriyorum.">I scope by repo count, integration depth, and risk profile. Then I propose either fixed milestones or a monthly lane.</p>
+      </div>
+    </article>
+  </div>
+</section>
 <section class="research" id="research" style="background:var(--bg-elevated)">
   <div class="reveal">
     <p class="section-label" data-en="Writing & Research" data-tr="Yazılar & Araştırma">Writing & Research</p>
@@ -1255,6 +1423,13 @@ footer a:hover { color: var(--text); }
         <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_next" value="https://yakuphanycl.github.io/?success=1#contact">
         <input type="text" name="_honey" style="display:none">
+        <input type="hidden" name="utm_source" id="utm_source">
+        <input type="hidden" name="utm_medium" id="utm_medium">
+        <input type="hidden" name="utm_campaign" id="utm_campaign">
+        <input type="hidden" name="utm_term" id="utm_term">
+        <input type="hidden" name="utm_content" id="utm_content">
+        <input type="hidden" name="referrer" id="referrer">
+        <input type="hidden" name="landing_page" id="landing_page">
         <div class="brief-step active" data-step="1">
           <div class="form-row-inline">
             <div class="form-row">
@@ -1380,6 +1555,7 @@ footer a:hover { color: var(--text); }
       <a href="/projects/winstonredguard.html">WRG</a>
       <a href="#services" data-en="Services" data-tr="Hizmetler">Services</a>
       <a href="#pricing" data-en="Pricing" data-tr="Fiyatlandırma">Pricing</a>
+      <a href="#faq" data-en="FAQ" data-tr="SSS">FAQ</a>
       <a href="#contact" data-en="Contact" data-tr="İletişim">Contact</a>
       <a href="https://github.com/yakuphanycl" target="_blank">GitHub</a>
       <a href="https://pypi.org/project/instinct-mcp/" target="_blank">PyPI</a>
@@ -1391,6 +1567,12 @@ footer a:hover { color: var(--text); }
   </div>
   </div>
 </footer>
+<div class="mobile-cta-bar">
+  <div class="mobile-cta-inner">
+    <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn-call" data-book-call="1" data-mobile-cta="mobile_call_click" data-en="Book 15-min Call" data-tr="15 dk Görüşme Planla">Book 15-min Call</a>
+    <a href="#contact" class="btn-secondary" data-mobile-cta="mobile_brief_click" data-en="Send Brief" data-tr="Brief Gönder">Send Brief</a>
+  </div>
+</div>
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
 /* ── Menu ── */
@@ -1688,6 +1870,41 @@ function initBriefWizard() {
   setBriefStep(1);
 }
 
+function initFaqAccordion() {
+  const items = Array.from(document.querySelectorAll('.faq-item'));
+  if (!items.length) return;
+  items.forEach((item) => {
+    const btn = item.querySelector('.faq-question');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      items.forEach((other) => {
+        other.classList.remove('open');
+        const otherBtn = other.querySelector('.faq-question');
+        if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        trackEvent('faq_open', { question: btn.textContent.trim().slice(0, 80) });
+      }
+    });
+  });
+}
+
+function captureLeadSourceData() {
+  const params = new URLSearchParams(window.location.search);
+  const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+  keys.forEach((key) => {
+    const el = document.getElementById(key);
+    if (el) el.value = params.get(key) || '';
+  });
+  const referrerEl = document.getElementById('referrer');
+  if (referrerEl) referrerEl.value = document.referrer || 'direct';
+  const landingEl = document.getElementById('landing_page');
+  if (landingEl) landingEl.value = window.location.href;
+}
+
 /* ── Contact form anti-spam guard ── */
 const contactForm = document.querySelector('.contact-form');
 const formReadyAt = Date.now();
@@ -1724,9 +1941,18 @@ if (contactForm) {
       service: (document.getElementById('service') || {}).value || 'unknown',
       budget: (document.getElementById('budget') || {}).value || 'unknown',
       timeline: (document.getElementById('timeline') || {}).value || 'unknown',
+      utm_source: (document.getElementById('utm_source') || {}).value || 'direct',
+      utm_campaign: (document.getElementById('utm_campaign') || {}).value || 'none',
     });
   });
 }
+
+document.querySelectorAll('[data-mobile-cta]').forEach((el) => {
+  el.addEventListener('click', () => {
+    const eventName = el.getAttribute('data-mobile-cta') || 'mobile_cta_click';
+    trackEvent(eventName, { location: 'mobile_bar' });
+  });
+});
 
 /* ── Init ── */
 const params = new URLSearchParams(window.location.search);
@@ -1738,6 +1964,8 @@ if (params.get('success') === '1') {
   trackEvent('contact_success_view', { location: 'contact' });
 }
 initBriefWizard();
+initFaqAccordion();
+captureLeadSourceData();
 applyLanguage(getStoredLanguage(), false);
 
 /* ── Terminal typing animation ── */
