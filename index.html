@@ -393,11 +393,15 @@ section { padding: 6rem 4rem; }
 .trust-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
 .trust-card p { font-size: 0.9rem; color: var(--text-muted); }
 .contact-wrapper { max-width: 1100px; }
+.contact-quick-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin: 0.2rem 0 1.1rem; }
+.contact-quick-actions .btn-call,
+.contact-quick-actions .btn-secondary { padding: 0.75rem 1.15rem; font-size: 0.82rem; }
 .contact-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.25rem; align-items: start; margin-top: 1.5rem; }
 .contact-form { border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); padding: 1.2rem; }
 .contact-form h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
 .contact-form p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
 .form-row { display: grid; gap: 0.35rem; margin-bottom: 0.8rem; }
+.form-row-inline { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 0.8rem; }
 .form-row label { font-size: 0.8rem; color: var(--text-muted); }
 .form-row input, .form-row select, .form-row textarea {
   width: 100%;
@@ -411,9 +415,30 @@ section { padding: 6rem 4rem; }
 }
 .form-row textarea { min-height: 120px; resize: vertical; }
 .form-actions { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; }
+.form-hint { margin-top: 0.35rem; font-size: 0.74rem; color: #7f8190; }
 .status-note { display: none; margin-top: 0.75rem; font-size: 0.82rem; color: #9edb9e; }
 .status-note.visible { display: block; }
 .status-note.error { color: #f1a5a5; }
+.status-actions { display: none; margin-top: 0.8rem; gap: 0.6rem; flex-wrap: wrap; }
+.status-actions.visible { display: flex; }
+.status-actions .btn-secondary { padding: 0.55rem 0.9rem; font-size: 0.8rem; }
+.contact-side { display: grid; gap: 0.8rem; }
+.contact-trust,
+.contact-steps {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  padding: 1rem;
+}
+.contact-trust h3,
+.contact-steps h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+.contact-trust-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; }
+.trust-kpi { border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem 0.6rem; background: rgba(255,255,255,0.02); }
+.trust-kpi strong { display: block; font-size: 1rem; color: var(--text); line-height: 1.2; }
+.trust-kpi small { display: block; margin-top: 0.18rem; color: var(--text-muted); font-size: 0.68rem; line-height: 1.35; }
+.step-list { display: grid; gap: 0.45rem; }
+.step-item { border-left: 2px solid rgba(231,76,60,0.4); padding-left: 0.6rem; color: var(--text-muted); font-size: 0.82rem; line-height: 1.5; }
+.step-item strong { color: var(--text); font-weight: 600; }
 .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
 .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text); transition: all 0.3s; }
 .contact-link:hover { border-color: var(--accent); transform: translateX(6px); }
@@ -490,6 +515,8 @@ footer a:hover { color: var(--text); }
   .pricing-cta { align-items: flex-start; }
   .project-card-primary { grid-column: span 1; }
   .contact-grid { grid-template-columns: 1fr; }
+  .form-row-inline { grid-template-columns: 1fr; gap: 0; }
+  .contact-trust-grid { grid-template-columns: 1fr 1fr 1fr; }
   .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
   footer { padding: 2rem 1.5rem; }
   .footer-top { flex-direction: column; gap: 1.5rem; text-align: center; }
@@ -534,6 +561,12 @@ footer a:hover { color: var(--text); }
   .pricing-cta-actions { width: 100%; }
   .pricing-cta-actions .btn-call,
   .pricing-cta-actions .btn-secondary { width: 100%; justify-content: center; }
+  .contact-quick-actions { flex-direction: column; }
+  .contact-quick-actions .btn-call,
+  .contact-quick-actions .btn-secondary { width: 100%; justify-content: center; }
+  .contact-trust-grid { grid-template-columns: 1fr; }
+  .status-actions { flex-direction: column; }
+  .status-actions .btn-secondary { width: 100%; text-align: center; }
   .service-number { font-size: 2.2rem; }
   .contact-link { padding: 1rem 1.25rem; }
   .contact-link-icon { width: 36px; height: 36px; font-size: 1rem; }
@@ -1162,54 +1195,120 @@ footer a:hover { color: var(--text); }
   </div>
   <div class="contact-wrapper reveal">
     <p style="color: var(--text-muted); font-weight: 300; margin-bottom: 1rem;" data-en="I'm open to freelance projects, collaborations, and interesting problems. Reach out through any of the channels below." data-tr="Freelance projeler, iş birlikleri ve ilgi çekici problemler için açığım. Aşağıdaki kanallardan ulaşabilirsiniz.">I'm open to freelance projects, collaborations, and interesting problems. Reach out through any of the channels below.</p>
+    <div class="contact-quick-actions">
+      <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0ATeam%20size%3A%0ARepo%20count%3A%0APreferred%20time%20window%3A" class="btn-call contact-track" data-track="contact_call_click" data-en="Schedule 15-min Call" data-tr="15 dk Görüşme Planla">Schedule 15-min Call</a>
+      <a href="#contact-brief-form" class="btn-secondary contact-track" data-track="contact_brief_click" data-en="Send Project Brief" data-tr="Proje Briefi Gönder">Send Project Brief</a>
+    </div>
     <div class="contact-grid">
-      <form class="contact-form" action="https://formsubmit.co/winstonrgsocial@gmail.com" method="POST">
+      <form id="contact-brief-form" class="contact-form" action="https://formsubmit.co/winstonrgsocial@gmail.com" method="POST">
         <h3 data-en="Start with a short brief" data-tr="Kısa bir brief ile başlayın">Start with a short brief</h3>
         <p data-en="I usually reply within 24 hours." data-tr="Genellikle 24 saat içinde dönüş yapıyorum.">I usually reply within 24 hours.</p>
         <input type="hidden" name="_subject" value="New inquiry from WinstonRed website">
         <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_next" value="https://yakuphanycl.github.io/?success=1#contact">
         <input type="text" name="_honey" style="display:none">
-        <div class="form-row">
-          <label for="name" data-en="Name" data-tr="İsim">Name</label>
-          <input id="name" name="name" required>
+        <div class="form-row-inline">
+          <div class="form-row">
+            <label for="name" data-en="Name" data-tr="İsim">Name</label>
+            <input id="name" name="name" required>
+          </div>
+          <div class="form-row">
+            <label for="email" data-en="Email" data-tr="E-posta">Email</label>
+            <input id="email" name="email" type="email" required>
+          </div>
         </div>
-        <div class="form-row">
-          <label for="email" data-en="Email" data-tr="E-posta">Email</label>
-          <input id="email" name="email" type="email" required>
+        <div class="form-row-inline">
+          <div class="form-row">
+            <label for="service" data-en="Service Focus" data-tr="Hizmet Odağı">Service Focus</label>
+            <select id="service" name="service" required>
+              <option value="" data-en="Select service" data-tr="Hizmet seçin">Select service</option>
+              <option value="saas" data-en="SaaS Development" data-tr="SaaS Geliştirme">SaaS Development</option>
+              <option value="osint" data-en="OSINT / Research" data-tr="OSINT / Araştırma">OSINT / Research</option>
+              <option value="mcp" data-en="MCP / Agent Integration" data-tr="MCP / Ajan Entegrasyonu">MCP / Agent Integration</option>
+              <option value="governance" data-en="Monorepo / Governance" data-tr="Monorepo / Yönetişim">Monorepo / Governance</option>
+              <option value="other" data-en="Other" data-tr="Diğer">Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="budget" data-en="Budget Range (USD)" data-tr="Bütçe Aralığı (USD)">Budget Range (USD)</label>
+            <select id="budget" name="budget" required>
+              <option value="" data-en="Select budget" data-tr="Bütçe seçin">Select budget</option>
+              <option value="500-2000">$500-$2,000</option>
+              <option value="2000-5000">$2,000-$5,000</option>
+              <option value="5000-plus">$5,000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-inline">
+          <div class="form-row">
+            <label for="timeline" data-en="Timeline" data-tr="Zamanlama">Timeline</label>
+            <select id="timeline" name="timeline" required>
+              <option value="" data-en="Select timeline" data-tr="Zamanlama seçin">Select timeline</option>
+              <option value="urgent" data-en="Urgent (this week)" data-tr="Acil (bu hafta)">Urgent (this week)</option>
+              <option value="2-4-weeks" data-en="2-4 weeks" data-tr="2-4 hafta">2-4 weeks</option>
+              <option value="flexible" data-en="Flexible" data-tr="Esnek">Flexible</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="repo_count" data-en="Repo Count (if relevant)" data-tr="Repo Sayısı (varsa)">Repo Count (if relevant)</label>
+            <input id="repo_count" name="repo_count" type="number" min="1" step="1" placeholder="1">
+          </div>
         </div>
         <div class="form-row">
           <label for="message" data-en="Project Need" data-tr="Proje İhtiyacı">Project Need</label>
-          <textarea id="message" name="message" minlength="20" required></textarea>
+          <textarea id="message" name="message" minlength="20" required placeholder="Goal, current stack, and expected outcome..."></textarea>
+          <p class="form-hint" data-en="Include your goal, current stack, and expected outcome for a faster scope draft." data-tr="Daha hızlı kapsam taslağı için hedefinizi, mevcut teknoloji yığınınızı ve beklenen çıktıyı ekleyin.">Include your goal, current stack, and expected outcome for a faster scope draft.</p>
         </div>
         <div class="form-actions">
           <button class="btn-primary" type="submit" data-en="Send Brief →" data-tr="Brief Gönder →">Send Brief →</button>
         </div>
         <p id="guard-note" class="status-note error" data-en="Please add a few more details about your project before sending." data-tr="Lütfen göndermeden önce projenizle ilgili birkaç detay daha ekleyin.">Please add a few more details about your project before sending.</p>
         <p id="status-note" class="status-note" data-en="Thanks, your message has been sent." data-tr="Teşekkürler, mesajınız gönderildi.">Thanks, your message has been sent.</p>
+        <div id="status-actions" class="status-actions">
+          <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn-secondary contact-track" data-track="contact_success_call_click" data-en="Schedule 15-min Call" data-tr="15 dk Görüşme Planla">Schedule 15-min Call</a>
+          <a href="https://linkedin.com/in/yakuphanycl" target="_blank" rel="noopener noreferrer" class="btn-secondary contact-track" data-track="contact_success_linkedin_click" data-en="Message on LinkedIn" data-tr="LinkedIn'den Yaz">Message on LinkedIn</a>
+        </div>
       </form>
-      <div class="contact-links">
-        <a href="https://medium.com/@yakuphan.yucel11" target="_blank" rel="noopener noreferrer" class="contact-link">
-          <div class="contact-link-icon">✍</div>
-          <div class="contact-link-text"><h4>Medium</h4><p>@yakuphan.yucel11</p></div>
-        </a>
-        <a href="https://github.com/yakuphanycl" target="_blank" rel="noopener noreferrer" class="contact-link">
-          <div class="contact-link-icon">⌨</div>
-          <div class="contact-link-text"><h4>GitHub</h4><p>github.com/yakuphanycl</p></div>
-        </a>
-        <a href="https://x.com/rg_winston3375" target="_blank" rel="noopener noreferrer" class="contact-link">
-          <div class="contact-link-icon">𝕏</div>
-          <div class="contact-link-text"><h4>X / Twitter</h4><p>@rg_winston3375</p></div>
-        </a>
-        <a href="https://linkedin.com/in/yakuphanycl" target="_blank" rel="noopener noreferrer" class="contact-link">
-          <div class="contact-link-icon">💼</div>
-          <div class="contact-link-text"><h4>LinkedIn</h4><p>linkedin.com/in/yakuphanycl</p></div>
-        </a>
-        <a href="mailto:winstonrgsocial@gmail.com" class="contact-link">
-          <div class="contact-link-icon">✉</div>
-          <div class="contact-link-text"><h4>Email</h4><p>winstonrgsocial@gmail.com</p></div>
-        </a>
-        <button class="copy-email-btn" onclick="copyEmail(this)" data-en="Copy email" data-tr="E-postayı kopyala">Copy email</button>
+      <div class="contact-side">
+        <div class="contact-trust">
+          <h3 data-en="Why teams choose WinstonRed" data-tr="Ekipler neden WinstonRed'i seçiyor">Why teams choose WinstonRed</h3>
+          <div class="contact-trust-grid">
+            <div class="trust-kpi"><strong>61+</strong><small data-en="apps shipped" data-tr="uygulama teslimi">apps shipped</small></div>
+            <div class="trust-kpi"><strong>1400+</strong><small data-en="tests in CI" data-tr="CI test sayısı">tests in CI</small></div>
+            <div class="trust-kpi"><strong>&lt;24h</strong><small data-en="first response" data-tr="ilk yanıt">first response</small></div>
+          </div>
+        </div>
+        <div class="contact-steps">
+          <h3 data-en="What happens next" data-tr="Sonraki adımlar">What happens next</h3>
+          <div class="step-list">
+            <p class="step-item" data-en="<strong>0-24h:</strong> First response + clarifying questions." data-tr="<strong>0-24s:</strong> İlk dönüş + netleştirme soruları."><strong>0-24h:</strong> First response + clarifying questions.</p>
+            <p class="step-item" data-en="<strong>24-48h:</strong> Scope draft, timeline, and pricing lane." data-tr="<strong>24-48s:</strong> Kapsam taslağı, zaman planı ve fiyat hattı."><strong>24-48h:</strong> Scope draft, timeline, and pricing lane.</p>
+            <p class="step-item" data-en="<strong>Week 1:</strong> Kickoff and milestone plan." data-tr="<strong>Hafta 1:</strong> Kickoff ve milestone planı."><strong>Week 1:</strong> Kickoff and milestone plan.</p>
+          </div>
+        </div>
+        <div class="contact-links">
+          <a href="https://medium.com/@yakuphan.yucel11" target="_blank" rel="noopener noreferrer" class="contact-link contact-track" data-track="contact_medium_click">
+            <div class="contact-link-icon">✍</div>
+            <div class="contact-link-text"><h4>Medium</h4><p>@yakuphan.yucel11</p></div>
+          </a>
+          <a href="https://github.com/yakuphanycl" target="_blank" rel="noopener noreferrer" class="contact-link contact-track" data-track="contact_github_click">
+            <div class="contact-link-icon">⌨</div>
+            <div class="contact-link-text"><h4>GitHub</h4><p>github.com/yakuphanycl</p></div>
+          </a>
+          <a href="https://x.com/rg_winston3375" target="_blank" rel="noopener noreferrer" class="contact-link contact-track" data-track="contact_x_click">
+            <div class="contact-link-icon">𝕏</div>
+            <div class="contact-link-text"><h4>X / Twitter</h4><p>@rg_winston3375</p></div>
+          </a>
+          <a href="https://linkedin.com/in/yakuphanycl" target="_blank" rel="noopener noreferrer" class="contact-link contact-track" data-track="contact_linkedin_click">
+            <div class="contact-link-icon">💼</div>
+            <div class="contact-link-text"><h4>LinkedIn</h4><p>linkedin.com/in/yakuphanycl</p></div>
+          </a>
+          <a href="mailto:winstonrgsocial@gmail.com" class="contact-link contact-track" data-track="contact_email_click">
+            <div class="contact-link-icon">✉</div>
+            <div class="contact-link-text"><h4>Email</h4><p>winstonrgsocial@gmail.com</p></div>
+          </a>
+          <button class="copy-email-btn" onclick="copyEmail(this)" data-en="Copy email" data-tr="E-postayı kopyala">Copy email</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1304,6 +1403,17 @@ function toggleLang() {
 }
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function trackEvent(eventName, payload = {}) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, payload);
+    }
+    if (Array.isArray(window.dataLayer)) {
+      window.dataLayer.push({ event: eventName, ...payload });
+    }
+  } catch (_) {}
+}
 
 /* ── Scroll reveal with stagger ── */
 if (prefersReducedMotion) {
@@ -1430,12 +1540,20 @@ if (proofStrip) {
 /* ── Copy email ── */
 function copyEmail(btn) {
   navigator.clipboard.writeText('winstonrgsocial@gmail.com').then(() => {
+    trackEvent('contact_copy_email_click', { location: 'contact' });
     const orig = btn.textContent;
     btn.textContent = lang === 'tr' ? 'Kopyaland\u0131!' : 'Copied!';
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
   });
 }
+
+document.querySelectorAll('.contact-track').forEach((el) => {
+  el.addEventListener('click', () => {
+    const name = el.getAttribute('data-track') || 'contact_link_click';
+    trackEvent(name, { location: 'contact' });
+  });
+});
 
 /* ── Contact form anti-spam guard ── */
 const contactForm = document.querySelector('.contact-form');
@@ -1459,7 +1577,15 @@ if (contactForm) {
     if (tooFast || tooShort) {
       e.preventDefault();
       if (guardNote) guardNote.classList.add('visible');
+      trackEvent('contact_submit_blocked', { reason: tooFast ? 'too_fast' : 'too_short' });
+      return;
     }
+
+    trackEvent('contact_submit', {
+      service: (document.getElementById('service') || {}).value || 'unknown',
+      budget: (document.getElementById('budget') || {}).value || 'unknown',
+      timeline: (document.getElementById('timeline') || {}).value || 'unknown',
+    });
   });
 }
 
@@ -1468,6 +1594,9 @@ const params = new URLSearchParams(window.location.search);
 if (params.get('success') === '1') {
   const note = document.getElementById('status-note');
   if (note) note.classList.add('visible');
+  const actions = document.getElementById('status-actions');
+  if (actions) actions.classList.add('visible');
+  trackEvent('contact_success_view', { location: 'contact' });
 }
 applyLanguage(getStoredLanguage(), false);
 
