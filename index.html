@@ -231,6 +231,7 @@ section { padding: 6rem 4rem; }
 .form-actions { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; }
 .status-note { display: none; margin-top: 0.75rem; font-size: 0.82rem; color: #9edb9e; }
 .status-note.visible { display: block; }
+.status-note.error { color: #f1a5a5; }
 .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
 .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text); transition: all 0.3s; }
 .contact-link:hover { border-color: var(--accent); transform: translateX(6px); }
@@ -772,7 +773,7 @@ footer a:hover { color: var(--text); }
         <h3 data-en="Start with a short brief" data-tr="Kısa bir brief ile başlayın">Start with a short brief</h3>
         <p data-en="I usually reply within 24 hours." data-tr="Genellikle 24 saat içinde dönüş yapıyorum.">I usually reply within 24 hours.</p>
         <input type="hidden" name="_subject" value="New inquiry from WinstonRed website">
-        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_captcha" value="true">
         <input type="hidden" name="_next" value="https://yakuphanycl.github.io/?success=1#contact">
         <input type="text" name="_honey" style="display:none">
         <div class="form-row">
@@ -785,11 +786,12 @@ footer a:hover { color: var(--text); }
         </div>
         <div class="form-row">
           <label for="message" data-en="Project Need" data-tr="Proje İhtiyacı">Project Need</label>
-          <textarea id="message" name="message" required></textarea>
+          <textarea id="message" name="message" minlength="20" required></textarea>
         </div>
         <div class="form-actions">
           <button class="btn-primary" type="submit" data-en="Send Brief →" data-tr="Brief Gönder →">Send Brief →</button>
         </div>
+        <p id="guard-note" class="status-note error" data-en="Please add a few more details about your project before sending." data-tr="Lütfen göndermeden önce projenizle ilgili birkaç detay daha ekleyin.">Please add a few more details about your project before sending.</p>
         <p id="status-note" class="status-note" data-en="Thanks, your message has been sent." data-tr="Teşekkürler, mesajınız gönderildi.">Thanks, your message has been sent.</p>
       </form>
       <div class="contact-links">
@@ -976,6 +978,32 @@ function copyEmail(btn) {
     btn.textContent = lang === 'tr' ? 'Kopyaland\u0131!' : 'Copied!';
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+/* ── Contact form anti-spam guard ── */
+const contactForm = document.querySelector('.contact-form');
+const formReadyAt = Date.now();
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    const guardNote = document.getElementById('guard-note');
+    if (guardNote) guardNote.classList.remove('visible');
+
+    const honey = contactForm.querySelector('input[name="_honey"]');
+    if (honey && honey.value.trim()) {
+      e.preventDefault();
+      return;
+    }
+
+    const messageField = contactForm.querySelector('#message');
+    const message = messageField ? messageField.value.trim() : '';
+    const elapsed = Date.now() - formReadyAt;
+    const tooFast = elapsed < 4000;
+    const tooShort = message.length < 20;
+    if (tooFast || tooShort) {
+      e.preventDefault();
+      if (guardNote) guardNote.classList.add('visible');
+    }
   });
 }
 
