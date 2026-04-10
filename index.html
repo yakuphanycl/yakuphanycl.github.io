@@ -188,6 +188,9 @@ section { padding: 6rem 4rem; }
 .project-link a { color: var(--accent-light); text-decoration: none; font-size: 0.85rem; }
 .project-link a:hover { color: #fff; }
 .featured-badge { position: absolute; top: 1rem; right: 1rem; font-family: var(--font-mono); font-size: 0.65rem; padding: 0.2rem 0.6rem; background: rgba(212,168,83,0.12); border: 1px solid rgba(212,168,83,0.35); border-radius: 4px; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+.projects-actions { display: flex; gap: 0.85rem; align-items: center; flex-wrap: wrap; margin-top: 1.4rem; }
+#projects .project-card-extra { display: none; }
+#projects.projects-expanded .project-card-extra { display: block; }
 .cases { background: var(--bg-elevated); }
 .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 1100px; }
 .case-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
@@ -310,6 +313,7 @@ footer a:hover { color: var(--text); }
   .tech-tag { font-size: 0.7rem; padding: 0.35rem 0.4rem; min-height: 36px; }
   .project-card h3 { font-size: 1rem; }
   .project-card p { font-size: 0.85rem; }
+  .projects-actions { gap: 0.6rem; }
   .service-number { font-size: 2.2rem; }
   .contact-link { padding: 1rem 1.25rem; }
   .contact-link-icon { width: 36px; height: 36px; font-size: 1rem; }
@@ -486,7 +490,7 @@ footer a:hover { color: var(--text); }
       </div>
       <div class="project-meta"><span>Python</span><span>77 tests</span><span>Kelly Criterion</span><span>Streamlit</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">📊</div>
       <h3><a href="https://winstonredguard-production.up.railway.app" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">PulseBoard by WinstonRed</a></h3>
       <p data-en="GitHub repo health dashboard with webhook auto-refresh, trend history, and tier-based pricing (Free/Pro/Agency). FastAPI + SQLite, GitHub OAuth, 5 async collectors, 0–100 Pulse Score. Live on Railway." data-tr="Webhook otomatik yenileme, trend geçmişi ve kademe bazlı fiyatlandırma (Free/Pro/Agency) ile GitHub repo sağlık paneli. FastAPI + SQLite, GitHub OAuth, 5 asenkron toplayıcı, 0–100 Pulse Skoru. Railway'de canlı.">GitHub repo health dashboard with webhook auto-refresh, trend history, and tier-based pricing (Free/Pro/Agency). FastAPI + SQLite, GitHub OAuth, 5 async collectors, 0–100 Pulse Score. Live on Railway.</p>
@@ -498,13 +502,13 @@ footer a:hover { color: var(--text); }
       <p class="project-link"><a href="/projects/pulseboard.html" data-en="Read case study →" data-tr="Vaka çalışmasını oku →">Read case study →</a></p>
       <div class="project-meta"><span>FastAPI</span><span>119 tests</span><span>Railway</span><span>SaaS</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">🖥️</div>
       <h3>WRG Control Center</h3>
       <p data-en="Electron-based desktop command center for the WinstonRedGuard ecosystem. OSINT dashboard, match radar controls, ecosystem overview, and real-time operational metrics." data-tr="WinstonRedGuard ekosistemi için Electron tabanlı masaüstü komut merkezi. OSINT paneli, maç radar kontrolleri, ekosistem genel görünümü ve gerçek zamanlı operasyonel metrikler.">Electron-based desktop command center for the WinstonRedGuard ecosystem. OSINT dashboard, match radar controls, ecosystem overview, and real-time operational metrics.</p>
       <div class="project-meta"><span>FastAPI</span><span>99 tests</span><span>Electron</span><span>OSINT</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">🎯</div>
       <h3>Paper Impact</h3>
       <p data-en="Academic paper impact scorer. Fetches papers from arXiv, collects adoption signals across GitHub, social media, and news, then computes a 0–100 Impact Score with 5 weighted categories." data-tr="Akademik makale etki skorlayıcı. arXiv'den makaleleri çeker, GitHub, sosyal medya ve haberler üzerinden benimseme sinyallerini toplar, 5 ağırlıklı kategori ile 0–100 Etki Skoru hesaplar.">Academic paper impact scorer. Fetches papers from arXiv, collects adoption signals across GitHub, social media, and news, then computes a 0–100 Impact Score with 5 weighted categories.</p>
@@ -515,7 +519,7 @@ footer a:hover { color: var(--text); }
       </div>
       <div class="project-meta"><span>Python</span><span>156 tests</span><span>arXiv API</span><span>Zero deps</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">🤝</div>
       <h3>wrg-agent / ACP</h3>
       <p data-en="Three-layer coordination protocol for concurrent AI coding agents. SQLite runtime locks, .agents/ durable layer, SSE broadcast. Prevents file conflicts between Claude Code, Codex, Cursor, and other agents running in parallel. 8-command CLI, pre-commit hook generator, opt-in local telemetry." data-tr="Paralel çalışan AI kodlama ajanları için üç katmanlı koordinasyon protokolü. SQLite runtime kilitleri, .agents/ kalıcı katman, SSE yayın. Claude Code, Codex, Cursor ve diğer ajanlar arasındaki dosya çakışmalarını önler. 8 komutlu CLI, pre-commit hook üretici, opt-in yerel telemetri.">Three-layer coordination protocol for concurrent AI coding agents. SQLite runtime locks, .agents/ durable layer, SSE broadcast. Prevents file conflicts between Claude Code, Codex, Cursor, and other agents running in parallel. 8-command CLI, pre-commit hook generator, opt-in local telemetry.</p>
@@ -528,25 +532,25 @@ footer a:hover { color: var(--text); }
       </p>
       <div class="project-meta"><span>Python</span><span>Multi-agent</span><span>Protocol</span><span>SSE</span><span>Telemetry</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">🧪</div>
       <h3>Rule Lab</h3>
       <p data-en="Policy rule authoring and testing workbench. 9 modules, 62 tests. Built from scratch as part of the WinstonRedGuard governance ecosystem." data-tr="Politika kuralı yazma ve test tezgahı. 9 modül, 62 test. WinstonRedGuard yönetişim ekosisteminin parçası olarak sıfırdan yazıldı.">Policy rule authoring and testing workbench. 9 modules, 62 tests. Built from scratch as part of the WinstonRedGuard governance ecosystem.</p>
       <div class="project-meta"><span>Python</span><span>62 tests</span><span>9 modules</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">💬</div>
       <h3>Comment Copilot</h3>
       <p data-en="LinkedIn comment generation assistant. Analyzer classifies topic/tone/intent, generator produces 5 styles, quality filter scores on a 100-point scale with spam detection." data-tr="LinkedIn yorum üretim asistanı. Analizci konu/ton/niyet sınıflandırır, üretici 5 farklı stilde yorum oluşturur, kalite filtresi 100 puan üzerinden skorlar ve spam algılar.">LinkedIn comment generation assistant. Analyzer classifies topic/tone/intent, generator produces 5 styles, quality filter scores on a 100-point scale with spam detection.</p>
       <div class="project-meta"><span>Python</span><span>89 tests</span><span>Streamlit</span><span>SQLite</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">🧠</div>
       <h3>Local AI Chat</h3>
       <p data-en="Fully local AI chat powered by Ollama with RAG and ModelOps. SQLite vector store, FTS5 keyword search, model lifecycle management, and support for multiple models including Gemma and Qwen." data-tr="Ollama, RAG ve ModelOps destekli tamamen yerel yapay zeka sohbeti. SQLite vektör deposu, FTS5 anahtar kelime araması, model yaşam döngüsü yönetimi, Gemma ve Qwen dahil çoklu model desteği.">Fully local AI chat powered by Ollama with RAG and ModelOps. SQLite vector store, FTS5 keyword search, model lifecycle management, and support for multiple models including Gemma and Qwen.</p>
       <div class="project-meta"><span>Python</span><span>53 tests</span><span>Ollama</span><span>RAG</span><span>ModelOps</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">⚡</div>
       <h3><a href="https://github.com/yakuphanycl/instinct" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">instinct-mcp</a></h3>
       <p data-en="Self-learning pattern memory for AI coding agents. Observe repeated tool sequences, user preferences, and fix patterns — auto-promote to suggestions when confidence is high. Works with Claude Code, Cursor, Windsurf." data-tr="AI kodlama ajanları için kendi kendine öğrenen kalıp hafızası. Tekrarlayan araç dizilerini, kullanıcı tercihlerini ve düzeltme kalıplarını gözlemle — güven yükseldikçe otomatik öneri yap. Claude Code, Cursor, Windsurf ile çalışır.">Self-learning pattern memory for AI coding agents. Observe repeated tool sequences, user preferences, and fix patterns — auto-promote to suggestions when confidence is high. Works with Claude Code, Cursor, Windsurf.</p>
@@ -558,12 +562,26 @@ footer a:hover { color: var(--text); }
       <p class="project-link"><a href="/projects/instinct.html" data-en="Read case study →" data-tr="Vaka çalışmasını oku →">Read case study →</a></p>
       <div class="project-meta"><span>Python</span><span>MCP</span><span>PyPI</span><span>SQLite</span></div>
     </div>
-    <div class="project-card reveal">
+    <div class="project-card reveal project-card-extra">
       <div class="project-icon">📦</div>
       <h3>Affiliate Engine</h3>
       <p data-en="Facebook affiliate post manager for home office niche. Product catalog, post generation, scheduling, tracking, and a Streamlit Cloud UI." data-tr="Ev ofis nişi için Facebook affiliate gönderi yöneticisi. Ürün kataloğu, gönderi üretimi, zamanlama, takip ve Streamlit Cloud arayüzü.">Facebook affiliate post manager for home office niche. Product catalog, post generation, scheduling, tracking, and a Streamlit Cloud UI.</p>
       <div class="project-meta"><span>Python</span><span>40 tests</span><span>Streamlit</span></div>
     </div>
+  </div>
+  <div class="projects-actions reveal">
+    <button
+      id="toggle-projects"
+      type="button"
+      class="btn-secondary"
+      data-en-collapsed="View all project highlights"
+      data-en-expanded="Show fewer highlights"
+      data-tr-collapsed="Tüm proje özetlerini gör"
+      data-tr-expanded="Daha az proje göster"
+      data-en="View all project highlights"
+      data-tr="Tüm proje özetlerini gör"
+    >View all project highlights</button>
+    <a class="btn-secondary" href="https://github.com/yakuphanycl?tab=repositories" target="_blank" rel="noopener noreferrer" data-en="Browse all repositories" data-tr="Tüm repoları incele">Browse all repositories</a>
   </div>
 </section>
 <section class="research" id="research" style="background:var(--bg-elevated)">
@@ -840,6 +858,15 @@ function closeMenu() {
 
 /* ── Language toggle ── */
 let lang = 'en';
+function updateProjectsToggleText() {
+  const btn = document.getElementById('toggle-projects');
+  const section = document.getElementById('projects');
+  if (!btn || !section) return;
+  const expanded = section.classList.contains('projects-expanded');
+  const key = expanded ? 'expanded' : 'collapsed';
+  const text = btn.getAttribute(`data-${lang}-${key}`);
+  if (text) btn.textContent = text;
+}
 function renderProofTimestamp() {
   const el = document.getElementById('proof-updated');
   if (!el) return;
@@ -855,6 +882,7 @@ function toggleLang() {
     if (text) el.innerHTML = text;
   });
   renderProofTimestamp();
+  updateProjectsToggleText();
 }
 
 /* ── Scroll reveal with stagger ── */
@@ -865,6 +893,14 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 document.querySelectorAll('.project-card.reveal').forEach((card, i) => {
   card.style.setProperty('--stagger', i);
 });
+const projectsSection = document.getElementById('projects');
+const toggleProjectsBtn = document.getElementById('toggle-projects');
+if (projectsSection && toggleProjectsBtn) {
+  toggleProjectsBtn.addEventListener('click', () => {
+    projectsSection.classList.toggle('projects-expanded');
+    updateProjectsToggleText();
+  });
+}
 
 /* ── Nav hide on scroll + progress bar ── */
 let lastScroll = 0;
@@ -950,6 +986,7 @@ if (params.get('success') === '1') {
   if (note) note.classList.add('visible');
 }
 renderProofTimestamp();
+updateProjectsToggleText();
 
 /* ── Terminal typing animation ── */
 (function initTerminal() {
