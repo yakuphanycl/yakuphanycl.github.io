@@ -332,6 +332,29 @@ footer a:hover { color: var(--text); }
 .copy-email-btn.copied { background: rgba(192,57,43,0.15); border-color: var(--accent); color: var(--accent-light); }
 .typing-cursor { display: inline-block; width: 3px; height: 0.9em; background: var(--accent-light); margin-left: 4px; animation: cursorBlink 0.8s ease-in-out infinite; vertical-align: baseline; }
 @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero::before,
+  .scroll-hint,
+  .typing-cursor,
+  .term-cursor {
+    display: none !important;
+  }
+  .reveal,
+  .reveal.visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .term-line {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -908,11 +931,17 @@ function toggleLang() {
   applyLanguage(lang === 'en' ? 'tr' : 'en');
 }
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* ── Scroll reveal with stagger ── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+if (prefersReducedMotion) {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+} else {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
 document.querySelectorAll('.project-card.reveal').forEach((card, i) => {
   card.style.setProperty('--stagger', i);
 });
@@ -944,6 +973,11 @@ function animateCounters() {
     if (el.dataset.counted) return;
     const target = parseInt(el.dataset.count, 10);
     const suffix = el.dataset.suffix || '';
+    if (prefersReducedMotion) {
+      el.dataset.counted = '1';
+      el.textContent = target + suffix;
+      return;
+    }
     const duration = 1500;
     const start = performance.now();
     el.dataset.counted = '1';
@@ -963,9 +997,13 @@ const counterObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 const proofStrip = document.querySelector('.proof-strip');
 if (proofStrip) {
-  counterObserver.observe(proofStrip);
-  // Also trigger immediately if already visible on load
-  setTimeout(animateCounters, 500);
+  if (prefersReducedMotion) {
+    animateCounters();
+  } else {
+    counterObserver.observe(proofStrip);
+    // Also trigger immediately if already visible on load
+    setTimeout(animateCounters, 500);
+  }
 }
 
 /* ── Typing effect for hero ── */
@@ -975,6 +1013,10 @@ if (proofStrip) {
   const em = h1.querySelector('em');
   if (!em) return;
   const fullText = em.textContent;
+  if (prefersReducedMotion) {
+    em.textContent = fullText;
+    return;
+  }
   em.textContent = '';
   const cursor = document.createElement('span');
   cursor.className = 'typing-cursor';
@@ -1056,6 +1098,23 @@ applyLanguage(getStoredLanguage(), false);
     { type: 'ok',  text: '  All 61 gates passing \u2713' },
     { type: 'dim', text: '  Last run: 2m ago' },
   ];
+  if (prefersReducedMotion) {
+    lines.forEach((l) => {
+      if (l.type === 'br') {
+        el.appendChild(document.createElement('br'));
+        return;
+      }
+      const div = document.createElement('div');
+      div.className = 'term-line';
+      if (l.type === 'cmd') {
+        div.innerHTML = '<span class="term-prompt">$ </span><span class="term-cmd">' + l.text + '</span>';
+      } else {
+        div.innerHTML = '<span class="term-' + l.type + '">' + l.text + '</span>';
+      }
+      el.appendChild(div);
+    });
+    return;
+  }
   let i = 0;
   function addLine() {
     if (i >= lines.length) {
