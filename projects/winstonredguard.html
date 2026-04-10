@@ -13,7 +13,7 @@
 
   <!-- Open Graph -->
   <meta property="og:title" content="WinstonRedGuard — AI-Powered Python Monorepo">
-  <meta property="og:description" content="61+ Python apps, 61/61 governance checks, 17/18 CI green, full test coverage. Built with V0 discipline: stdlib-first, zero external dependencies, SQLite, local-first.">
+  <meta property="og:description" content="61+ Python apps, 55/55 governance checks, 17/17 CI green, full test coverage. Built with V0 discipline: stdlib-first, zero external dependencies, SQLite, local-first.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yakuphanycl.github.io/projects/winstonredguard.html">
 
@@ -250,6 +250,32 @@
       margin-top: 6px;
     }
 
+    /* ENGAGEMENT STRIP */
+    .engage-strip {
+      margin: 22px 0 74px;
+      border: 1px solid rgba(231, 76, 60, 0.25);
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(231, 76, 60, 0.11), rgba(17, 17, 24, 0.95));
+      padding: 26px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .engage-copy h3 {
+      font-size: 22px;
+      letter-spacing: -0.4px;
+      margin-bottom: 6px;
+    }
+    .engage-copy p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 640px;
+    }
+    .engage-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
     /* SECTIONS */
     section { padding: 80px 0; }
     .section-label {
@@ -374,7 +400,7 @@
     /* HIGHLIGHT: PULSEBOARD */
     .highlight-card {
       background: linear-gradient(135deg, var(--bg-card) 0%, rgba(231,76,60,0.03) 100%);
-      border: 1px solid rgba(200,255,0,0.12);
+      border: 1px solid rgba(231,76,60,0.2);
       border-radius: 16px;
       padding: 48px;
       display: grid;
@@ -539,6 +565,10 @@
 
     /* RESPONSIVE */
     @media (max-width: 768px) {
+      .engage-strip { padding: 20px; }
+      .engage-copy h3 { font-size: 19px; }
+      .engage-actions { width: 100%; }
+      .engage-actions .btn { width: 100%; justify-content: center; }
       .highlight-card { grid-template-columns: 1fr; padding: 32px 24px; }
       .arch-flow { flex-direction: column; }
       .arch-arrow { transform: rotate(90deg); }
@@ -556,6 +586,7 @@
         <a href="https://yakuphanycl.github.io" data-en="Home" data-tr="Ana Sayfa">Home</a>
         <a href="https://yakuphanycl.github.io/#projects" data-en="Projects" data-tr="Projeler">Projects</a>
         <a href="https://yakuphanycl.github.io/#services" data-en="Services" data-tr="Hizmetler">Services</a>
+        <a href="https://yakuphanycl.github.io/#pricing" data-en="Pricing" data-tr="Fiyatland&#305;rma">Pricing</a>
         <a href="https://yakuphanycl.github.io/#contact" data-en="Contact" data-tr="İletişim">Contact</a>
         <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank">GitHub</a>
         <button class="lang-toggle" onclick="toggleLang()">TR</button>
@@ -568,7 +599,7 @@
     <div class="container">
       <div class="hero-tag">
         <span class="dot"></span>
-        <span data-en="CI Green &middot; 61/61 Governance" data-tr="CI Ye&#351;il &middot; 61/61 Y&ouml;neti&#351;im">CI Green &middot; 61/61 Governance</span>
+        <span data-en="CI Green &middot; 55/55 Governance" data-tr="CI Ye&#351;il &middot; 55/55 Y&ouml;neti&#351;im">CI Green &middot; 55/55 Governance</span>
       </div>
       <h1>Winston<span class="accent">Red</span>Guard</h1>
       <p class="hero-sub" data-en="A 61+ app Python monorepo built with V0 discipline &mdash; stdlib-first, zero external dependencies, SQLite-backed, local-first. Every app ships with full test coverage and passes automated governance." data-tr="V0 disipliniyle in&#351;a edilmi&#351; 61+ uygulamal&#305; Python monorepo &mdash; stdlib-&ouml;ncelikli, s&#305;f&#305;r d&#305;&#351; ba&#287;&#305;ml&#305;l&#305;k, SQLite tabanl&#305;, yerel-&ouml;ncelikli. Her uygulama tam test kapsam&#305;yla ve otomatik y&ouml;neti&#351;imden ge&ccedil;erek g&ouml;nderilir.">
@@ -593,24 +624,34 @@
         <div class="stat-label" data-en="Apps" data-tr="Uygulama">Apps</div>
       </div>
       <div class="stat-item">
-        <span class="stat-num">61/61</span>
-        <div class="stat-label" data-en="Governance" data-tr="Y&ouml;neti&#351;im">Governance</div>
+        <span class="stat-num">1200+</span>
+        <div class="stat-label" data-en="Tests" data-tr="Test">Tests</div>
       </div>
       <div class="stat-item">
-        <span class="stat-num">18/18</span>
+        <span class="stat-num">17/17</span>
         <div class="stat-label" data-en="CI Jobs" data-tr="CI &#304;&#351;leri">CI Jobs</div>
       </div>
       <div class="stat-item">
-        <span class="stat-num">134</span>
-        <div class="stat-label" data-en="PulseBoard Tests" data-tr="PulseBoard Testleri">PulseBoard Tests</div>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">112</span>
-        <div class="stat-label" data-en="Control Center Tests" data-tr="Kontrol Merkezi Testleri">Control Center Tests</div>
+        <span class="stat-num">55/55</span>
+        <div class="stat-label" data-en="Governance Checks" data-tr="Y&ouml;neti&#351;im Kontrol">Governance Checks</div>
       </div>
       <div class="stat-item">
         <span class="stat-num">0</span>
         <div class="stat-label" data-en="Ext Dependencies" data-tr="D&#305;&#351; Ba&#287;&#305;ml&#305;l&#305;k">Ext Dependencies</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">SQLite</span>
+        <div class="stat-label" data-en="Default Data Layer" data-tr="Varsay&#305;lan Veri Katman&#305;">Default Data Layer</div>
+      </div>
+    </div>
+    <div class="engage-strip">
+      <div class="engage-copy">
+        <h3 data-en="Need This Governance for Your Repo?" data-tr="Bu Y&ouml;neti&#351;imi Kendi Repona da Uygulayal&#305;m m&#305;">Need This Governance for Your Repo?</h3>
+        <p data-en="I can implement the same test-first, policy-gated delivery setup for your codebase in a focused sprint." data-tr="Ayn&#305; test-&ouml;ncelikli, policy gate destekli teslim yap&#305;s&#305;n&#305; kod taban&#305;n&#305;za odakl&#305; bir sprint ile kurabilirim.">I can implement the same test-first, policy-gated delivery setup for your codebase in a focused sprint.</p>
+      </div>
+      <div class="engage-actions">
+        <a href="https://yakuphanycl.github.io/#pricing" class="btn btn-primary" data-en="View Guard Cloud Plans" data-tr="Guard Cloud Planlar&#305;n&#305; G&ouml;r">View Guard Cloud Plans</a>
+        <a href="https://yakuphanycl.github.io/#contact" class="btn btn-ghost" data-en="Start 15-min Discovery Call" data-tr="15 dk Ke&#351;if G&ouml;r&uuml;&#351;mesi Ba&#351;lat">Start 15-min Discovery Call</a>
       </div>
     </div>
   </div>
@@ -642,7 +683,7 @@
         <div class="principle-card">
           <span class="principle-icon">&#9878;</span>
           <h3 data-en="Automated Governance" data-tr="Otomatik Y&ouml;neti&#351;im">Automated Governance</h3>
-          <p data-en="61 automated checks validate structure, tests, README, version, and registry before any release." data-tr="61 otomatik kontrol; yap&#305;, testler, README, versiyon ve registry'yi her yay&#305;ndan &ouml;nce do&#287;rular.">61 automated checks validate structure, tests, README, version, and registry before any release.</p>
+          <p data-en="55 automated checks validate structure, tests, README, version, and registry before any release." data-tr="55 otomatik kontrol; yap&#305;, testler, README, versiyon ve registry'yi her yay&#305;ndan &ouml;nce do&#287;rular.">55 automated checks validate structure, tests, README, version, and registry before any release.</p>
         </div>
       </div>
     </div>
@@ -881,13 +922,13 @@
   <!-- CTA -->
   <section class="cta-section">
     <div class="container">
-      <h2 data-en="Built in Public" data-tr="A&ccedil;&#305;k Geli&#351;tirme">Built in Public</h2>
-      <p data-en="Follow the journey. Check the code. Try the product." data-tr="Yolculu&#287;u takip edin. Kodu inceleyin. &Uuml;r&uuml;n&uuml; deneyin.">Follow the journey. Check the code. Try the product.</p>
+      <h2 data-en="Use This Blueprint in Your Team" data-tr="Bu Blueprint'i Kendi Ekibinde Uygula">Use This Blueprint in Your Team</h2>
+      <p data-en="Get WinstonRed-style governance, CI discipline, and delivery reliability for your own repository." data-tr="Kendi repolar&#305;n&#305;z i&ccedil;in WinstonRed tarz&#305; y&ouml;neti&#351;im, CI disiplini ve teslim g&uuml;venilirli&#287;i kurun.">Get WinstonRed-style governance, CI discipline, and delivery reliability for your own repository.</p>
       <div class="cta-links">
-        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-primary">GitHub Repo</a>
+        <a href="https://yakuphanycl.github.io/#pricing" class="btn btn-primary" data-en="Guard Cloud Pricing" data-tr="Guard Cloud Fiyatlar&#305;">Guard Cloud Pricing</a>
+        <a href="https://yakuphanycl.github.io/#contact" class="btn btn-ghost" data-en="Book Discovery Call" data-tr="Ke&#351;if G&ouml;r&uuml;&#351;mesi Planla">Book Discovery Call</a>
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" class="btn btn-ghost">GitHub Repo</a>
         <a href="https://winstonredguard-production.up.railway.app" target="_blank" class="btn btn-ghost" data-en="Try PulseBoard" data-tr="PulseBoard'u Dene">Try PulseBoard</a>
-        <a href="https://x.com/rg_winston3375" target="_blank" class="btn btn-ghost" data-en="Follow on X" data-tr="X'te Takip Et">Follow on X</a>
-        <a href="https://pypi.org/project/instinct-mcp/" target="_blank" class="btn btn-ghost">instinct-mcp on PyPI</a>
       </div>
     </div>
   </section>
@@ -899,15 +940,38 @@
   </footer>
 
 <script>
+const LANG_STORAGE_KEY = 'wrg_case_lang';
 let lang = 'en';
-function toggleLang() {
-  lang = lang === 'en' ? 'tr' : 'en';
+
+function applyLanguage(nextLang, persist = true) {
+  lang = nextLang === 'tr' ? 'tr' : 'en';
+  document.documentElement.lang = lang;
   document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'TR' : 'EN';
   document.querySelectorAll('[data-en]').forEach(el => {
     const text = el.getAttribute('data-' + lang);
     if (text) el.innerHTML = text;
   });
+  if (persist) {
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, lang);
+    } catch (_) {}
+  }
 }
+
+function toggleLang() {
+  applyLanguage(lang === 'en' ? 'tr' : 'en');
+}
+
+function getStoredLanguage() {
+  try {
+    const stored = localStorage.getItem(LANG_STORAGE_KEY);
+    return stored === 'tr' ? 'tr' : 'en';
+  } catch (_) {
+    return 'en';
+  }
+}
+
+applyLanguage(getStoredLanguage(), false);
 </script>
 </body>
 </html>
