@@ -311,6 +311,34 @@ section { padding: 6rem 4rem; }
 .projects-actions { display: flex; gap: 0.85rem; align-items: center; flex-wrap: wrap; margin-top: 1.4rem; }
 #projects .project-card-extra { display: none; }
 #projects.projects-expanded .project-card-extra { display: block; }
+.demos { background: var(--bg-elevated); }
+.demo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; max-width: 1200px; }
+.demo-card { border: 1px solid var(--border); border-radius: 10px; background: var(--bg-card); padding: 1rem; }
+.demo-preview { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #0f0f13; position: relative; aspect-ratio: 16 / 9; }
+.demo-toolbar { display: flex; align-items: center; gap: 0.35rem; padding: 0.45rem 0.55rem; border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.03); }
+.demo-dot { width: 7px; height: 7px; border-radius: 50%; }
+.demo-dot.r { background: #ff5f57; }
+.demo-dot.y { background: #febc2e; }
+.demo-dot.g { background: #28c840; }
+.demo-body { padding: 0.7rem; display: grid; gap: 0.5rem; }
+.demo-row { border-radius: 6px; background: rgba(255,255,255,0.05); }
+.demo-wrg .demo-row:nth-child(1) { height: 16%; background: linear-gradient(90deg, rgba(231,76,60,0.55), rgba(231,76,60,0.12)); }
+.demo-wrg .demo-row:nth-child(2) { height: 23%; }
+.demo-wrg .demo-row:nth-child(3) { height: 46%; background: linear-gradient(180deg, rgba(212,168,83,0.14), rgba(255,255,255,0.04)); }
+.demo-pulse .demo-body { grid-template-columns: 1.2fr 1fr; grid-template-rows: 1fr 1fr; }
+.demo-pulse .demo-row:nth-child(1) { grid-row: 1 / 3; background: linear-gradient(180deg, rgba(46, 204, 113, 0.22), rgba(255,255,255,0.05)); }
+.demo-pulse .demo-row:nth-child(2) { background: rgba(52, 152, 219, 0.18); }
+.demo-pulse .demo-row:nth-child(3) { background: rgba(155, 89, 182, 0.18); }
+.demo-acp::after { content: 'SSE'; position: absolute; right: 0.7rem; bottom: 0.6rem; font-family: var(--font-mono); font-size: 0.62rem; color: var(--gold); letter-spacing: 0.08em; border: 1px solid rgba(212,168,83,0.4); border-radius: 999px; padding: 0.15rem 0.5rem; background: rgba(212,168,83,0.1); }
+.demo-acp .demo-row:nth-child(1) { height: 24%; background: rgba(231,76,60,0.16); }
+.demo-acp .demo-row:nth-child(2) { height: 24%; background: rgba(241,196,15,0.14); }
+.demo-acp .demo-row:nth-child(3) { height: 24%; background: rgba(46,204,113,0.14); }
+.demo-acp .demo-row:nth-child(4) { height: 20%; background: rgba(52,152,219,0.14); }
+.demo-card h3 { margin-top: 0.85rem; font-size: 1rem; }
+.demo-card p { margin-top: 0.4rem; color: var(--text-muted); font-size: 0.86rem; line-height: 1.55; }
+.demo-links { margin-top: 0.7rem; display: flex; gap: 0.65rem; flex-wrap: wrap; }
+.demo-links a { color: var(--accent-light); text-decoration: none; font-size: 0.83rem; border-bottom: 1px dashed rgba(231,76,60,0.45); }
+.demo-links a:hover { color: #fff; border-bottom-color: #fff; }
 .projects,
 .proof-signals {
   position: relative;
@@ -448,6 +476,7 @@ footer a:hover { color: var(--text); }
   .services-grid { grid-template-columns: 1fr; }
   .trust-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
+  .demo-grid { grid-template-columns: 1fr; }
   .project-card-primary { grid-column: span 1; }
   .contact-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
@@ -487,6 +516,8 @@ footer a:hover { color: var(--text); }
   .projects-actions { gap: 0.6rem; }
   .signals-grid { grid-template-columns: 1fr; }
   .signal-value { font-size: 1.15rem; }
+  .demo-card { padding: 0.85rem; }
+  .demo-card h3 { font-size: 0.95rem; }
   .service-number { font-size: 2.2rem; }
   .contact-link { padding: 1rem 1.25rem; }
   .contact-link-icon { width: 36px; height: 36px; font-size: 1rem; }
@@ -788,6 +819,64 @@ footer a:hover { color: var(--text); }
       data-tr="Tüm proje özetlerini gör"
     >View all project highlights</button>
     <a class="btn-secondary" href="https://github.com/yakuphanycl?tab=repositories" target="_blank" rel="noopener noreferrer" data-en="Browse all repositories" data-tr="Tüm repoları incele">Browse all repositories</a>
+  </div>
+</section>
+<section class="demos" id="demos">
+  <div class="reveal">
+    <p class="section-label" data-en="Visual Demos" data-tr="Görsel Demolar">Visual Demos</p>
+    <h2 class="section-title" data-en="See The Systems in Action" data-tr="Sistemleri Aksiyonda Gör">See The Systems in Action</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="demo-grid">
+    <article class="demo-card reveal">
+      <div class="demo-preview demo-wrg">
+        <div class="demo-toolbar"><span class="demo-dot r"></span><span class="demo-dot y"></span><span class="demo-dot g"></span></div>
+        <div class="demo-body">
+          <div class="demo-row"></div>
+          <div class="demo-row"></div>
+          <div class="demo-row"></div>
+        </div>
+      </div>
+      <h3>WinstonRedGuard</h3>
+      <p data-en="Governance monitor view: policy gates, CI status, and portfolio health in one operational layer." data-tr="Yönetişim izleme görünümü: policy gate'ler, CI durumu ve portföy sağlığı tek operasyon katmanında.">Governance monitor view: policy gates, CI status, and portfolio health in one operational layer.</p>
+      <div class="demo-links">
+        <a href="/projects/winstonredguard.html" data-en="Case study →" data-tr="Vaka çalışması →">Case study →</a>
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" rel="noopener noreferrer" data-en="GitHub repo →" data-tr="GitHub repo →">GitHub repo →</a>
+      </div>
+    </article>
+    <article class="demo-card reveal">
+      <div class="demo-preview demo-pulse">
+        <div class="demo-toolbar"><span class="demo-dot r"></span><span class="demo-dot y"></span><span class="demo-dot g"></span></div>
+        <div class="demo-body">
+          <div class="demo-row"></div>
+          <div class="demo-row"></div>
+          <div class="demo-row"></div>
+        </div>
+      </div>
+      <h3>PulseBoard</h3>
+      <p data-en="Live SaaS dashboard preview: repo scorecards, trend signals, and rapid risk visibility for teams." data-tr="Canlı SaaS panel önizlemesi: repo skor kartları, trend sinyalleri ve ekipler için hızlı risk görünürlüğü.">Live SaaS dashboard preview: repo scorecards, trend signals, and rapid risk visibility for teams.</p>
+      <div class="demo-links">
+        <a href="/projects/pulseboard.html" data-en="Case study →" data-tr="Vaka çalışması →">Case study →</a>
+        <a href="https://winstonredguard-production.up.railway.app" target="_blank" rel="noopener noreferrer" data-en="Live app →" data-tr="Canlı uygulama →">Live app →</a>
+      </div>
+    </article>
+    <article class="demo-card reveal">
+      <div class="demo-preview demo-acp">
+        <div class="demo-toolbar"><span class="demo-dot r"></span><span class="demo-dot y"></span><span class="demo-dot g"></span></div>
+        <div class="demo-body">
+          <div class="demo-row"></div>
+          <div class="demo-row"></div>
+          <div class="demo-row"></div>
+          <div class="demo-row"></div>
+        </div>
+      </div>
+      <h3>wrg-agent / ACP</h3>
+      <p data-en="Concurrent agent coordination demo: lock state, durable trace, and live sync events across coding agents." data-tr="Paralel ajan koordinasyon demosu: kilit durumu, kalıcı iz ve kodlama ajanları arasında canlı senkron olayları.">Concurrent agent coordination demo: lock state, durable trace, and live sync events across coding agents.</p>
+      <div class="demo-links">
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard/blob/main/ACP_QUICKSTART.md" target="_blank" rel="noopener noreferrer" data-en="Quickstart →" data-tr="Hızlı başlangıç →">Quickstart →</a>
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard/blob/main/ACP_PAPER.md" target="_blank" rel="noopener noreferrer" data-en="Paper →" data-tr="Makale →">Paper →</a>
+      </div>
+    </article>
   </div>
 </section>
 <section class="research" id="research" style="background:var(--bg-elevated)">
