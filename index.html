@@ -625,37 +625,43 @@ footer a:hover { color: var(--text); }
     </div>
     <div class="project-card reveal">
       <span class="featured-badge" data-en="Featured" data-tr="Öne Çıkan">Featured</span>
-      <div class="project-icon">🔬</div>
-      <h3>Research Motor</h3>
-      <p data-en="Multi-source OSINT &amp; research engine with 15 adapters (Reddit, GitHub, X, web scraper, repo audit, username OSINT, email intel, name lookup, and more). Watch mode, scheduled runs, HTML dashboard, and full CLI." data-tr="15 adaptörlü çok kaynaklı OSINT ve araştırma motoru (Reddit, GitHub, X, web scraper, repo audit, kullanıcı adı OSINT, e-posta istihbaratı, isim arama ve daha fazlası). Watch modu, zamanlanmış çalıştırma, HTML dashboard ve tam CLI.">Multi-source OSINT &amp; research engine with 15 adapters (Reddit, GitHub, X, web scraper, repo audit, username OSINT, email intel, name lookup, and more). Watch mode, scheduled runs, HTML dashboard, and full CLI.</p>
+      <div class="project-icon">📊</div>
+      <h3><a href="https://winstonredguard-production.up.railway.app" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">PulseBoard by WinstonRed</a></h3>
+      <p data-en="Live GitHub repo health SaaS on Railway. Tracks CI, coverage, PR age, dependencies, and release cadence with 7 collectors, then computes a single 0-100 Pulse Score for fast operational decisions." data-tr="Railway üzerinde canlı GitHub repo sağlık SaaS'ı. CI, coverage, PR yaşı, dependency ve release cadence sinyallerini 7 toplayıcıyla izler; hızlı operasyon kararları için tek bir 0-100 Pulse Skoru üretir.">Live GitHub repo health SaaS on Railway. Tracks CI, coverage, PR age, dependencies, and release cadence with 7 collectors, then computes a single 0-100 Pulse Score for fast operational decisions.</p>
       <div class="project-proof">
-        <div data-en="<strong>OSINT:</strong> Username scan across 68+ sites, email intelligence, name-based lookup." data-tr="<strong>OSINT:</strong> 68+ sitede kullanıcı adı tarama, e-posta istihbaratı, isim bazlı arama."><strong>OSINT:</strong> Username scan across 68+ sites, email intelligence, name-based lookup.</div>
-        <div data-en="<strong>Outcome:</strong> Repeatable intelligence reports and faster decision cycles." data-tr="<strong>Sonuç:</strong> Tekrarlanabilir istihbarat raporları ve daha hızlı karar döngüsü."><strong>Outcome:</strong> Repeatable intelligence reports and faster decision cycles.</div>
+        <div data-en="<strong>Problem:</strong> Engineering health signals were scattered across multiple tools." data-tr="<strong>Problem:</strong> Mühendislik sağlık sinyalleri birden fazla araçta dağınıktı."><strong>Problem:</strong> Engineering health signals were scattered across multiple tools.</div>
+        <div data-en="<strong>Solution:</strong> 7 collectors + unified Pulse Score + one operational dashboard." data-tr="<strong>Çözüm:</strong> 7 toplayıcı + birleşik Pulse Skoru + tek operasyon paneli."><strong>Solution:</strong> 7 collectors + unified Pulse Score + one operational dashboard.</div>
+        <div data-en="<strong>Outcome:</strong> 186 tests, live deployment, faster triage and decision loops." data-tr="<strong>Sonuç:</strong> 186 test, canlı deployment, daha hızlı triyaj ve karar döngüsü."><strong>Outcome:</strong> 186 tests, live deployment, faster triage and decision loops.</div>
       </div>
-      <div class="project-meta"><span>Python</span><span>180 tests</span><span>OSINT</span><span>CLI</span><span>Scheduler</span></div>
+      <p class="project-link"><a href="/projects/pulseboard.html" data-en="Read case study →" data-tr="Vaka çalışmasını oku →">Read case study →</a></p>
+      <div class="project-meta"><span>FastAPI</span><span>186 tests</span><span>Railway</span><span>SaaS</span></div>
     </div>
     <div class="project-card reveal">
       <span class="featured-badge" data-en="Featured" data-tr="Öne Çıkan">Featured</span>
-      <div class="project-icon">⚽</div>
-      <h3>Match Radar</h3>
-      <p data-en="Sports analytics pipeline that merges Forebet predictions, live odds, and statistical models into a unified signal. Kelly Criterion bet sizing, automated PDF reports, and a Streamlit dashboard." data-tr="Forebet tahminlerini, canlı oranları ve istatistiksel modelleri birleşik bir sinyalde buluşturan spor analitiği hattı. Kelly Criterion bahis boyutlandırma, otomatik PDF raporlar ve Streamlit dashboard.">Sports analytics pipeline that merges Forebet predictions, live odds, and statistical models into a unified signal. Kelly Criterion bet sizing, automated PDF reports, and a Streamlit dashboard.</p>
+      <div class="project-icon">🤝</div>
+      <h3>wrg-agent / ACP</h3>
+      <p data-en="A practical coordination protocol for concurrent AI coding agents. It combines SQLite TTL file locks, committed .agents durable state, and SSE broadcast to prevent merge conflicts before they happen." data-tr="Paralel AI kodlama ajanları için pratik koordinasyon protokolü. Merge çatışmalarını daha oluşmadan engellemek için SQLite TTL dosya kilitleri, commitlenen .agents kalıcı katmanı ve SSE yayını birleştirir.">A practical coordination protocol for concurrent AI coding agents. It combines SQLite TTL file locks, committed .agents durable state, and SSE broadcast to prevent merge conflicts before they happen.</p>
       <div class="project-proof">
-        <div data-en="<strong>Pipeline:</strong> Forebet → Odds API → Signal Merger → Kelly Criterion → Report." data-tr="<strong>Hat:</strong> Forebet → Odds API → Signal Merger → Kelly Criterion → Rapor."><strong>Pipeline:</strong> Forebet → Odds API → Signal Merger → Kelly Criterion → Report.</div>
-        <div data-en="<strong>Outcome:</strong> Automated daily match analysis with confidence-weighted sizing." data-tr="<strong>Sonuç:</strong> Güven ağırlıklı boyutlandırma ile otomatik günlük maç analizi."><strong>Outcome:</strong> Automated daily match analysis with confidence-weighted sizing.</div>
+        <div data-en="<strong>Runtime:</strong> SQLite session registry and TTL locks for in-progress file ownership." data-tr="<strong>Runtime:</strong> Devam eden dosya sahipliği için SQLite oturum kaydı ve TTL kilitleri."><strong>Runtime:</strong> SQLite session registry and TTL locks for in-progress file ownership.</div>
+        <div data-en="<strong>Durable:</strong> .agents/tasks + .agents/locks committed for auditability via git log." data-tr="<strong>Kalıcı:</strong> .agents/tasks + .agents/locks git log ile denetlenebilir olacak şekilde commitlenir."><strong>Durable:</strong> .agents/tasks + .agents/locks committed for auditability via git log.</div>
+        <div data-en="<strong>Outcome:</strong> Lower conflict rate and cleaner parallel delivery for multi-agent teams." data-tr="<strong>Sonuç:</strong> Çok ajanlı ekiplerde daha düşük çatışma oranı ve daha temiz paralel teslim."><strong>Outcome:</strong> Lower conflict rate and cleaner parallel delivery for multi-agent teams.</div>
       </div>
-      <div class="project-meta"><span>Python</span><span>77 tests</span><span>Kelly Criterion</span><span>Streamlit</span></div>
+      <p class="project-link">
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard/blob/main/ACP_QUICKSTART.md" target="_blank" rel="noopener noreferrer" data-en="Try in 60s →" data-tr="60 saniyede dene →">Try in 60s →</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/yakuphanycl/WinstonRedGuard/blob/main/ACP_PAPER.md" target="_blank" rel="noopener noreferrer" data-en="Paper →" data-tr="Makale →">Paper →</a>
+      </p>
+      <div class="project-meta"><span>Python</span><span>ACP</span><span>SQLite</span><span>SSE</span><span>CLI</span></div>
     </div>
     <div class="project-card reveal project-card-extra">
-      <div class="project-icon">📊</div>
-      <h3><a href="https://winstonredguard-production.up.railway.app" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">PulseBoard by WinstonRed</a></h3>
-      <p data-en="GitHub repo health dashboard with webhook auto-refresh, trend history, and tier-based pricing (Free/Pro/Agency). FastAPI + SQLite, GitHub OAuth, 5 async collectors, 0–100 Pulse Score. Live on Railway." data-tr="Webhook otomatik yenileme, trend geçmişi ve kademe bazlı fiyatlandırma (Free/Pro/Agency) ile GitHub repo sağlık paneli. FastAPI + SQLite, GitHub OAuth, 5 asenkron toplayıcı, 0–100 Pulse Skoru. Railway'de canlı.">GitHub repo health dashboard with webhook auto-refresh, trend history, and tier-based pricing (Free/Pro/Agency). FastAPI + SQLite, GitHub OAuth, 5 async collectors, 0–100 Pulse Score. Live on Railway.</p>
+      <div class="project-icon">🔬</div>
+      <h3>Research Motor</h3>
+      <p data-en="Deterministic multi-source research engine with OSINT adapters, watch mode, and report automation. Covers Reddit, GitHub, X, web intelligence, repo audit, username/email/name intelligence, and more." data-tr="OSINT adaptörleri, watch modu ve rapor otomasyonu içeren deterministik çok kaynaklı araştırma motoru. Reddit, GitHub, X, web intelligence, repo audit, kullanıcı adı/e-posta/isim istihbaratı ve daha fazlasını kapsar.">Deterministic multi-source research engine with OSINT adapters, watch mode, and report automation. Covers Reddit, GitHub, X, web intelligence, repo audit, username/email/name intelligence, and more.</p>
       <div class="project-proof">
-        <div data-en="<strong>Problem:</strong> Repo health signals were scattered and hard to prioritize." data-tr="<strong>Problem:</strong> Repo sağlık sinyalleri dağınık ve önceliklendirmesi zordu."><strong>Problem:</strong> Repo health signals were scattered and hard to prioritize.</div>
-        <div data-en="<strong>Solution:</strong> 5 async collectors + unified 0–100 scoring + one dashboard." data-tr="<strong>Çözüm:</strong> 5 asenkron toplayıcı + birleşik 0–100 skor + tek dashboard."><strong>Solution:</strong> 5 async collectors + unified 0–100 scoring + one dashboard.</div>
-        <div data-en="<strong>Outcome:</strong> A single operational view for health-based decisions." data-tr="<strong>Sonuç:</strong> Sağlık temelli kararlar için tek operasyon ekranı."><strong>Outcome:</strong> A single operational view for health-based decisions.</div>
+        <div data-en="<strong>OSINT:</strong> 68+ site username scan + email intelligence + name-based lookup." data-tr="<strong>OSINT:</strong> 68+ site kullanıcı adı tarama + e-posta istihbaratı + isim bazlı arama."><strong>OSINT:</strong> 68+ site username scan + email intelligence + name-based lookup.</div>
+        <div data-en="<strong>Outcome:</strong> 159 tests and repeatable intelligence reports for faster decisions." data-tr="<strong>Sonuç:</strong> 159 test ve daha hızlı kararlar için tekrarlanabilir istihbarat raporları."><strong>Outcome:</strong> 159 tests and repeatable intelligence reports for faster decisions.</div>
       </div>
-      <p class="project-link"><a href="/projects/pulseboard.html" data-en="Read case study →" data-tr="Vaka çalışmasını oku →">Read case study →</a></p>
-      <div class="project-meta"><span>FastAPI</span><span>119 tests</span><span>Railway</span><span>SaaS</span></div>
+      <div class="project-meta"><span>Python</span><span>159 tests</span><span>OSINT</span><span>CLI</span><span>Scheduler</span></div>
     </div>
     <div class="project-card reveal project-card-extra">
       <div class="project-icon">🖥️</div>
@@ -675,17 +681,14 @@ footer a:hover { color: var(--text); }
       <div class="project-meta"><span>Python</span><span>156 tests</span><span>arXiv API</span><span>Zero deps</span></div>
     </div>
     <div class="project-card reveal project-card-extra">
-      <div class="project-icon">🤝</div>
-      <h3>wrg-agent / ACP</h3>
-      <p data-en="Three-layer coordination protocol for concurrent AI coding agents. SQLite runtime locks, .agents/ durable layer, SSE broadcast. Prevents file conflicts between Claude Code, Codex, Cursor, and other agents running in parallel. 8-command CLI, pre-commit hook generator, opt-in local telemetry." data-tr="Paralel çalışan AI kodlama ajanları için üç katmanlı koordinasyon protokolü. SQLite runtime kilitleri, .agents/ kalıcı katman, SSE yayın. Claude Code, Codex, Cursor ve diğer ajanlar arasındaki dosya çakışmalarını önler. 8 komutlu CLI, pre-commit hook üretici, opt-in yerel telemetri.">Three-layer coordination protocol for concurrent AI coding agents. SQLite runtime locks, .agents/ durable layer, SSE broadcast. Prevents file conflicts between Claude Code, Codex, Cursor, and other agents running in parallel. 8-command CLI, pre-commit hook generator, opt-in local telemetry.</p>
-      <p class="project-link">
-        <a href="https://github.com/yakuphanycl/WinstonRedGuard/blob/main/ACP_QUICKSTART.md" target="_blank" rel="noopener noreferrer" data-en="Try in 60s →" data-tr="60 saniyede dene →">Try in 60s →</a>
-        &nbsp;·&nbsp;
-        <a href="https://github.com/yakuphanycl/WinstonRedGuard/blob/main/ACP_PAPER.md" target="_blank" rel="noopener noreferrer" data-en="Paper →" data-tr="Makale →">Paper →</a>
-        &nbsp;·&nbsp;
-        <a href="https://github.com/yakuphanycl/WinstonRedGuard/issues/new?template=acp_feedback.md" target="_blank" rel="noopener noreferrer" data-en="Feedback →" data-tr="Geri bildirim →">Feedback →</a>
-      </p>
-      <div class="project-meta"><span>Python</span><span>Multi-agent</span><span>Protocol</span><span>SSE</span><span>Telemetry</span></div>
+      <div class="project-icon">⚽</div>
+      <h3>Match Radar</h3>
+      <p data-en="Sports analytics pipeline that merges Forebet predictions, live odds, and statistical models into one signal layer. Includes Kelly Criterion sizing, automated daily reports, and Streamlit monitoring." data-tr="Forebet tahminlerini, canlı oranları ve istatistiksel modelleri tek sinyal katmanında birleştiren spor analitiği hattı. Kelly Criterion boyutlandırma, otomatik günlük raporlar ve Streamlit izleme içerir.">Sports analytics pipeline that merges Forebet predictions, live odds, and statistical models into one signal layer. Includes Kelly Criterion sizing, automated daily reports, and Streamlit monitoring.</p>
+      <div class="project-proof">
+        <div data-en="<strong>Pipeline:</strong> Forebet → Odds API → Signal Merger → Kelly sizing → Report." data-tr="<strong>Hat:</strong> Forebet → Odds API → Signal Merger → Kelly boyutlandırma → Rapor."><strong>Pipeline:</strong> Forebet → Odds API → Signal Merger → Kelly sizing → Report.</div>
+        <div data-en="<strong>Outcome:</strong> Automated daily match analysis with confidence-weighted sizing." data-tr="<strong>Sonuç:</strong> Güven ağırlıklı boyutlandırma ile otomatik günlük maç analizi."><strong>Outcome:</strong> Automated daily match analysis with confidence-weighted sizing.</div>
+      </div>
+      <div class="project-meta"><span>Python</span><span>77 tests</span><span>Kelly Criterion</span><span>Streamlit</span></div>
     </div>
     <div class="project-card reveal project-card-extra">
       <div class="project-icon">🧪</div>
