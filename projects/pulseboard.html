@@ -527,7 +527,7 @@
     }
   </style>
 </head>
-<body>
+<body data-calendly-url="">
 
   <nav>
     <div class="container">
@@ -597,6 +597,40 @@
       </div>
     </div>
   </div>
+
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Case Snapshot" data-tr="// Vaka Özeti">// Case Snapshot</div>
+      <h2 data-en="Standard Delivery Snapshot" data-tr="Standart Teslim Özeti">Standard Delivery Snapshot</h2>
+      <div class="pso-grid">
+        <div class="pso-card">
+          <span class="pso-tag problem" data-en="Problem" data-tr="Problem">Problem</span>
+          <h3 data-en="Scattered Repo Signals" data-tr="Dağınık Repo Sinyalleri">Scattered Repo Signals</h3>
+          <p data-en="Engineering health indicators lived across many tools, making prioritization slow and reactive." data-tr="Mühendislik sağlık göstergeleri birçok araca dağılmıştı; önceliklendirme yavaş ve reaktif kalıyordu.">Engineering health indicators lived across many tools, making prioritization slow and reactive.</p>
+        </div>
+        <div class="pso-card solution">
+          <span class="pso-tag solution" data-en="Solution" data-tr="Çözüm">Solution</span>
+          <h3 data-en="Collector + Score Engine" data-tr="Toplayıcı + Skor Motoru">Collector + Score Engine</h3>
+          <p data-en="Async collectors plus a single 0-100 scoring layer and dashboard, with webhook-triggered refresh." data-tr="Asenkron toplayıcılar, tek bir 0-100 skor katmanı ve webhook tetiklemeli yenileme ile panel." >Async collectors plus a single 0-100 scoring layer and dashboard, with webhook-triggered refresh.</p>
+        </div>
+        <div class="pso-card">
+          <span class="pso-tag outcome" data-en="Outcome" data-tr="Sonuç">Outcome</span>
+          <h3 data-en="Faster Decision Loop" data-tr="Daha Hızlı Karar Döngüsü">Faster Decision Loop</h3>
+          <p data-en="Live operational visibility, clearer repo triage, and faster intervention based on measurable health data." data-tr="Canlı operasyon görünürlüğü, daha net repo triyajı ve ölçülebilir sağlık verisiyle daha hızlı müdahale.">Live operational visibility, clearer repo triage, and faster intervention based on measurable health data.</p>
+        </div>
+        <div class="pso-card">
+          <span class="pso-tag" data-en="Stack" data-tr="Teknoloji">Stack</span>
+          <h3 data-en="FastAPI + SQLite + Railway" data-tr="FastAPI + SQLite + Railway">FastAPI + SQLite + Railway</h3>
+          <p data-en="FastAPI, aiosqlite, GitHub OAuth, webhook events, CI-backed deployment and observability." data-tr="FastAPI, aiosqlite, GitHub OAuth, webhook olayları, CI destekli deployment ve gözlemlenebilirlik.">FastAPI, aiosqlite, GitHub OAuth, webhook events, CI-backed deployment and observability.</p>
+        </div>
+        <div class="pso-card">
+          <span class="pso-tag" data-en="Timeline" data-tr="Süre">Timeline</span>
+          <h3 data-en="2-4 Week Build Lane" data-tr="2-4 Haftalık Build Hattı">2-4 Week Build Lane</h3>
+          <p data-en="MVP score visibility in 2 weeks, production hardening and integrations in following iterations." data-tr="2 haftada MVP skor görünürlüğü, sonraki iterasyonlarda prod güçlendirme ve entegrasyonlar.">MVP score visibility in 2 weeks, production hardening and integrations in following iterations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- PROBLEM / SOLUTION / OUTCOME -->
   <section>
@@ -781,7 +815,14 @@
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
 const LANG_STORAGE_KEY = 'pulseboard_case_lang';
-const CALENDLY_BOOKING_URL = 'https://calendly.com/your-handle/15min'; // replace with your real Calendly URL
+function getCalendlyUrl() {
+  try {
+    return (window.WINSTONRED_CALENDLY_URL || document.body.getAttribute('data-calendly-url') || localStorage.getItem('winstonred_calendly_url') || '').trim();
+  } catch (_) {
+    return (window.WINSTONRED_CALENDLY_URL || document.body.getAttribute('data-calendly-url') || '').trim();
+  }
+}
+const CALENDLY_BOOKING_URL = getCalendlyUrl();
 const BOOKING_FALLBACK_MAILTO = 'mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request';
 let lang = 'en';
 
@@ -814,7 +855,7 @@ function getStoredLanguage() {
 }
 
 function openBookingFlow() {
-  const hasCalendly = CALENDLY_BOOKING_URL && !CALENDLY_BOOKING_URL.includes('your-handle');
+  const hasCalendly = /^https:\/\/calendly\.com\//i.test(CALENDLY_BOOKING_URL);
   if (!hasCalendly) {
     window.location.href = BOOKING_FALLBACK_MAILTO;
     return;

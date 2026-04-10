@@ -143,6 +143,22 @@
         "@type": "Answer",
         "text": "Projects are scoped either as fixed milestone packages or monthly retainers depending on repo count, integration complexity, and delivery cadence."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you work remotely across time zones?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. I work remotely with async-first communication and clear milestones, and align overlap windows for review and handover."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can we start with a small pilot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Most engagements can start with a short pilot sprint focused on one repo or one high-risk workflow before broader rollout."
+      }
     }
   ]
 }
@@ -316,6 +332,16 @@ section { padding: 6rem 4rem; }
 .project-proof { margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 0.9rem; display: grid; gap: 0.35rem; }
 .project-proof div { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
 .project-proof strong { color: var(--text); font-weight: 600; }
+.project-kpi-row { display: flex; gap: 0.45rem; flex-wrap: wrap; margin: 0.2rem 0 0.75rem; }
+.project-kpi-pill {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  border: 1px solid rgba(231,76,60,0.38);
+  background: rgba(231,76,60,0.1);
+  color: #f3d7d3;
+  border-radius: 999px;
+  padding: 0.18rem 0.55rem;
+}
 .project-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
 .project-meta span { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.25rem 0.6rem; background: var(--surface); border-radius: 3px; color: var(--text-muted); }
 .project-link { margin-top: 0.75rem; }
@@ -381,6 +407,10 @@ section { padding: 6rem 4rem; }
 .plan-price { margin-top: 0.2rem; font-family: var(--font-display); font-size: 2rem; line-height: 1; letter-spacing: -0.02em; }
 .plan-price small { font-family: var(--font-body); font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-left: 0.2rem; }
 .plan-lead { margin-top: 0.55rem; color: var(--text-muted); font-size: 0.84rem; line-height: 1.5; }
+.plan-fit, .plan-exclusion { margin-top: 0.5rem; font-size: 0.78rem; line-height: 1.45; }
+.plan-fit { color: #d7dae4; }
+.plan-exclusion { color: #8f93a3; }
+.plan-fit strong, .plan-exclusion strong { color: var(--text); }
 .plan-features { margin-top: 0.8rem; display: grid; gap: 0.35rem; color: var(--text-muted); font-size: 0.84rem; line-height: 1.5; padding-left: 0.95rem; }
 .plan-features li strong { color: var(--text); }
 .pricing-addon { margin-top: 1rem; max-width: 1200px; border: 1px dashed rgba(212,168,83,0.36); border-radius: 10px; background: rgba(212,168,83,0.05); padding: 0.85rem 1rem; }
@@ -542,6 +572,15 @@ section { padding: 6rem 4rem; }
 .wizard-actions .btn-call { padding: 0.68rem 1rem; font-size: 0.82rem; }
 .wizard-actions .is-hidden { display: none !important; }
 .form-hint { margin-top: 0.35rem; font-size: 0.74rem; color: #7f8190; }
+.brief-template-box {
+  margin-top: 0.55rem;
+  border: 1px dashed rgba(212,168,83,0.38);
+  border-radius: 8px;
+  background: rgba(212,168,83,0.05);
+  padding: 0.6rem 0.7rem;
+}
+.brief-template-box p { margin: 0; font-size: 0.75rem; color: #b5b9c7; line-height: 1.45; }
+.brief-template-box button { margin-top: 0.45rem; }
 .status-note { display: none; margin-top: 0.75rem; font-size: 0.82rem; color: #9edb9e; }
 .status-note.visible { display: block; }
 .status-note.error { color: #f1a5a5; }
@@ -777,7 +816,7 @@ footer a:hover { color: var(--text); }
 }
 </style>
 </head>
-<body>
+<body data-calendly-url="">
 <div class="scroll-progress" id="scroll-progress"></div>
 <nav>
   <a href="#" class="logo">Winston<span>Red</span></a>
@@ -810,8 +849,8 @@ footer a:hover { color: var(--text); }
     <div class="hero-badge">
       <span data-en="2026 Q2 — Open to research collaborations &amp; AI/ML roles" data-tr="2026 Q2 — Araştırma iş birlikleri &amp; AI/ML rollerine açık">2026 Q2 — Open to research collaborations &amp; AI/ML roles</span>
     </div>
-    <h1 data-en="Production-grade <em>AI &amp; OSINT systems</em> with measurable outcomes." data-tr="Ölçülebilir sonuç üreten <em>AI &amp; OSINT</em> sistemleri geliştiriyorum.">Production-grade <em>AI &amp; OSINT systems</em> with measurable outcomes.</h1>
-    <p class="hero-sub" data-en="Founder at WinstonRed. I ship automation, OSINT platforms, and research engines with governance gates, test-first delivery, and clear operational handover." data-tr="WinstonRed kurucusu. Yönetişim kapıları, test-öncelikli teslim ve net operasyonel devir ile otomasyon, OSINT platformları ve araştırma motorları geliştiriyorum.">Founder at WinstonRed. I ship automation, OSINT platforms, and research engines with governance gates, test-first delivery, and clear operational handover.</p>
+    <h1 data-en="For CTOs and engineering teams: <em>AI &amp; OSINT systems</em> that reduce repo risk and ship measurable outcomes." data-tr="CTO ve mühendislik ekipleri için: repo riskini düşüren ve ölçülebilir sonuç üreten <em>AI &amp; OSINT sistemleri</em>.">For CTOs and engineering teams: <em>AI &amp; OSINT systems</em> that reduce repo risk and ship measurable outcomes.</h1>
+    <p class="hero-sub" data-en="Founder at WinstonRed. I turn scattered engineering workflows into governance-driven delivery lanes with test-first pipelines and clear operational handover." data-tr="WinstonRed kurucusuyum. Dağınık mühendislik iş akışlarını test-öncelikli pipeline'lar ve net operasyonel devir ile yönetişim odaklı teslim hatlarına dönüştürüyorum.">Founder at WinstonRed. I turn scattered engineering workflows into governance-driven delivery lanes with test-first pipelines and clear operational handover.</p>
     <div class="proof-strip">
       <div class="proof-chip">
         <span class="proof-k" data-en="Tests" data-tr="Test">Tests</span>
@@ -835,8 +874,8 @@ footer a:hover { color: var(--text); }
       </div>
     </div>
     <div class="hero-cta">
-      <a href="mailto:winstonrgsocial@gmail.com?subject=Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0AProject%20summary%3A%0ATimeline%3A%0ABudget%20range%3A" class="btn-call" data-book-call="1" data-en="Book 15-min Discovery Call" data-tr="15 dk Keşif Görüşmesi Planla">Book 15-min Discovery Call</a>
-      <a href="#contact" class="btn-primary" data-en="Send Project Brief →" data-tr="Proje Briefi Gönder →">Send Project Brief →</a>
+      <a href="mailto:winstonrgsocial@gmail.com?subject=Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0AProject%20summary%3A%0ATimeline%3A%0ABudget%20range%3A" class="btn-call" data-book-call="1" data-funnel="hero_call_click" data-en="Book 15-min Discovery Call" data-tr="15 dk Keşif Görüşmesi Planla">Book 15-min Discovery Call</a>
+      <a href="#contact" class="btn-primary" data-funnel="hero_brief_click" data-en="Send Project Brief →" data-tr="Proje Briefi Gönder →">Send Project Brief →</a>
       <a href="#projects" class="btn-secondary" data-en="View Projects" data-tr="Projeleri Gör">View Projects</a>
     </div>
     <div class="hero-decision-grid">
@@ -906,6 +945,11 @@ footer a:hover { color: var(--text); }
       <span class="top-pick" data-en="Top Pick" data-tr="En İyi Seçim">Top Pick</span>
       <div class="project-icon">🛡️</div>
       <h3><a href="https://github.com/yakuphanycl/WinstonRedGuard" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">WinstonRedGuard</a></h3>
+      <div class="project-kpi-row">
+        <span class="project-kpi-pill" data-en="61 apps" data-tr="61 uygulama">61 apps</span>
+        <span class="project-kpi-pill" data-en="1400+ CI tests" data-tr="1400+ CI test">1400+ CI tests</span>
+        <span class="project-kpi-pill" data-en="55/55 governance" data-tr="55/55 yönetişim">55/55 governance</span>
+      </div>
       <p data-en="The core monorepo powering all WinstonRed applications — 61+ apps, 1400+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline." data-tr="Tüm WinstonRed uygulamalarını barındıran ana monorepo — 61+ uygulama, 1400+ test, CI/CD yeşil. Otomatik kalite kontrolleri, yönetişim kuralları ve günlük sinyal istihbarat hattı içeren Python &amp; PowerShell politika kapı sistemi.">The core monorepo powering all WinstonRed applications — 61+ apps, 1400+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline.</p>
       <div class="project-proof">
         <div data-en="<strong>Problem:</strong> Many apps, fragmented standards, and high review overhead." data-tr="<strong>Problem:</strong> Çok sayıda uygulama, parçalı standartlar ve yüksek review maliyeti."><strong>Problem:</strong> Many apps, fragmented standards, and high review overhead.</div>
@@ -920,6 +964,11 @@ footer a:hover { color: var(--text); }
       <span class="rank-chip">#2</span>
       <div class="project-icon">📊</div>
       <h3><a href="https://winstonredguard-production.up.railway.app" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">PulseBoard by WinstonRed</a></h3>
+      <div class="project-kpi-row">
+        <span class="project-kpi-pill" data-en="0-100 pulse score" data-tr="0-100 pulse skoru">0-100 pulse score</span>
+        <span class="project-kpi-pill" data-en="7 collectors" data-tr="7 toplayıcı">7 collectors</span>
+        <span class="project-kpi-pill" data-en="186 tests" data-tr="186 test">186 tests</span>
+      </div>
       <p data-en="Live GitHub repo health SaaS on Railway. Tracks CI, coverage, PR age, dependencies, and release cadence with 7 collectors, then computes a single 0-100 Pulse Score for fast operational decisions." data-tr="Railway üzerinde canlı GitHub repo sağlık SaaS'ı. CI, coverage, PR yaşı, dependency ve release cadence sinyallerini 7 toplayıcıyla izler; hızlı operasyon kararları için tek bir 0-100 Pulse Skoru üretir.">Live GitHub repo health SaaS on Railway. Tracks CI, coverage, PR age, dependencies, and release cadence with 7 collectors, then computes a single 0-100 Pulse Score for fast operational decisions.</p>
       <div class="project-proof">
         <div data-en="<strong>Problem:</strong> Engineering health signals were scattered across multiple tools." data-tr="<strong>Problem:</strong> Mühendislik sağlık sinyalleri birden fazla araçta dağınıktı."><strong>Problem:</strong> Engineering health signals were scattered across multiple tools.</div>
@@ -934,6 +983,11 @@ footer a:hover { color: var(--text); }
       <span class="rank-chip">#3</span>
       <div class="project-icon">🤝</div>
       <h3>wrg-agent / ACP</h3>
+      <div class="project-kpi-row">
+        <span class="project-kpi-pill" data-en="8 CLI commands" data-tr="8 CLI komutu">8 CLI commands</span>
+        <span class="project-kpi-pill" data-en="3-layer protocol" data-tr="3 katmanlı protokol">3-layer protocol</span>
+        <span class="project-kpi-pill" data-en="merge conflicts down" data-tr="çatışma oranı düşer">merge conflicts down</span>
+      </div>
       <p data-en="A practical coordination protocol for concurrent AI coding agents. It combines SQLite TTL file locks, committed .agents durable state, and SSE broadcast to prevent merge conflicts before they happen." data-tr="Paralel AI kodlama ajanları için pratik koordinasyon protokolü. Merge çatışmalarını daha oluşmadan engellemek için SQLite TTL dosya kilitleri, commitlenen .agents kalıcı katmanı ve SSE yayını birleştirir.">A practical coordination protocol for concurrent AI coding agents. It combines SQLite TTL file locks, committed .agents durable state, and SSE broadcast to prevent merge conflicts before they happen.</p>
       <div class="project-proof">
         <div data-en="<strong>Runtime:</strong> SQLite session registry and TTL locks for in-progress file ownership." data-tr="<strong>Runtime:</strong> Devam eden dosya sahipliği için SQLite oturum kaydı ve TTL kilitleri."><strong>Runtime:</strong> SQLite session registry and TTL locks for in-progress file ownership.</div>
@@ -1100,6 +1154,8 @@ footer a:hover { color: var(--text); }
       <h3 class="plan-name">Starter</h3>
       <p class="plan-price">$49<small data-en="/month" data-tr="/ay">/month</small></p>
       <p class="plan-lead" data-en="For solo builders and small repositories." data-tr="Tek geliştirici ve küçük repo portföyleri için.">For solo builders and small repositories.</p>
+      <p class="plan-fit" data-en="<strong>Best for:</strong> Solo founder teams with limited repo count." data-tr="<strong>En uygun:</strong> Düşük repo sayılı solo kurucu ekipleri."><strong>Best for:</strong> Solo founder teams with limited repo count.</p>
+      <p class="plan-exclusion" data-en="<strong>Not included:</strong> 24/7 alert channel and custom policy packs." data-tr="<strong>Dahil değil:</strong> 7/24 alarm kanalı ve özel policy paketleri."><strong>Not included:</strong> 24/7 alert channel and custom policy packs.</p>
       <ul class="plan-features">
         <li data-en="<strong>5 repos</strong> monitored daily" data-tr="Günlük izleme ile <strong>5 repo</strong>"><strong>5 repos</strong> monitored daily</li>
         <li data-en="CI, PR and dependency baseline risk score" data-tr="CI, PR ve dependency için temel risk skoru">CI, PR and dependency baseline risk score</li>
@@ -1112,6 +1168,8 @@ footer a:hover { color: var(--text); }
       <h3 class="plan-name">Growth</h3>
       <p class="plan-price">$149<small data-en="/month" data-tr="/ay">/month</small></p>
       <p class="plan-lead" data-en="For active teams shipping production weekly." data-tr="Haftalık üretim teslimi yapan aktif ekipler için.">For active teams shipping production weekly.</p>
+      <p class="plan-fit" data-en="<strong>Best for:</strong> Product teams shipping weekly with growing repo footprint." data-tr="<strong>En uygun:</strong> Haftalık teslim yapan ve repo ayak izi büyüyen ürün ekipleri."><strong>Best for:</strong> Product teams shipping weekly with growing repo footprint.</p>
+      <p class="plan-exclusion" data-en="<strong>Not included:</strong> Enterprise SSO rollout and dedicated support lane." data-tr="<strong>Dahil değil:</strong> Enterprise SSO rollout ve özel destek hattı."><strong>Not included:</strong> Enterprise SSO rollout and dedicated support lane.</p>
       <ul class="plan-features">
         <li data-en="<strong>20 repos</strong> with hourly scans" data-tr="Saatlik tarama ile <strong>20 repo</strong>"><strong>20 repos</strong> with hourly scans</li>
         <li data-en="Slack and Discord realtime alerts" data-tr="Slack ve Discord gerçek zamanlı alarmlar">Slack and Discord realtime alerts</li>
@@ -1124,6 +1182,8 @@ footer a:hover { color: var(--text); }
       <h3 class="plan-name">Scale</h3>
       <p class="plan-price">$399<small data-en="/month" data-tr="/ay">/month</small></p>
       <p class="plan-lead" data-en="For agencies and portfolio-level delivery teams." data-tr="Ajanslar ve portföy seviyesinde teslim yapan ekipler için.">For agencies and portfolio-level delivery teams.</p>
+      <p class="plan-fit" data-en="<strong>Best for:</strong> Agencies managing many client repos and compliance risk." data-tr="<strong>En uygun:</strong> Çoklu müşteri reposu ve uyum riski yöneten ajanslar."><strong>Best for:</strong> Agencies managing many client repos and compliance risk.</p>
+      <p class="plan-exclusion" data-en="<strong>Not included:</strong> On-prem deployment and legal audit consulting." data-tr="<strong>Dahil değil:</strong> On-prem deployment ve hukuki denetim danışmanlığı."><strong>Not included:</strong> On-prem deployment and legal audit consulting.</p>
       <ul class="plan-features">
         <li data-en="<strong>75 repos</strong> near realtime scans" data-tr="Neredeyse gerçek zamanlı tarama ile <strong>75 repo</strong>"><strong>75 repos</strong> near realtime scans</li>
         <li data-en="Custom policy packs and threshold tuning" data-tr="Özel policy paketleri ve eşik ayarı">Custom policy packs and threshold tuning</li>
@@ -1138,8 +1198,8 @@ footer a:hover { color: var(--text); }
   <div class="pricing-cta reveal">
     <p data-en="Stop manually chasing repo risk. Start WinstonRed Guard Cloud with a 15-minute discovery call and ship with clearer engineering confidence." data-tr="Repo riskini manuel takip etmeyi bırakın. WinstonRed Guard Cloud'a 15 dakikalık keşif görüşmesiyle başlayın ve daha net mühendislik güveniyle teslim yapın.">Stop manually chasing repo risk. Start WinstonRed Guard Cloud with a 15-minute discovery call and ship with clearer engineering confidence.</p>
     <div class="pricing-cta-actions">
-      <a href="mailto:winstonrgsocial@gmail.com?subject=Guard%20Cloud%20Trial%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20start%20a%20Guard%20Cloud%20trial.%0ATeam%20size%3A%0ARepo%20count%3A%0ACurrent%20stack%3A" class="btn-call" data-en="Start 14-day Trial" data-tr="14 Günlük Denemeyi Başlat">Start 14-day Trial</a>
-      <a href="#contact" class="btn-secondary" data-en="Request Live Demo" data-tr="Canlı Demo İste">Request Live Demo</a>
+      <a href="mailto:winstonrgsocial@gmail.com?subject=Guard%20Cloud%20Trial%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20start%20a%20Guard%20Cloud%20trial.%0ATeam%20size%3A%0ARepo%20count%3A%0ACurrent%20stack%3A" class="btn-call" data-funnel="pricing_trial_click" data-en="Start 14-day Trial" data-tr="14 Günlük Denemeyi Başlat">Start 14-day Trial</a>
+      <a href="#contact" class="btn-secondary" data-funnel="pricing_demo_click" data-en="Request Live Demo" data-tr="Canlı Demo İste">Request Live Demo</a>
     </div>
   </div>
 </section>
@@ -1185,6 +1245,24 @@ footer a:hover { color: var(--text); }
       </button>
       <div class="faq-answer">
         <p data-en="I scope by repo count, integration depth, and risk profile. Then I propose either fixed milestones or a monthly lane." data-tr="Repo sayısı, entegrasyon derinliği ve risk profiline göre kapsam çıkarıyorum. Sonra sabit milestone ya da aylık teslim hattı öneriyorum.">I scope by repo count, integration depth, and risk profile. Then I propose either fixed milestones or a monthly lane.</p>
+      </div>
+    </article>
+    <article class="faq-item reveal">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-en="Do you work remotely across time zones?" data-tr="Farklı saat dilimlerinde uzaktan çalışıyor musunuz?">Do you work remotely across time zones?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">
+        <p data-en="Yes. I run async-first communication with clear milestones, and we align overlap windows for reviews and critical decisions." data-tr="Evet. Asenkron-öncelikli iletişim ve net milestone'larla çalışıyorum; review ve kritik kararlar için ortak saat aralıkları belirliyoruz.">Yes. I run async-first communication with clear milestones, and we align overlap windows for reviews and critical decisions.</p>
+      </div>
+    </article>
+    <article class="faq-item reveal">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-en="Can we start with a pilot sprint?" data-tr="Pilot sprint ile başlayabilir miyiz?">Can we start with a pilot sprint?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">
+        <p data-en="Yes. We can start with one repo or one high-risk flow as a pilot, then scale once we validate delivery speed and quality gates." data-tr="Evet. Önce tek repo veya yüksek riskli bir akışla pilot başlatabilir, teslim hızı ve kalite kapıları doğrulandıktan sonra ölçekleyebiliriz.">Yes. We can start with one repo or one high-risk flow as a pilot, then scale once we validate delivery speed and quality gates.</p>
       </div>
     </article>
   </div>
@@ -1407,8 +1485,8 @@ footer a:hover { color: var(--text); }
   <div class="contact-wrapper reveal">
     <p style="color: var(--text-muted); font-weight: 300; margin-bottom: 1rem;" data-en="I'm open to freelance projects, collaborations, and interesting problems. Reach out through any of the channels below." data-tr="Freelance projeler, iş birlikleri ve ilgi çekici problemler için açığım. Aşağıdaki kanallardan ulaşabilirsiniz.">I'm open to freelance projects, collaborations, and interesting problems. Reach out through any of the channels below.</p>
     <div class="contact-quick-actions">
-      <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0ATeam%20size%3A%0ARepo%20count%3A%0APreferred%20time%20window%3A" class="btn-call contact-track" data-book-call="1" data-track="contact_call_click" data-en="Schedule 15-min Call" data-tr="15 dk Görüşme Planla">Schedule 15-min Call</a>
-      <a href="#contact-brief-form" class="btn-secondary contact-track" data-track="contact_brief_click" data-en="Send Project Brief" data-tr="Proje Briefi Gönder">Send Project Brief</a>
+      <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request&body=Hi%20Yakuphan%2C%0A%0AI%20want%20to%20book%20a%2015-minute%20discovery%20call.%0ATeam%20size%3A%0ARepo%20count%3A%0APreferred%20time%20window%3A" class="btn-call contact-track" data-book-call="1" data-funnel="contact_call_click" data-track="contact_call_click" data-en="Schedule 15-min Call" data-tr="15 dk Görüşme Planla">Schedule 15-min Call</a>
+      <a href="#contact-brief-form" class="btn-secondary contact-track" data-funnel="contact_brief_click" data-track="contact_brief_click" data-en="Send Project Brief" data-tr="Proje Briefi Gönder">Send Project Brief</a>
     </div>
     <div class="contact-grid">
       <form id="contact-brief-form" class="contact-form" action="https://formsubmit.co/winstonrgsocial@gmail.com" method="POST">
@@ -1484,6 +1562,10 @@ footer a:hover { color: var(--text); }
             <label for="message" data-en="Project Need" data-tr="Proje İhtiyacı">Project Need</label>
             <textarea id="message" name="message" minlength="20" required placeholder="Goal, current stack, and expected outcome..."></textarea>
             <p class="form-hint" data-en="Include your goal, current stack, and expected outcome for a faster scope draft." data-tr="Daha hızlı kapsam taslağı için hedefinizi, mevcut teknoloji yığınınızı ve beklenen çıktıyı ekleyin.">Include your goal, current stack, and expected outcome for a faster scope draft.</p>
+            <div class="brief-template-box">
+              <p data-en="Need a starting point? Load a short brief template and edit it in seconds." data-tr="Başlangıç metni mi lazım? Kısa brief şablonunu tek tıkla yükleyip saniyeler içinde düzenleyin.">Need a starting point? Load a short brief template and edit it in seconds.</p>
+              <button id="brief-template-btn" class="btn-secondary" type="button" data-en="Use Sample Brief" data-tr="Örnek Briefi Kullan">Use Sample Brief</button>
+            </div>
           </div>
         </div>
         <div class="wizard-actions">
@@ -1569,8 +1651,8 @@ footer a:hover { color: var(--text); }
 </footer>
 <div class="mobile-cta-bar">
   <div class="mobile-cta-inner">
-    <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn-call" data-book-call="1" data-mobile-cta="mobile_call_click" data-en="Book 15-min Call" data-tr="15 dk Görüşme Planla">Book 15-min Call</a>
-    <a href="#contact" class="btn-secondary" data-mobile-cta="mobile_brief_click" data-en="Send Brief" data-tr="Brief Gönder">Send Brief</a>
+    <a href="mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request" class="btn-call" data-book-call="1" data-funnel="mobile_call_click" data-mobile-cta="mobile_call_click" data-en="Book 15-min Call" data-tr="15 dk Görüşme Planla">Book 15-min Call</a>
+    <a href="#contact" class="btn-secondary" data-funnel="mobile_brief_click" data-mobile-cta="mobile_brief_click" data-en="Send Brief" data-tr="Brief Gönder">Send Brief</a>
   </div>
 </div>
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
@@ -1640,13 +1722,20 @@ function toggleLang() {
 }
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const CALENDLY_BOOKING_URL = 'https://calendly.com/your-handle/15min'; // replace with your real Calendly URL
+function getCalendlyUrl() {
+  try {
+    return (window.WINSTONRED_CALENDLY_URL || document.body.getAttribute('data-calendly-url') || localStorage.getItem('winstonred_calendly_url') || '').trim();
+  } catch (_) {
+    return (window.WINSTONRED_CALENDLY_URL || document.body.getAttribute('data-calendly-url') || '').trim();
+  }
+}
+const CALENDLY_BOOKING_URL = getCalendlyUrl();
 const BOOKING_FALLBACK_MAILTO = 'mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request';
 let currentBriefStep = 1;
 const totalBriefSteps = 3;
 
 function openBookingFlow() {
-  const hasCalendly = CALENDLY_BOOKING_URL && !CALENDLY_BOOKING_URL.includes('your-handle');
+  const hasCalendly = /^https:\/\/calendly\.com\//i.test(CALENDLY_BOOKING_URL);
   if (!hasCalendly) {
     window.location.href = BOOKING_FALLBACK_MAILTO;
     return;
@@ -1802,6 +1891,13 @@ function copyEmail(btn) {
   });
 }
 
+document.querySelectorAll('[data-funnel]').forEach((el) => {
+  el.addEventListener('click', () => {
+    const eventName = el.getAttribute('data-funnel') || 'funnel_click';
+    trackEvent(eventName, { location: 'sitewide' });
+  });
+});
+
 document.querySelectorAll('[data-book-call]').forEach((el) => {
   el.addEventListener('click', (e) => {
     e.preventDefault();
@@ -1870,6 +1966,28 @@ function initBriefWizard() {
   setBriefStep(1);
 }
 
+function initBriefTemplate() {
+  const btn = document.getElementById('brief-template-btn');
+  const messageField = document.getElementById('message');
+  if (!btn || !messageField) return;
+  btn.addEventListener('click', () => {
+    const template =
+      `Project goal: \n` +
+      `Current stack: \n` +
+      `Main pain point: \n` +
+      `Expected outcome (measurable): \n` +
+      `Timeline target: \n` +
+      `Budget range: \n`;
+    if (!messageField.value.trim()) {
+      messageField.value = template;
+    } else {
+      messageField.value = `${messageField.value.trim()}\n\n${template}`;
+    }
+    messageField.focus();
+    trackEvent('contact_template_insert', { location: 'contact' });
+  });
+}
+
 function initFaqAccordion() {
   const items = Array.from(document.querySelectorAll('.faq-item'));
   if (!items.length) return;
@@ -1909,6 +2027,12 @@ function captureLeadSourceData() {
 const contactForm = document.querySelector('.contact-form');
 const formReadyAt = Date.now();
 if (contactForm) {
+  let formStarted = false;
+  contactForm.addEventListener('input', () => {
+    if (formStarted) return;
+    formStarted = true;
+    trackEvent('contact_brief_started', { location: 'contact' });
+  }, { once: true });
   contactForm.addEventListener('submit', (e) => {
     const guardNote = document.getElementById('guard-note');
     if (guardNote) guardNote.classList.remove('visible');
@@ -1964,6 +2088,7 @@ if (params.get('success') === '1') {
   trackEvent('contact_success_view', { location: 'contact' });
 }
 initBriefWizard();
+initBriefTemplate();
 initFaqAccordion();
 captureLeadSourceData();
 applyLanguage(getStoredLanguage(), false);

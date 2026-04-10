@@ -578,7 +578,7 @@
     }
   </style>
 </head>
-<body>
+<body data-calendly-url="">
 
   <nav>
     <div class="container">
@@ -656,6 +656,40 @@
       </div>
     </div>
   </div>
+
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Case Snapshot" data-tr="// Vaka Özeti">// Case Snapshot</div>
+      <h2 data-en="Standard Delivery Snapshot" data-tr="Standart Teslim Özeti">Standard Delivery Snapshot</h2>
+      <div class="principles-grid">
+        <div class="principle-card">
+          <span class="principle-icon">&#10007;</span>
+          <h3 data-en="Problem" data-tr="Problem">Problem</h3>
+          <p data-en="Multiple apps were shipping with inconsistent quality rules, creating review bottlenecks and release risk." data-tr="Birden fazla uygulama tutarsız kalite kurallarıyla ilerliyor, bu da review darboğazı ve release riski oluşturuyordu.">Multiple apps were shipping with inconsistent quality rules, creating review bottlenecks and release risk.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9881;</span>
+          <h3 data-en="Solution" data-tr="Çözüm">Solution</h3>
+          <p data-en="Registry-first governance with automated policy gates, CI quality checks, and release validation scripts." data-tr="Registry-öncelikli yönetişim, otomatik policy gate'ler, CI kalite kontrolleri ve release doğrulama scriptleri.">Registry-first governance with automated policy gates, CI quality checks, and release validation scripts.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#10003;</span>
+          <h3 data-en="Outcome" data-tr="Sonuç">Outcome</h3>
+          <p data-en="61+ apps, 1200+ tests, 17/17 CI checks and 55/55 governance checks passing as a repeatable operating model." data-tr="Tekrarlanabilir bir operasyon modeliyle 61+ uygulama, 1200+ test, 17/17 CI ve 55/55 governance kontrolünün geçmesi.">61+ apps, 1200+ tests, 17/17 CI checks and 55/55 governance checks passing as a repeatable operating model.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#128736;</span>
+          <h3 data-en="Stack" data-tr="Teknoloji">Stack</h3>
+          <p data-en="Python, PowerShell, SQLite, GitHub Actions, CodeQL, deterministic CLI workflows." data-tr="Python, PowerShell, SQLite, GitHub Actions, CodeQL, deterministik CLI iş akışları.">Python, PowerShell, SQLite, GitHub Actions, CodeQL, deterministic CLI workflows.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#128338;</span>
+          <h3 data-en="Timeline" data-tr="Süre">Timeline</h3>
+          <p data-en="Initial governance baseline in 1-2 weeks, then iterative hardening across release cycles." data-tr="İlk yönetişim baseline'ı 1-2 haftada, ardından release döngülerinde iteratif güçlendirme.">Initial governance baseline in 1-2 weeks, then iterative hardening across release cycles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- V0 DISCIPLINE -->
   <section>
@@ -943,7 +977,14 @@
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
 const LANG_STORAGE_KEY = 'wrg_case_lang';
-const CALENDLY_BOOKING_URL = 'https://calendly.com/your-handle/15min'; // replace with your real Calendly URL
+function getCalendlyUrl() {
+  try {
+    return (window.WINSTONRED_CALENDLY_URL || document.body.getAttribute('data-calendly-url') || localStorage.getItem('winstonred_calendly_url') || '').trim();
+  } catch (_) {
+    return (window.WINSTONRED_CALENDLY_URL || document.body.getAttribute('data-calendly-url') || '').trim();
+  }
+}
+const CALENDLY_BOOKING_URL = getCalendlyUrl();
 const BOOKING_FALLBACK_MAILTO = 'mailto:winstonrgsocial@gmail.com?subject=15-minute%20Discovery%20Call%20Request';
 let lang = 'en';
 
@@ -976,7 +1017,7 @@ function getStoredLanguage() {
 }
 
 function openBookingFlow() {
-  const hasCalendly = CALENDLY_BOOKING_URL && !CALENDLY_BOOKING_URL.includes('your-handle');
+  const hasCalendly = /^https:\/\/calendly\.com\//i.test(CALENDLY_BOOKING_URL);
   if (!hasCalendly) {
     window.location.href = BOOKING_FALLBACK_MAILTO;
     return;
