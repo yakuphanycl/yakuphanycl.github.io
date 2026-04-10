@@ -26,25 +26,84 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Yakuphan Yucel",
-  "url": "https://yakuphanycl.github.io/",
-  "jobTitle": "Founder",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "WinstonRed"
-  },
-  "sameAs": [
-    "https://github.com/yakuphanycl",
-    "https://x.com/rg_winston3375",
-    "https://linkedin.com/in/yakuphanycl",
-    "https://medium.com/@yakuphan.yucel11"
-  ],
-  "knowsAbout": [
-    "Python", "PowerShell", "FastAPI", "OSINT",
-    "monorepo governance", "sports analytics",
-    "AI agents", "RAG pipelines", "test automation",
-    "CI/CD", "research engines"
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://yakuphanycl.github.io/#person",
+      "name": "Yakuphan Yucel",
+      "url": "https://yakuphanycl.github.io/",
+      "jobTitle": "Founder",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "WinstonRed"
+      },
+      "sameAs": [
+        "https://github.com/yakuphanycl",
+        "https://x.com/rg_winston3375",
+        "https://linkedin.com/in/yakuphanycl",
+        "https://medium.com/@yakuphan.yucel11"
+      ],
+      "knowsAbout": [
+        "Python",
+        "PowerShell",
+        "FastAPI",
+        "OSINT",
+        "monorepo governance",
+        "sports analytics",
+        "AI agents",
+        "RAG pipelines",
+        "test automation",
+        "CI/CD",
+        "research engines"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://yakuphanycl.github.io/#website",
+      "url": "https://yakuphanycl.github.io/",
+      "name": "WinstonRed - Yakuphan Yucel",
+      "inLanguage": [
+        "en",
+        "tr"
+      ],
+      "publisher": {
+        "@id": "https://yakuphanycl.github.io/#person"
+      }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://yakuphanycl.github.io/#service",
+      "name": "WinstonRed Engineering Services",
+      "url": "https://yakuphanycl.github.io/#services",
+      "provider": {
+        "@id": "https://yakuphanycl.github.io/#person"
+      },
+      "areaServed": "Worldwide",
+      "serviceType": [
+        "SaaS Development",
+        "App Development",
+        "Business Analytics",
+        "OSINT and Intelligence",
+        "MCP Server Development",
+        "Monorepo and Governance Setup",
+        "Data Pipeline and Scoring",
+        "AI Agent Integration"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Engineering Services Catalog",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SaaS Development" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "App Development" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Analytics" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "OSINT and Intelligence" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "MCP Server Development" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Monorepo and Governance Setup" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Data Pipeline and Scoring" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Agent Integration" } }
+        ]
+      }
+    }
   ]
 }
 </script>
