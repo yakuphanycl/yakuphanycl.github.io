@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>wrg-devguard — Developer-First AI Safety Checks | WinstonRed</title>
+  <meta name="description" content="Developer-first AI safety checks. Secret scanning + prompt-policy lint in one zero-dep Python CLI. Ships as CLI, GitHub Action, Claude Code skill, and Cursor rule.">
+  <meta name="keywords" content="wrg-devguard, secret scanning, policy lint, Python CLI, GitHub Action, Claude Code, Cursor, security, DevSecOps, AI safety">
+  <meta name="author" content="Yakuphan">
+  <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="7-VBvAmBA1YVMBbNnlzJYzDm4XfXfxYZKKJxMFSfB2g" />
+  <link rel="canonical" href="https://yakuphanycl.github.io/projects/wrg-devguard.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="wrg-devguard — Developer-First AI Safety Checks">
+  <meta property="og:description" content="Secret scanning + prompt-policy lint in one zero-dep Python CLI. Ships as CLI, GitHub Action, Claude Code skill, and Cursor rule.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yakuphanycl.github.io/projects/wrg-devguard.html">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="wrg-devguard — Developer-First AI Safety Checks">
+  <meta name="twitter:description" content="Secret scanning + prompt-policy lint in one zero-dep Python CLI. Ships as CLI, GitHub Action, Claude Code skill, and Cursor rule.">
+  <meta name="twitter:creator" content="@rg_winston3375">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #111118;
+      --bg-card-hover: #16161f;
+      --border: #1e1e2a;
+      --border-accent: #2a2a3a;
+      --text: #e4e4ed;
+      --text-muted: #8888a0;
+      --text-dim: #55556a;
+      --accent: #e74c3c;
+      --accent-dim: rgba(231, 76, 60, 0.08);
+      --accent-mid: rgba(231, 76, 60, 0.15);
+      --red: #ff4060;
+      --green: #00e07b;
+      --blue: #4090ff;
+      --orange: #ff8830;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-display);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .lang-toggle {
+      background: rgba(231,76,60,0.08);
+      border: 1px solid rgba(231,76,60,0.15);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 5px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    .lang-toggle:hover { background: rgba(231,76,60,0.15); border-color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(231, 76, 60, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(231, 76, 60, 0.12);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .hero-tag .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out 0.1s both;
+    }
+    h1 .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      line-height: 1.7;
+      font-weight: 300;
+      animation: fadeInUp 0.6s ease-out 0.2s both;
+    }
+    .hero-badges {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out 0.25s both;
+    }
+    .hero-badges img { height: 20px; }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease-out 0.3s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .btn-primary:hover { background: #c0392b; opacity: 1; transform: translateY(-1px); box-shadow: 0 0 30px rgba(231,76,60,0.3); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-accent);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 60px 0;
+    }
+    .stat-item {
+      background: var(--bg-card);
+      padding: 28px 20px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .stat-item:hover { background: var(--bg-card-hover); }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 6px;
+    }
+
+    /* SECTIONS */
+    section { padding: 80px 0; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    /* PRINCIPLES / FEATURES GRID */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .principle-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      transition: all 0.3s;
+    }
+    .principle-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .principle-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .principle-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .principle-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* HIGHLIGHT CARD */
+    .highlight-card {
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(231,76,60,0.03) 100%);
+      border: 1px solid rgba(200,255,0,0.12);
+      border-radius: 16px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin: 48px 0;
+    }
+    .highlight-card h3 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .highlight-card .sub {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .highlight-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .highlight-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .highlight-feature .check {
+      color: var(--green);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 14px;
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      overflow-x: auto;
+    }
+    .code-block .prompt { color: var(--accent); user-select: none; }
+    .code-block .comment { color: var(--text-dim); }
+    .code-block .flag { color: var(--orange); }
+    .code-block .string { color: var(--green); }
+
+    /* INSTALL TABS */
+    .install-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .install-tab {
+      padding: 10px 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-dim);
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      background: transparent;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .install-tab:hover { color: var(--text-muted); }
+    .install-tab.active {
+      color: var(--accent);
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+    .install-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 24px 28px;
+    }
+    .install-panel.active { display: block; }
+    .install-panel .code-block {
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    /* INSTALL BOX */
+    .install-box {
+      background: var(--bg-card);
+      border: 1px solid rgba(200,255,0,0.12);
+      border-radius: 10px;
+      padding: 20px 28px;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .install-box:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent);
+    }
+    .install-box .dollar { color: var(--text-dim); user-select: none; }
+    .install-box .copy-hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-left: 8px;
+    }
+
+    /* DETECTION LIST */
+    .detection-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .detection-group h4 {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .detection-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .detection-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .detection-list li::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 100px 0;
+    }
+    .cta-section h2 { margin-bottom: 12px; }
+    .cta-section p {
+      color: var(--text-muted);
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+    .cta-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    footer a { color: var(--text-muted); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .highlight-card { grid-template-columns: 1fr; padding: 32px 24px; }
+      .detection-grid { grid-template-columns: 1fr; }
+      .nav-links { gap: 16px; }
+      section { padding: 60px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="https://yakuphanycl.github.io" class="nav-brand"><span>~/</span>yakuphanycl</a>
+      <div class="nav-links">
+        <a href="https://yakuphanycl.github.io" data-en="Home" data-tr="Ana Sayfa">Home</a>
+        <a href="https://yakuphanycl.github.io/#projects" data-en="Projects" data-tr="Projeler">Projects</a>
+        <a href="https://yakuphanycl.github.io/#services" data-en="Services" data-tr="Hizmetler">Services</a>
+        <a href="https://yakuphanycl.github.io/#contact" data-en="Contact" data-tr="İletişim">Contact</a>
+        <a href="https://github.com/yakuphanycl/wrg-devguard" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://pypi.org/project/wrg-devguard/" target="_blank" rel="noopener">PyPI</a>
+        <button class="lang-toggle" onclick="toggleLang()">TR</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <span class="dot"></span>
+        <span data-en="AVAILABLE ON PYPI" data-tr="PYPI'DA MEVCUT">AVAILABLE ON PYPI</span>
+      </div>
+      <h1>wrg<span class="accent">-devguard</span></h1>
+      <p class="hero-sub" data-en="Developer-first AI safety checks. Secret scanning + prompt-policy lint in one zero-dep Python CLI." data-tr="Geli&#351;tirici &ouml;ncelikli AI g&uuml;venlik kontrolleri. S&#305;r taramas&#305; + prompt-politika lint'i tek bir ba&#287;&#305;ml&#305;l&#305;ks&#305;z Python CLI'da.">
+        Developer-first AI safety checks. Secret scanning + prompt-policy lint in one zero-dep Python CLI.
+      </p>
+      <div class="hero-badges">
+        <a href="https://pypi.org/project/wrg-devguard/" target="_blank" rel="noopener"><img src="https://img.shields.io/pypi/v/wrg-devguard?color=e74c3c&style=flat-square" alt="PyPI version"></a>
+        <a href="https://github.com/yakuphanycl/wrg-devguard/actions" target="_blank" rel="noopener"><img src="https://img.shields.io/github/actions/workflow/status/yakuphanycl/wrg-devguard/ci.yml?style=flat-square&label=CI" alt="CI status"></a>
+        <a href="https://github.com/yakuphanycl/wrg-devguard/blob/main/LICENSE" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License MIT"></a>
+      </div>
+      <div class="hero-actions">
+        <div class="install-box" onclick="navigator.clipboard.writeText('pip install wrg-devguard')">
+          <span class="dollar">$</span> pip install wrg-devguard
+          <span class="copy-hint" data-en="click to copy" data-tr="kopyalamak i&ccedil;in t&#305;kla">click to copy</span>
+        </div>
+        <a href="https://github.com/yakuphanycl/wrg-devguard" target="_blank" rel="noopener" class="btn btn-ghost" data-en="GitHub &rarr;" data-tr="GitHub &rarr;">
+          GitHub &rarr;
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num">8/8</span>
+        <div class="stat-label" data-en="Tests Passing" data-tr="Ge&ccedil;en Test">Tests Passing</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3.11+</span>
+        <div class="stat-label" data-en="Python Support" data-tr="Python Deste&#287;i">Python Support</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">0</span>
+        <div class="stat-label" data-en="Dependencies" data-tr="Ba&#287;&#305;ml&#305;l&#305;k">Dependencies</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4</span>
+        <div class="stat-label" data-en="Distribution Channels" data-tr="Da&#287;&#305;t&#305;m Kanal&#305;">Distribution Channels</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Features" data-tr="// &Ouml;zellikler">// Features</div>
+      <h2 data-en="What It Does" data-tr="Ne Yapar">What It Does</h2>
+      <p class="section-desc" data-en="Four capabilities in one lightweight package &mdash; catch secrets and policy violations before they reach your main branch." data-tr="D&ouml;rt yetenek tek bir hafif pakette &mdash; s&#305;rlar&#305; ve politika ihlallerini ana dal&#305;n&#305;za ula&#351;madan yakalay&#305;n.">
+        Four capabilities in one lightweight package &mdash; catch secrets and policy violations before they reach your main branch.
+      </p>
+      <div class="principles-grid">
+        <div class="principle-card">
+          <span class="principle-icon">&#128270;</span>
+          <h3 data-en="Secret Scanning" data-tr="S&#305;r Taramas&#305;">Secret Scanning</h3>
+          <p data-en="Detects leaked API keys, tokens, private keys, and common credential formats in tracked files." data-tr="Takip edilen dosyalardaki s&#305;zan API anahtarlar&#305;n&#305;, token'lar&#305;, &ouml;zel anahtarlar&#305; ve yayg&#305;n kimlik bilgisi formatlar&#305;n&#305; tespit eder.">Detects leaked API keys, tokens, private keys, and common credential formats in tracked files.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#128220;</span>
+          <h3 data-en="Prompt-Policy Lint" data-tr="Prompt-Politika Lint">Prompt-Policy Lint</h3>
+          <p data-en="Catches deny-listed patterns in AI-facing text assets &mdash; system prompts, configs, and instruction files." data-tr="AI'a y&ouml;nelik metin varl&#305;klar&#305;ndaki yasakl&#305; kal&#305;plar&#305; yakalar &mdash; sistem prompt'lar&#305;, yap&#305;land&#305;rmalar ve talimat dosyalar&#305;.">Catches deny-listed patterns in AI-facing text assets &mdash; system prompts, configs, and instruction files.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9898;</span>
+          <h3 data-en="Zero Dependencies" data-tr="S&#305;f&#305;r Ba&#287;&#305;ml&#305;l&#305;k">Zero Dependencies</h3>
+          <p data-en="stdlib only. pip install is instant, works in any sandbox, no supply chain risk." data-tr="Sadece standart k&uuml;t&uuml;phane. pip install an&#305;nda, herhangi bir sandbox'ta &ccedil;al&#305;&#351;&#305;r, tedarik zinciri riski yok.">stdlib only. pip install is instant, works in any sandbox, no supply chain risk.</p>
+        </div>
+        <div class="principle-card">
+          <span class="principle-icon">&#9881;</span>
+          <h3 data-en="AI-Native UX" data-tr="AI-Yerel UX">AI-Native UX</h3>
+          <p data-en="Ships as CLI, GitHub Action, Claude Code skill, and Cursor rule &mdash; fits wherever you already work." data-tr="CLI, GitHub Action, Claude Code skill ve Cursor kural&#305; olarak gelir &mdash; zaten &ccedil;al&#305;&#351;t&#305;&#287;&#305;n&#305;z yere uyar.">Ships as CLI, GitHub Action, Claude Code skill, and Cursor rule &mdash; fits wherever you already work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// How It Works" data-tr="// Nas&#305;l &Ccedil;al&#305;&#351;&#305;r">// How It Works</div>
+      <h2 data-en="What It Catches" data-tr="Neleri Yakalar">What It Catches</h2>
+      <p class="section-desc" data-en="Scans your repo for two classes of issues before a PR lands. Choose baseline (CI-friendly) or strict (release audits) profile." data-tr="PR birle&#351;meden &ouml;nce reponuzu iki sorun s&#305;n&#305;f&#305; i&ccedil;in tarar. baseline (CI uyumlu) veya strict (s&uuml;r&uuml;m denetimi) profili se&ccedil;in.">
+        Scans your repo for two classes of issues before a PR lands. Choose baseline (CI-friendly) or strict (release audits) profile.
+      </p>
+      <div class="detection-grid">
+        <div class="detection-group">
+          <h4 data-en="Secret Patterns" data-tr="S&#305;r Kal&#305;plar&#305;">Secret Patterns</h4>
+          <ul class="detection-list">
+            <li data-en="OpenAI API keys (sk-...)" data-tr="OpenAI API anahtarlar&#305; (sk-...)">OpenAI API keys (sk-...)</li>
+            <li data-en="GitHub tokens (ghp_, gho_, ghs_)" data-tr="GitHub token'lar&#305; (ghp_, gho_, ghs_)">GitHub tokens (ghp_, gho_, ghs_)</li>
+            <li data-en="AWS access keys (AKIA...)" data-tr="AWS eri&#351;im anahtarlar&#305; (AKIA...)">AWS access keys (AKIA...)</li>
+            <li data-en="RSA / EC private keys" data-tr="RSA / EC &ouml;zel anahtarlar">RSA / EC private keys</li>
+            <li data-en="Generic high-entropy strings" data-tr="Genel y&uuml;ksek-entropi diziler">Generic high-entropy strings</li>
+          </ul>
+        </div>
+        <div class="detection-group">
+          <h4 data-en="Policy Patterns" data-tr="Politika Kal&#305;plar&#305;">Policy Patterns</h4>
+          <ul class="detection-list">
+            <li data-en="Deny-listed words in prompts" data-tr="Prompt'lardaki yasakl&#305; kelimeler">Deny-listed words in prompts</li>
+            <li data-en="Hardcoded system messages" data-tr="Sabit kodlanm&#305;&#351; sistem mesajlar&#305;">Hardcoded system messages</li>
+            <li data-en="PII in AI-facing text" data-tr="AI'a y&ouml;nelik metindeki KKB">PII in AI-facing text</li>
+            <li data-en="Profiles: baseline &amp; strict" data-tr="Profiller: baseline &amp; strict">Profiles: baseline &amp; strict</li>
+            <li data-en="JSON output for CI integration" data-tr="CI entegrasyonu i&ccedil;in JSON &ccedil;&#305;kt&#305;">JSON output for CI integration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Install" data-tr="// Kurulum">// Install</div>
+      <h2 data-en="4 Ways to Ship It" data-tr="4 Da&#287;&#305;t&#305;m Yolu">4 Ways to Ship It</h2>
+      <p class="section-desc" data-en="Pick the channel that fits your workflow. All four run the same scan engine." data-tr="&#304;&#351; ak&#305;&#351;&#305;n&#305;za uyan kanal&#305; se&ccedil;in. D&ouml;rd&uuml; de ayn&#305; tarama motorunu &ccedil;al&#305;&#351;t&#305;r&#305;r.">
+        Pick the channel that fits your workflow. All four run the same scan engine.
+      </p>
+
+      <div class="install-tabs">
+        <button class="install-tab active" onclick="switchTab(0)" data-en="Python CLI" data-tr="Python CLI">Python CLI</button>
+        <button class="install-tab" onclick="switchTab(1)" data-en="GitHub Action" data-tr="GitHub Action">GitHub Action</button>
+        <button class="install-tab" onclick="switchTab(2)" data-en="Claude Code Skill" data-tr="Claude Code Skill">Claude Code Skill</button>
+        <button class="install-tab" onclick="switchTab(3)" data-en="Cursor Rule" data-tr="Cursor Kural&#305;">Cursor Rule</button>
+      </div>
+
+      <div class="install-panel active">
+        <div class="code-block">
+          <span class="comment"># Install from PyPI</span><br>
+          <span class="prompt">$ </span>pip install wrg-devguard<br><br>
+          <span class="comment"># Run a scan</span><br>
+          <span class="prompt">$ </span>wrg-devguard check <span class="flag">--path</span> . <span class="flag">--fail-on</span> <span class="string">error</span>
+        </div>
+      </div>
+
+      <div class="install-panel">
+        <div class="code-block">
+          <span class="comment"># .github/workflows/devguard.yml</span><br>
+          - <span class="flag">uses</span>: yakuphanycl/wrg-devguard@v1<br>
+          &nbsp;&nbsp;<span class="flag">with</span>:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="flag">profile</span>: <span class="string">strict</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="flag">fail-on</span>: <span class="string">error</span>
+        </div>
+      </div>
+
+      <div class="install-panel">
+        <div class="code-block">
+          <span class="comment"># Download the skill file</span><br>
+          <span class="prompt">$ </span>mkdir -p .claude/skills/wrg-devguard<br>
+          <span class="prompt">$ </span>curl -L https://raw.githubusercontent.com/<br>
+          &nbsp;&nbsp;yakuphanycl/wrg-devguard/main/SKILL.md \<br>
+          &nbsp;&nbsp;-o .claude/skills/wrg-devguard/SKILL.md
+        </div>
+      </div>
+
+      <div class="install-panel">
+        <div class="code-block">
+          <span class="comment"># Download the Cursor rule</span><br>
+          <span class="prompt">$ </span>mkdir -p .cursor/rules<br>
+          <span class="prompt">$ </span>curl -L https://raw.githubusercontent.com/<br>
+          &nbsp;&nbsp;yakuphanycl/wrg-devguard/main/wrg-devguard.mdc \<br>
+          &nbsp;&nbsp;-o .cursor/rules/wrg-devguard.mdc
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MULTI-CHANNEL -->
+  <section>
+    <div class="container">
+      <div class="section-label" data-en="// Distribution" data-tr="// Da&#287;&#305;t&#305;m">// Distribution</div>
+      <div class="highlight-card">
+        <div>
+          <h3 data-en="One Engine, Four Channels" data-tr="Bir Motor, D&ouml;rt Kanal">One Engine, Four Channels</h3>
+          <p class="sub" data-en="wrg-devguard ships the same scan engine across every distribution surface. Whether you run it locally, in CI, or let your AI agent invoke it &mdash; same rules, same output, same exit codes." data-tr="wrg-devguard ayn&#305; tarama motorunu her da&#287;&#305;t&#305;m y&uuml;zeyinde sunar. Yerel olarak, CI'da veya AI ajan&#305;n&#305;z arac&#305;l&#305;&#287;&#305;yla &ccedil;al&#305;&#351;t&#305;rsan&#305;z da &mdash; ayn&#305; kurallar, ayn&#305; &ccedil;&#305;kt&#305;, ayn&#305; &ccedil;&#305;k&#305;&#351; kodlar&#305;.">
+            wrg-devguard ships the same scan engine across every distribution surface. Whether you run it locally, in CI, or let your AI agent invoke it &mdash; same rules, same output, same exit codes.
+          </p>
+          <div class="highlight-features">
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Python CLI (pip install)" data-tr="Python CLI (pip install)">Python CLI (pip install)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="GitHub Action (yakuphanycl/wrg-devguard@v1)" data-tr="GitHub Action (yakuphanycl/wrg-devguard@v1)">GitHub Action (yakuphanycl/wrg-devguard@v1)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Claude Code skill (.claude/skills/)" data-tr="Claude Code skill (.claude/skills/)">Claude Code skill (.claude/skills/)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="Cursor rule (.cursor/rules/)" data-tr="Cursor kural&#305; (.cursor/rules/)">Cursor rule (.cursor/rules/)</span></div>
+            <div class="highlight-feature"><span class="check">&#10003;</span> <span data-en="JSON output for CI pipelines" data-tr="CI hatlar&#305; i&ccedil;in JSON &ccedil;&#305;kt&#305;">JSON output for CI pipelines</span></div>
+          </div>
+        </div>
+        <div class="code-block">
+          <span class="comment"># Quick scan with JSON output</span><br>
+          <span class="prompt">$ </span>wrg-devguard check \<br>
+          &nbsp;&nbsp;<span class="flag">--path</span> . \<br>
+          &nbsp;&nbsp;<span class="flag">--profile</span> <span class="string">strict</span> \<br>
+          &nbsp;&nbsp;<span class="flag">--format</span> <span class="string">json</span><br><br>
+          <span class="comment"># Exit code 0 = clean</span><br>
+          <span class="comment"># Exit code 1 = findings</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 data-en="Ship Safer Code" data-tr="Daha G&uuml;venli Kod G&ouml;nderin">Ship Safer Code</h2>
+      <p data-en="Install from PyPI. Add to CI. Let your agent run it. Zero config, zero deps." data-tr="PyPI'dan kurun. CI'ya ekleyin. Ajan&#305;n&#305;z&#305;n &ccedil;al&#305;&#351;t&#305;rmas&#305;na izin verin. S&#305;f&#305;r yap&#305;land&#305;rma, s&#305;f&#305;r ba&#287;&#305;ml&#305;l&#305;k.">Install from PyPI. Add to CI. Let your agent run it. Zero config, zero deps.</p>
+      <div class="cta-links">
+        <a href="https://github.com/yakuphanycl/wrg-devguard" target="_blank" rel="noopener" class="btn btn-primary">GitHub Repo</a>
+        <a href="https://pypi.org/project/wrg-devguard/" target="_blank" rel="noopener" class="btn btn-ghost" data-en="View on PyPI" data-tr="PyPI'da G&ouml;r&uuml;nt&uuml;le">View on PyPI</a>
+        <a href="https://x.com/rg_winston3375" target="_blank" rel="noopener" class="btn btn-ghost" data-en="Follow on X" data-tr="X'te Takip Et">Follow on X</a>
+        <a href="https://yakuphanycl.github.io/projects/winstonredguard.html" class="btn btn-ghost" data-en="WinstonRedGuard &rarr;" data-tr="WinstonRedGuard &rarr;">WinstonRedGuard &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 <a href="https://yakuphanycl.github.io">Yakuphan</a> &middot; WinstonRed &middot; &Ccedil;anakkale, Turkey</p>
+    </div>
+  </footer>
+
+<script>
+let lang = 'en';
+function toggleLang() {
+  lang = lang === 'en' ? 'tr' : 'en';
+  document.querySelector('.lang-toggle').textContent = lang === 'en' ? 'TR' : 'EN';
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const text = el.getAttribute('data-' + lang);
+    if (text) el.innerHTML = text;
+  });
+}
+
+function switchTab(idx) {
+  document.querySelectorAll('.install-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.install-panel').forEach((p, i) => {
+    p.classList.toggle('active', i === idx);
+  });
+}
+</script>
+</body>
+</html>
