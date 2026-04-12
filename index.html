@@ -1278,6 +1278,24 @@ footer a:hover { color: var(--text); }
         <p data-en="Yes. We can start with one repo or one high-risk flow as a pilot, then scale once we validate delivery speed and quality gates." data-tr="Evet. Önce tek repo veya yüksek riskli bir akışla pilot başlatabilir, teslim hızı ve kalite kapıları doğrulandıktan sonra ölçekleyebiliriz.">Yes. We can start with one repo or one high-risk flow as a pilot, then scale once we validate delivery speed and quality gates.</p>
       </div>
     </article>
+    <article class="faq-item reveal">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-en="What does wrg-devguard detect?" data-tr="wrg-devguard neleri tespit ediyor?">What does wrg-devguard detect?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">
+        <p data-en="Two classes of issues: leaked secrets (API keys, tokens, private keys, credentials) and prompt-policy violations (deny-listed patterns in AI-facing text assets). Zero runtime dependencies, runs anywhere Python is installed." data-tr="İki tür sorun: sızdırılmış sırlar (API anahtarları, tokenlar, özel anahtarlar, kimlik bilgileri) ve prompt-politika ihlalleri (AI'a yönelik metin dosyalarındaki yasaklı kalıplar). Sıfır bağımlılık, Python olan her yerde çalışır.">Two classes of issues: leaked secrets (API keys, tokens, private keys, credentials) and prompt-policy violations (deny-listed patterns in AI-facing text assets). Zero runtime dependencies, runs anywhere Python is installed.</p>
+      </div>
+    </article>
+    <article class="faq-item reveal">
+      <button class="faq-question" type="button" aria-expanded="false">
+        <span data-en="How do I add wrg-devguard to my CI pipeline?" data-tr="wrg-devguard'ı CI pipeline'ıma nasıl eklerim?">How do I add wrg-devguard to my CI pipeline?</span>
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-answer">
+        <p data-en="Add two lines to your GitHub Actions workflow: uses: yakuphanycl/wrg-devguard@v1 with fail-on: error. It installs from PyPI, scans your repo, and fails the job if secrets or policy violations are found." data-tr="GitHub Actions workflow'unuza iki satır ekleyin: uses: yakuphanycl/wrg-devguard@v1 ve fail-on: error. PyPI'dan yükler, reponuzu tarar, sır veya politika ihlali bulursa job'u başarısız kılar.">Add two lines to your GitHub Actions workflow: uses: yakuphanycl/wrg-devguard@v1 with fail-on: error. It installs from PyPI, scans your repo, and fails the job if secrets or policy violations are found.</p>
+      </div>
+    </article>
   </div>
 </section>
 <section class="research" id="research" style="background:var(--bg-elevated)">
@@ -1653,7 +1671,8 @@ footer a:hover { color: var(--text); }
       <a href="#faq" data-en="FAQ" data-tr="SSS">FAQ</a>
       <a href="#contact" data-en="Contact" data-tr="İletişim">Contact</a>
       <a href="https://github.com/yakuphanycl" target="_blank">GitHub</a>
-      <a href="https://pypi.org/project/instinct-mcp/" target="_blank">PyPI</a>
+      <a href="https://pypi.org/project/wrg-devguard/" target="_blank">wrg-devguard (PyPI)</a>
+      <a href="https://pypi.org/project/instinct-mcp/" target="_blank">instinct-mcp (PyPI)</a>
     </nav>
   </div>
   <div class="footer-bottom">
