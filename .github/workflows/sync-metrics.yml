@@ -1,0 +1,92 @@
+name: Sync Live Metrics
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 06:00 UTC
+  workflow_dispatch:       # Manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch metrics from GitHub profile README
+        id: metrics
+        run: |
+          README=$(curl -sf https://raw.githubusercontent.com/yakuphanycl/yakuphanycl/main/README.md)
+          APPS=$(echo "$README" | grep -oP '\|\s*\K\d+(?=\s*apps)')
+          TESTS=$(echo "$README" | grep -oP '\|\s*\K\d+(?=\+?\s*tests)')
+          GOV=$(echo "$README" | grep -oP '\K\d+/\d+(?=\s*governance)')
+          echo "apps=$APPS" >> "$GITHUB_OUTPUT"
+          echo "tests=$TESTS" >> "$GITHUB_OUTPUT"
+          echo "gov=$GOV" >> "$GITHUB_OUTPUT"
+          echo "Found: apps=$APPS tests=$TESTS gov=$GOV"
+
+      - name: Update index.html
+        if: steps.metrics.outputs.apps != '' && steps.metrics.outputs.tests != ''
+        env:
+          APPS: ${{ steps.metrics.outputs.apps }}
+          TESTS: ${{ steps.metrics.outputs.tests }}
+          GOV: ${{ steps.metrics.outputs.gov }}
+        run: |
+          FILE=index.html
+
+          # Read current values
+          OLD_APPS=$(grep -oP 'data-count="\K\d+(?=".*app)' "$FILE" | head -1 || echo "0")
+          OLD_TESTS=$(grep -oP 'data-count="\K\d+(?=".*test)' "$FILE" | head -1 || echo "0")
+
+          if [ "$OLD_APPS" = "$APPS" ] && [ "$OLD_TESTS" = "$TESTS" ]; then
+            echo "No changes needed (apps=$APPS, tests=$TESTS)"
+            exit 0
+          fi
+
+          echo "Updating: apps $OLD_APPS→$APPS, tests $OLD_TESTS→$TESTS"
+
+          # Update data-count attributes
+          sed -i "s/data-count=\"$OLD_APPS\"/data-count=\"$APPS\"/g" "$FILE"
+          sed -i "s/data-count=\"$OLD_TESTS\"/data-count=\"$TESTS\"/g" "$FILE"
+
+          # Update display text (EN)
+          sed -i "s/${OLD_APPS}+ apps/${APPS}+ apps/g" "$FILE"
+          sed -i "s/${OLD_APPS} apps/${APPS} apps/g" "$FILE"
+          sed -i "s/${OLD_TESTS}+ tests/${TESTS}+ tests/g" "$FILE"
+          sed -i "s/${OLD_TESTS}+ CI tests/${TESTS}+ CI tests/g" "$FILE"
+          sed -i "s/>${OLD_TESTS}+</>${TESTS}+</g" "$FILE"
+          sed -i "s/>${OLD_APPS}+</>${APPS}+</g" "$FILE"
+
+          # Update display text (TR)
+          sed -i "s/${OLD_APPS}+ uygulama/${APPS}+ uygulama/g" "$FILE"
+          sed -i "s/${OLD_APPS} uygulama/${APPS} uygulama/g" "$FILE"
+          sed -i "s/${OLD_TESTS}+ test/${TESTS}+ test/g" "$FILE"
+          sed -i "s/${OLD_TESTS}+ CI test/${TESTS}+ CI test/g" "$FILE"
+
+          # Update meta tags
+          sed -i "s/${OLD_APPS}+ apps, ${OLD_TESTS}+ tests/${APPS}+ apps, ${TESTS}+ tests/g" "$FILE"
+
+          # Update terminal animation
+          sed -i "s/${OLD_APPS} apps registered/${APPS} apps registered/g" "$FILE"
+
+          # Update governance if changed
+          if [ -n "$GOV" ]; then
+            OLD_GOV=$(grep -oP '\d+/\d+(?= governance)' "$FILE" | head -1)
+            if [ -n "$OLD_GOV" ] && [ "$OLD_GOV" != "$GOV" ]; then
+              sed -i "s/${OLD_GOV} governance/${GOV} governance/g" "$FILE"
+              sed -i "s/All ${OLD_GOV%%/*} gates/All ${GOV%%/*} gates/g" "$FILE"
+              sed -i "s/${OLD_GOV} gates/${GOV} gates/g" "$FILE"
+            fi
+          fi
+
+          echo "✅ Updated successfully"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore: sync live metrics (apps=${{ steps.metrics.outputs.apps }}, tests=${{ steps.metrics.outputs.tests }})"
+          git push
