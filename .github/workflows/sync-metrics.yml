@@ -18,9 +18,12 @@ jobs:
         id: metrics
         run: |
           README=$(curl -sf https://raw.githubusercontent.com/yakuphanycl/yakuphanycl/main/README.md)
-          APPS=$(echo "$README" | grep -oP '\|\s*\K\d+(?=\s*apps)')
-          TESTS=$(echo "$README" | grep -oP '\|\s*\K\d+(?=\+?\s*tests)')
-          GOV=$(echo "$README" | grep -oP '\K\d+/\d+(?=\s*governance)')
+          # Patterns tolerate optional Markdown bold (**N**, **N+**, **N/M**) around digits.
+          # `|| true` keeps the step alive under `bash -e` if a pattern finds zero matches;
+          # the downstream step gates on non-empty outputs before acting.
+          APPS=$(echo "$README" | grep -oP '\|\s*\*{0,2}\K\d+(?=\*{0,2}\s*apps)' | head -1 || true)
+          TESTS=$(echo "$README" | grep -oP '\|\s*\*{0,2}\K\d+(?=\+?\*{0,2}\s*tests)' | head -1 || true)
+          GOV=$(echo "$README" | grep -oP '\*{0,2}\K\d+/\d+(?=\*{0,2}\s*governance)' | head -1 || true)
           echo "apps=$APPS" >> "$GITHUB_OUTPUT"
           echo "tests=$TESTS" >> "$GITHUB_OUTPUT"
           echo "gov=$GOV" >> "$GITHUB_OUTPUT"
