@@ -36,54 +36,75 @@ jobs:
           TESTS: ${{ steps.metrics.outputs.tests }}
           GOV: ${{ steps.metrics.outputs.gov }}
         run: |
-          FILE=index.html
+          python3 <<'PY'
+          import os, re, sys
+          from pathlib import Path
 
-          # Read current values
-          OLD_APPS=$(grep -oP 'data-count="\K\d+(?=".*app)' "$FILE" | head -1 || echo "0")
-          OLD_TESTS=$(grep -oP 'data-count="\K\d+(?=".*test)' "$FILE" | head -1 || echo "0")
+          file = Path("index.html")
+          apps = os.environ["APPS"]
+          tests = os.environ["TESTS"]
+          gov = os.environ.get("GOV", "")
 
-          if [ "$OLD_APPS" = "$APPS" ] && [ "$OLD_TESTS" = "$TESTS" ]; then
-            echo "No changes needed (apps=$APPS, tests=$TESTS)"
-            exit 0
-          fi
+          content = file.read_text(encoding="utf-8")
 
-          echo "Updating: apps $OLD_APPS→$APPS, tests $OLD_TESTS→$TESTS"
+          # data-count attributes appear as `<strong data-count="N" ...>` in two
+          # adjacent rows (tests first, apps second) — the text "apps" / "tests"
+          # lives on separate lines, so regex co-location would miss them.
+          counts = re.findall(r'data-count="(\d+)"', content)
+          if len(counts) < 2:
+              print("WARN: fewer than 2 data-count attributes; skipping update")
+              sys.exit(0)
+          old_tests, old_apps = counts[0], counts[1]
 
-          # Update data-count attributes
-          sed -i "s/data-count=\"$OLD_APPS\"/data-count=\"$APPS\"/g" "$FILE"
-          sed -i "s/data-count=\"$OLD_TESTS\"/data-count=\"$TESTS\"/g" "$FILE"
+          if old_apps == apps and old_tests == tests and (not gov or gov in content):
+              print(f"No changes needed (apps={apps}, tests={tests}, gov={gov})")
+              sys.exit(0)
 
-          # Update display text (EN)
-          sed -i "s/${OLD_APPS}+ apps/${APPS}+ apps/g" "$FILE"
-          sed -i "s/${OLD_APPS} apps/${APPS} apps/g" "$FILE"
-          sed -i "s/${OLD_TESTS}+ tests/${TESTS}+ tests/g" "$FILE"
-          sed -i "s/${OLD_TESTS}+ CI tests/${TESTS}+ CI tests/g" "$FILE"
-          sed -i "s/>${OLD_TESTS}+</>${TESTS}+</g" "$FILE"
-          sed -i "s/>${OLD_APPS}+</>${APPS}+</g" "$FILE"
+          print(f"Updating: apps {old_apps}->{apps}, tests {old_tests}->{tests}")
 
-          # Update display text (TR)
-          sed -i "s/${OLD_APPS}+ uygulama/${APPS}+ uygulama/g" "$FILE"
-          sed -i "s/${OLD_APPS} uygulama/${APPS} uygulama/g" "$FILE"
-          sed -i "s/${OLD_TESTS}+ test/${TESTS}+ test/g" "$FILE"
-          sed -i "s/${OLD_TESTS}+ CI test/${TESTS}+ CI test/g" "$FILE"
+          new = content
+          # data-count="N" — first two occurrences only (tests, apps)
+          new = re.sub(rf'data-count="{old_tests}"', f'data-count="{tests}"', new, count=2)
+          new = re.sub(rf'data-count="{old_apps}"', f'data-count="{apps}"', new, count=2)
 
-          # Update meta tags
-          sed -i "s/${OLD_APPS}+ apps, ${OLD_TESTS}+ tests/${APPS}+ apps, ${TESTS}+ tests/g" "$FILE"
+          # Display forms — English + Turkish, with/without plus, plus meta tags.
+          app_variants = [
+              f'{old_apps}+ apps', f'{old_apps} apps',
+              f'{old_apps}+ uygulama', f'{old_apps} uygulama',
+              f'>{old_apps}+<', f'{old_apps} apps registered',
+          ]
+          test_variants = [
+              f'{old_tests}+ tests', f'{old_tests}+ test',
+              f'{old_tests}+ CI tests', f'{old_tests}+ CI test',
+              f'>{old_tests}+<',
+          ]
+          for v in app_variants:
+              new = new.replace(v, v.replace(old_apps, apps, 1))
+          for v in test_variants:
+              new = new.replace(v, v.replace(old_tests, tests, 1))
 
-          # Update terminal animation
-          sed -i "s/${OLD_APPS} apps registered/${APPS} apps registered/g" "$FILE"
+          # Combined meta: "N+ apps, M+ tests"
+          new = new.replace(
+              f'{old_apps}+ apps, {old_tests}+ tests',
+              f'{apps}+ apps, {tests}+ tests',
+          )
 
-          # Update governance if changed
-          if [ -n "$GOV" ]; then
-            OLD_GOV=$(grep -oP '\d+/\d+(?= governance)' "$FILE" | head -1)
-            if [ -n "$OLD_GOV" ] && [ "$OLD_GOV" != "$GOV" ]; then
-              sed -i "s/${OLD_GOV} governance/${GOV} governance/g" "$FILE"
-              sed -i "s/All ${OLD_GOV%%/*} gates/All ${GOV%%/*} gates/g" "$FILE"
-              sed -i "s/${OLD_GOV} gates/${GOV} gates/g" "$FILE"
-            fi
-          fi
+          # Governance (e.g. "70/70 governance", "All 70 gates")
+          if gov:
+              m = re.search(r'(\d+/\d+)(?=\s+governance)', new)
+              if m:
+                  old_gov = m.group(1)
+                  if old_gov != gov:
+                      new = new.replace(f'{old_gov} governance', f'{gov} governance')
+                      new = new.replace(f'{old_gov} gates', f'{gov} gates')
+                      old_n, new_n = old_gov.split('/')[0], gov.split('/')[0]
+                      new = new.replace(f'All {old_n} gates', f'All {new_n} gates')
 
-          echo "✅ Updated successfully"
+          if new == content:
+              print("No textual substitutions applied (values matched attribute only)")
+          file.write_text(new, encoding="utf-8")
+          print(f"Updated index.html (apps={apps}, tests={tests}, gov={gov})")
+          PY
 
       - name: Commit and push
         run: |
