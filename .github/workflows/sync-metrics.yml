@@ -3,14 +3,70 @@ name: Sync Live Metrics
 on:
   schedule:
     - cron: '0 6 * * *'  # Daily at 06:00 UTC
-  workflow_dispatch:       # Manual trigger
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/scripts/sync_metrics.py'
+      - '.github/scripts/check_metrics.py'
+      - '.github/workflows/sync-metrics.yml'
+      - 'tests/fixtures/stale_index.html'
 
 permissions:
   contents: write
 
 jobs:
-  sync:
+  self-test:
+    # Runs on every trigger. Catches regressions in sync_metrics.py /
+    # check_metrics.py before they can corrupt index.html on main.
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Self-test — sync fixes every stale variant
+        env:
+          APPS: '18'
+          TESTS: '900'
+          GOV: '18/18'
+        run: |
+          cp tests/fixtures/stale_index.html /tmp/fresh.html
+          python3 .github/scripts/sync_metrics.py /tmp/fresh.html
+          python3 .github/scripts/check_metrics.py /tmp/fresh.html
+
+      - name: Self-test — guard rejects raw stale fixture
+        env:
+          APPS: '18'
+          TESTS: '900'
+          GOV: '18/18'
+        run: |
+          if python3 .github/scripts/check_metrics.py tests/fixtures/stale_index.html; then
+            echo "::error::regression guard failed to flag raw stale fixture"
+            exit 1
+          fi
+          echo "guard correctly flagged raw stale fixture"
+
+      - name: Self-test — recover from PR#10-style buggy sync
+        env:
+          APPS: '18'
+          TESTS: '900'
+          GOV: '18/18'
+        run: |
+          # Simulates the exact PR #10 residue: data-count updated to 18 but
+          # inner text still 59. sync_metrics.py must self-align inner text.
+          cat > /tmp/buggy.html <<'HTML'
+          <!DOCTYPE html><html><body>
+          <strong data-count="18" data-suffix="">59</strong>
+          <strong data-count="900" data-suffix="+">800+</strong>
+          <span data-en="18/18 governance" data-tr="59/59 yönetişim">18/18 governance</span>
+          </body></html>
+          HTML
+          python3 .github/scripts/sync_metrics.py /tmp/buggy.html
+          python3 .github/scripts/check_metrics.py /tmp/buggy.html
+
+  sync:
+    # Only runs on scheduled / manual triggers — PRs stop at self-test.
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    needs: self-test
     steps:
       - uses: actions/checkout@v4
 
@@ -35,78 +91,18 @@ jobs:
           APPS: ${{ steps.metrics.outputs.apps }}
           TESTS: ${{ steps.metrics.outputs.tests }}
           GOV: ${{ steps.metrics.outputs.gov }}
-        run: |
-          python3 <<'PY'
-          import os, re, sys
-          from pathlib import Path
+        run: python3 .github/scripts/sync_metrics.py index.html
 
-          file = Path("index.html")
-          apps = os.environ["APPS"]
-          tests = os.environ["TESTS"]
-          gov = os.environ.get("GOV", "")
-
-          content = file.read_text(encoding="utf-8")
-
-          # data-count attributes appear as `<strong data-count="N" ...>` in two
-          # adjacent rows (tests first, apps second) — the text "apps" / "tests"
-          # lives on separate lines, so regex co-location would miss them.
-          counts = re.findall(r'data-count="(\d+)"', content)
-          if len(counts) < 2:
-              print("WARN: fewer than 2 data-count attributes; skipping update")
-              sys.exit(0)
-          old_tests, old_apps = counts[0], counts[1]
-
-          if old_apps == apps and old_tests == tests and (not gov or gov in content):
-              print(f"No changes needed (apps={apps}, tests={tests}, gov={gov})")
-              sys.exit(0)
-
-          print(f"Updating: apps {old_apps}->{apps}, tests {old_tests}->{tests}")
-
-          new = content
-          # data-count="N" — first two occurrences only (tests, apps)
-          new = re.sub(rf'data-count="{old_tests}"', f'data-count="{tests}"', new, count=2)
-          new = re.sub(rf'data-count="{old_apps}"', f'data-count="{apps}"', new, count=2)
-
-          # Display forms — English + Turkish, with/without plus, plus meta tags.
-          app_variants = [
-              f'{old_apps}+ apps', f'{old_apps} apps',
-              f'{old_apps}+ uygulama', f'{old_apps} uygulama',
-              f'>{old_apps}+<', f'{old_apps} apps registered',
-          ]
-          test_variants = [
-              f'{old_tests}+ tests', f'{old_tests}+ test',
-              f'{old_tests}+ CI tests', f'{old_tests}+ CI test',
-              f'>{old_tests}+<',
-          ]
-          for v in app_variants:
-              new = new.replace(v, v.replace(old_apps, apps, 1))
-          for v in test_variants:
-              new = new.replace(v, v.replace(old_tests, tests, 1))
-
-          # Combined meta: "N+ apps, M+ tests"
-          new = new.replace(
-              f'{old_apps}+ apps, {old_tests}+ tests',
-              f'{apps}+ apps, {tests}+ tests',
-          )
-
-          # Governance (e.g. "70/70 governance", "All 70 gates")
-          if gov:
-              m = re.search(r'(\d+/\d+)(?=\s+governance)', new)
-              if m:
-                  old_gov = m.group(1)
-                  if old_gov != gov:
-                      new = new.replace(f'{old_gov} governance', f'{gov} governance')
-                      new = new.replace(f'{old_gov} gates', f'{gov} gates')
-                      old_n, new_n = old_gov.split('/')[0], gov.split('/')[0]
-                      new = new.replace(f'All {old_n} gates', f'All {new_n} gates')
-
-          if new == content:
-              print("No textual substitutions applied (values matched attribute only)")
-          file.write_text(new, encoding="utf-8")
-          print(f"Updated index.html (apps={apps}, tests={tests}, gov={gov})")
-          PY
+      - name: Regression guard — verify no stale residue
+        if: steps.metrics.outputs.apps != '' && steps.metrics.outputs.tests != ''
+        env:
+          APPS: ${{ steps.metrics.outputs.apps }}
+          TESTS: ${{ steps.metrics.outputs.tests }}
+          GOV: ${{ steps.metrics.outputs.gov }}
+        run: python3 .github/scripts/check_metrics.py index.html
 
       - name: Commit and push
+        if: steps.metrics.outputs.apps != '' && steps.metrics.outputs.tests != ''
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

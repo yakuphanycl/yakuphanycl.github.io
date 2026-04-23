@@ -1,0 +1,69 @@
+<!--
+  Regression fixture for .github/scripts/sync_metrics.py.
+
+  Contains every metric variant the workflow must handle, all left at the
+  stale pre-ratchet values (apps=59, tests=800, gov=59/59). The self-test
+  job runs sync_metrics.py with APPS=18 TESTS=900 GOV=18/18 against this
+  file, then check_metrics.py must report zero violations.
+
+  The five patterns that the original workflow missed (pre PR #10) are
+  marked as (2), (5), (7), (8), (9).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+  <!-- (1) data-count attribute + (2) inner text of <strong data-count> -->
+  <div class="proof-chip">
+    <span class="proof-k" data-en="Tests" data-tr="Test">Tests</span>
+    <strong data-count="800" data-suffix="+">800+</strong>
+    <small>CI tests</small>
+  </div>
+  <div class="proof-chip">
+    <span class="proof-k" data-en="Apps" data-tr="Uygulama">Apps</span>
+    <strong data-count="59" data-suffix="">59</strong>
+    <small>Built in WinstonRedGuard</small>
+  </div>
+
+  <!-- (3) Natural-text EN/TR + (4) combined meta -->
+  <p>Battle-tested across 59 apps and 800+ tests.</p>
+  <p data-tr="59 uygulama, 800+ test">59 apps, 800+ tests</p>
+
+  <!-- (5) Governance attribute EN + TR -->
+  <span class="project-kpi-pill"
+        data-en="59/59 governance"
+        data-tr="59/59 yönetişim">59/59 governance</span>
+
+  <!-- (6) Governance body text -->
+  <p>All 59 gates green — 59/59 governance coverage.</p>
+
+  <!-- (7) stat-number + sibling label -->
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-number">800+</div>
+      <div class="stat-label" data-en="Tests Passing" data-tr="Geçen Test">Tests Passing</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">59</div>
+      <div class="stat-label" data-en="Apps Built" data-tr="Uygulama">Apps Built</div>
+    </div>
+  </div>
+
+  <!-- (8) trust-kpi + localized small -->
+  <div class="contact-trust-grid">
+    <div class="trust-kpi"><strong>59</strong><small data-en="apps shipped" data-tr="uygulama teslimi">apps shipped</small></div>
+    <div class="trust-kpi"><strong>800+</strong><small data-en="tests in CI" data-tr="CI test sayısı">tests in CI</small></div>
+  </div>
+
+  <!-- (9) JS fallback literal -->
+  <script>
+    function resolveMetrics(md) {
+      const apps = (md.match(/\|\s*(\d+)\s*apps/i)  || [])[1];
+      const tests = (md.match(/\|\s*(\d+)\+?\s*tests/i) || [])[1];
+      const gov  = (md.match(/(\d+\/\d+)\s*governance/i) || [])[1];
+      return apps && tests ? { apps: apps + '+', tests: tests + '+', governance: gov || '59/59' } : null;
+    }
+  </script>
+
+</body>
+</html>
