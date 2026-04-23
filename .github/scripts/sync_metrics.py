@@ -50,27 +50,11 @@ def update_html(content: str, apps: str, tests: str, gov: str) -> tuple[str, dic
     new = re.sub(rf'data-count="{old_tests}"', f'data-count="{tests}"', new, count=2)
     new = re.sub(rf'data-count="{old_apps}"', f'data-count="{apps}"', new, count=2)
 
-    # (2) Inner text of <strong data-count="N" data-suffix="S" ...>OLD</strong>
-    # The pair (data-count, data-suffix) is authoritative — inner text must
-    # equal their concatenation. Rebuild the inner from attrs so we preserve
-    # "+" suffixes (e.g. 900+ tests) that live in data-suffix, not data-count.
-    def _align_strong_inner(m: re.Match[str]) -> str:
-        attrs = m.group(1)
-        count_m = re.search(r'\bdata-count="(\d+)"', attrs)
-        if not count_m:
-            return m.group(0)
-        count = count_m.group(1)
-        suffix_m = re.search(r'\bdata-suffix="([^"]*)"', attrs)
-        suffix = suffix_m.group(1) if suffix_m else ""
-        return f"<strong{attrs}>{count}{suffix}</strong>"
-
-    new = re.sub(
-        r'<strong([^>]*\bdata-count="\d+"[^>]*)>\d+\+?</strong>',
-        _align_strong_inner,
-        new,
-    )
-
-    # (3) Natural-text variants (EN + TR)
+    # (3) Natural-text variants (EN + TR) — run BEFORE inner-align so step (2)
+    # always has the last word on <strong data-count> inner text. Previously
+    # step (3) ran after step (2) and the f">{old}+<" variants could match
+    # inner text that step (2) had just rewritten, flipping it back to the
+    # stale value (reproduced by the PR#10-style buggy fixture).
     app_variants = [
         f"{old_apps}+ apps",
         f"{old_apps} apps",
@@ -90,6 +74,28 @@ def update_html(content: str, apps: str, tests: str, gov: str) -> tuple[str, dic
         new = new.replace(v, v.replace(old_apps, apps, 1))
     for v in test_variants:
         new = new.replace(v, v.replace(old_tests, tests, 1))
+
+    # (2) Inner text of <strong data-count="N" data-suffix="S" ...>OLD</strong>
+    # The pair (data-count, data-suffix) is authoritative — inner text must
+    # equal their concatenation. Rebuild the inner from attrs so we preserve
+    # "+" suffixes (e.g. 900+ tests) that live in data-suffix, not data-count.
+    # INVARIANT: this block runs last among the strong-touching rewrites so
+    # it always has the final say on inner text.
+    def _align_strong_inner(m: re.Match[str]) -> str:
+        attrs = m.group(1)
+        count_m = re.search(r'\bdata-count="(\d+)"', attrs)
+        if not count_m:
+            return m.group(0)
+        count = count_m.group(1)
+        suffix_m = re.search(r'\bdata-suffix="([^"]*)"', attrs)
+        suffix = suffix_m.group(1) if suffix_m else ""
+        return f"<strong{attrs}>{count}{suffix}</strong>"
+
+    new = re.sub(
+        r'<strong([^>]*\bdata-count="\d+"[^>]*)>\d+\+?</strong>',
+        _align_strong_inner,
+        new,
+    )
 
     # (4) Combined meta
     new = new.replace(
