@@ -860,7 +860,7 @@ footer a:hover { color: var(--text); }
       </div>
       <div class="proof-chip">
         <span class="proof-k" data-en="Apps" data-tr="Uygulama">Apps</span>
-        <strong data-count="18" data-suffix="">59</strong>
+        <strong data-count="18" data-suffix="">18</strong>
         <small data-en="Built in WinstonRedGuard" data-tr="WinstonRedGuard içinde">Built in WinstonRedGuard</small>
       </div>
       <div class="proof-chip">
@@ -924,7 +924,7 @@ footer a:hover { color: var(--text); }
     <div class="reveal">
       <div class="stats-row">
         <div class="stat"><div class="stat-number">900+</div><div class="stat-label" data-en="Tests Passing" data-tr="Geçen Test">Tests Passing</div></div>
-        <div class="stat"><div class="stat-number">59</div><div class="stat-label" data-en="Apps Built" data-tr="Uygulama">Apps Built</div></div>
+        <div class="stat"><div class="stat-number">18</div><div class="stat-label" data-en="Apps Built" data-tr="Uygulama">Apps Built</div></div>
         <div class="stat" title="Maturity level based on quality and governance discipline.">
           <div class="stat-number">V1</div>
           <div class="stat-label" data-en="Maturity" data-tr="Olgunluk">Maturity</div>
@@ -949,7 +949,7 @@ footer a:hover { color: var(--text); }
       <div class="project-kpi-row">
         <span class="project-kpi-pill" data-en="18 apps" data-tr="18 uygulama">18 apps</span>
         <span class="project-kpi-pill" data-en="900+ CI tests" data-tr="900+ CI test">900+ CI tests</span>
-        <span class="project-kpi-pill" data-en="18/18 governance" data-tr="59/59 yönetişim">18/18 governance</span>
+        <span class="project-kpi-pill" data-en="18/18 governance" data-tr="18/18 yönetişim">18/18 governance</span>
       </div>
       <p data-en="The core monorepo powering all WinstonRed applications — 18 apps, 900+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline." data-tr="Tüm WinstonRed uygulamalarını barındıran ana monorepo — 18 uygulama, 900+ test, CI/CD yeşil. Otomatik kalite kontrolleri, yönetişim kuralları ve günlük sinyal istihbarat hattı içeren Python &amp; PowerShell politika kapı sistemi.">The core monorepo powering all WinstonRed applications — 18 apps, 900+ tests, CI/CD green. A Python &amp; PowerShell policy gate system with automated quality checks, governance rules, and a daily signal intelligence pipeline.</p>
       <div class="project-proof">
@@ -1615,7 +1615,7 @@ footer a:hover { color: var(--text); }
         <div class="contact-trust">
           <h3 data-en="Why teams choose WinstonRed" data-tr="Ekipler neden WinstonRed'i seçiyor">Why teams choose WinstonRed</h3>
           <div class="contact-trust-grid">
-            <div class="trust-kpi"><strong>59</strong><small data-en="apps shipped" data-tr="uygulama teslimi">apps shipped</small></div>
+            <div class="trust-kpi"><strong>18</strong><small data-en="apps shipped" data-tr="uygulama teslimi">apps shipped</small></div>
             <div class="trust-kpi"><strong>900+</strong><small data-en="tests in CI" data-tr="CI test sayısı">tests in CI</small></div>
             <div class="trust-kpi"><strong>&lt;24h</strong><small data-en="first response" data-tr="ilk yanıt">first response</small></div>
           </div>
@@ -2234,7 +2234,7 @@ applyLanguage(getStoredLanguage(), false);
     const apps = (md.match(/\|\s*(\d+)\s*apps/i)  || [])[1];
     const tests = (md.match(/\|\s*(\d+)\+?\s*tests/i) || [])[1];
     const gov  = (md.match(/(\d+\/\d+)\s*governance/i) || [])[1];
-    return apps && tests ? { apps: apps + '+', tests: tests + '+', governance: gov || '59/59' } : null;
+    return apps && tests ? { apps: apps + '+', tests: tests + '+', governance: gov || '18/18' } : null;
   }
 
   // Check cache first
