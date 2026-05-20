@@ -20,7 +20,7 @@ jobs:
     # check_metrics.py before they can corrupt index.html on main.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Self-test — sync fixes every stale variant
         env:
@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: self-test
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Fetch metrics from GitHub profile README
         id: metrics
